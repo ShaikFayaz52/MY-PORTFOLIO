@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Shaik Fayaz</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 229, 255, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-container h2 {
+            font-size: 30px;
+            color: #00e5ff;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-container h2::after {
+            display: none;
+        }
+
+        .login-container p {
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00e5ff;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #00e5ff;
+            background: rgba(0, 229, 255, 0.05);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #00e5ff;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: white;
+            box-shadow: 0 0 15px #00e5ff;
+        }
+
+        #error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: #00e5ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Admin Access</h2>
+        <p>Login to edit your portfolio details.</p>
+
+        <form id="login-form">
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+            <div id="error-msg">Access Denied. Unauthorized Email.</div>
+        </form>
+
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+    </div>
+
+    <script>
+        // Hashing function to avoid storing plaintext passwords
+        async function hashText(text) {
+            const msgBuffer = new TextEncoder().encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            // IF I WANT TO CHNAGE PASSWORD THEN I HAVE TO CHANGE THE HASH VALUE 
+            // BY USING ONLINE HASH TEXT FUNCTION CHANGE IN VALID PASSWORD HASH
+            // Target Password Hash
+            const validPasswordHash = "1a4f3ac06a7aeb941b74c9216333fb1b7dc094173b911de4ac2526dcba599517";
+
+            const inputPasswordHash = await hashText(password);
+
+            // Simple mock authentication using the user's specific email and hashed password
+            if (email === "shaikfayu52@gmail.com" && inputPasswordHash === validPasswordHash) {
+                // Set session token
+                localStorage.setItem("portfolio_admin", "true");
+                window.location.href = "index.html"; // Redirect back to homepage for in-line editing
+            } else {
+                document.getElementById('error-msg').style.display = "block";
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaik Fayaz - Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .resume-container {
+            background-color: white;
+            width: 100%;
+            max-width: 800px;
+            min-height: 1122px; /* A4 height */
+            padding: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 32px;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        header h3 {
+            font-size: 18px;
+            color: #4b5563;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Section Global */
+        section {
+            margin-bottom: 25px;
+        }
+
+        section h2 {
+            font-size: 20px;
+            color: #111827;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Profile Summary */
+        .summary p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+            text-align: justify;
+        }
+
+        /* Education & Projects */
+        .item-container {
+            margin-bottom: 15px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #111827;
+        }
+
+        .item-subtitle {
+            font-weight: 500;
+            font-size: 14px;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .item-date {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .item-details {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #374151;
+            margin-left: 15px;
+        }
+
+        /* Skills */
+        .skills-list {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skills-list li {
+            background-color: #f3f4f6;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Certificates */
+        .cert-list {
+            list-style-type: disc;
+            margin-left: 20px;
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        /* Print Specific Styles */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                display: block;
+            }
+            .resume-container {
+                box-shadow: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00e5ff;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <button class="no-print download-btn" onclick="window.print()">
+        <i class="fa-solid fa-download"></i> Save as PDF
+    </button>
+
+    <div class="resume-container">
+        <!-- Header -->
+        <header>
+            <h1>Shaik Fayaz</h1>
+            <h3>Passionate CSE Student | Aspiring Full-Stack Developer</h3>
+            <div class="contact-info">
+                <span><i class="fa-solid fa-phone"></i> +91 6305138534</span>
+                <span><i class="fa-solid fa-envelope"></i> your.email@example.com</span>
+                <span><i class="fa-brands fa-linkedin"></i> linkedin.com/in/shaik-fayaz-987b05333</span>
+                <span><i class="fa-solid fa-location-dot"></i> Anantapuramu, India</span>
+            </div>
+        </header>
+
+        <!-- Profile Summary -->
+        <section class="summary">
+            <h2>Profile Summary</h2>
+            <p>
+                A passionate Computer Science and Engineering student with a strong interest in software development and emerging technologies. Highly motivated to learn, innovate, and create impactful technology. Proven ability to build functional applications and websites, solve real-world challenges, and continuously adapt to new technologies.
+            </p>
+        </section>
+
+        <!-- Education -->
+        <section class="education">
+            <h2>Education</h2>
+            <div class="item-container">
+                <div class="item-header">
+                    <span class="item-title">B.Tech in Computer Science</span>
+                    <span class="item-date">2024 - 2028</span>
+                </div>
+                <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</div>
+            </div>
+
+            <div class="item-container">
+                <div class="item-header">
+                    <span class="item-title">Intermediate (M.P.C Stream)</span>
+                    <span class="item-date">2022 - 2024</span>
+                </div>
+                <div class="item-subtitle">Sri Chaitanya Junior College - Anantapuramu</div>
+            </div>
+
+            <div class="item-container">
+                <div class="item-header">
+                    <span class="item-title">Secondary School Certificate (SSC)</span>
+                    <span class="item-date">2022</span>
+                </div>
+                <div class="item-subtitle">V.V.Model E.M High School - Anantapuramu</div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="skills">
+            <h2>Technical Skills</h2>
+            <ul class="skills-list">
+                <li>Java</li>
+                <li>Python</li>
+                <li>C</li>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Firebase</li>
+                <li>Android Development</li>
+                <li>MySQL</li>
+                <li>UI/UX Design</li>
+            </ul>
+        </section>
+
+        <!-- Projects -->
+        <section class="projects">
+            <h2>Projects</h2>
+            
+            <div class="item-container">
+                <div class="item-header">
+                    <span class="item-title">Shop Ease Website</span>
+                </div>
+                <p class="item-details">
+                    Modern e-commerce website designed to provide a smooth and user-friendly online shopping experience. Features include product management, cart functionality, order tracking, and comprehensive admin features for customers and sellers.
+                </p>
+            </div>
+
+            <div class="item-container">
+                <div class="item-header">
+                    <span class="item-title">KindMeals App</span>
+                </div>
+                <p class="item-details">
+                    A food donation platform connecting food donors with needy people through location-based services. Includes an SOS emergency application feature for rapid response.
+                </p>
+            </div>
+
+            <div class="item-container">
+                <div class="item-header">
+                    <span class="item-title">Carbon Footprint Calculator</span>
+                </div>
+                <p class="item-details">
+                    An application to calculate and track personal or organizational environmental impact, featuring user-friendly analytics and interactive dashboards.
+                </p>
+            </div>
+        </section>
+
+        <!-- Certificates & Achievements -->
+        <section class="certificates">
+            <h2>Certificates & Achievements</h2>
+            <ul class="cert-list">
+                <li>Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA).</li>
+                <li>Python Programming Certification - Infosys Springboard.</li>
+                <li>Database Management Systems (DBMS) Certification - Infosys Springboard.</li>
+                <li>Data Engineering & Networking Cloud Virtual Internships - EDUSKILLS.</li>
+                <li>Completed and secured ELITE Rank in NPTEL Certification course of Public Speaking.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script>
+        // Automatically trigger print dialog if they want
+        // window.onload = function() { window.print(); }
+    </script>
+</body>
+</html>
