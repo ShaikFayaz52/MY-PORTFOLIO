@@ -238,7 +238,7 @@ if (aiChatToggle) {
 
     function getAIResponse(userText) {
         const text = userText.toLowerCase();
-        
+
         if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
             return "Hello! I am Fayaz's AI portfolio assistant. How can I help you?";
         } else if (text.includes("project") || text.includes("work")) {
@@ -251,7 +251,10 @@ if (aiChatToggle) {
             return "Fayaz is currently pursuing a B.Tech in Computer Science at Srinivasa Ramanujan Institute of Technology (2024 - 2028).";
         } else if (text.includes("about") || text.includes("who")) {
             return "Fayaz is a passionate Computer Science and Engineering student with a strong interest in software development, building innovative apps, and solving real-world challenges.";
-        } else {
+        } else if (text.includes("intership") || text.includes("intership")) {
+            return "I'm a 3rd Year B.Tech CSE student actively seeking internship opportunities where I can contribute, grow, and gain real-world experience. I'm available for both remote and on-site internships.";
+        }
+        else {
             return "That's interesting! If you want to know more about my skills, projects, or education, just ask. Otherwise, feel free to use the contact form to reach out to Fayaz directly!";
         }
     }
@@ -259,10 +262,10 @@ if (aiChatToggle) {
     function handleSend() {
         const text = aiChatInput.value.trim();
         if (text === "") return;
-        
+
         addMessage(text, "user");
         aiChatInput.value = "";
-        
+
         // Simulate AI thinking
         setTimeout(() => {
             const response = getAIResponse(text);
@@ -284,7 +287,7 @@ window.addEventListener("scroll", () => {
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
     const scrollProgress = document.getElementById("scroll-progress");
-    if(scrollProgress) {
+    if (scrollProgress) {
         scrollProgress.style.width = scrolled + "%";
     }
 });
@@ -367,7 +370,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
             section.style.border = "2px dashed rgba(0, 229, 255, 0.5)";
             section.style.borderRadius = "10px";
             section.style.position = "relative";
-            
+
             // Add an 'Edit Mode' badge to each section
             const badge = document.createElement("div");
             badge.textContent = "✎ Edit Mode";
@@ -404,7 +407,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                             fileInput.type = "file";
                             fileInput.accept = "image/*";
                             fileInput.style.display = "none";
-                            
+
                             fileInput.addEventListener("change", (e) => {
                                 const file = e.target.files[0];
                                 if (file) {
@@ -414,13 +417,13 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                                         return;
                                     }
                                     const reader = new FileReader();
-                                    reader.onload = function(event) {
+                                    reader.onload = function (event) {
                                         img.src = event.target.result; // Base64 string
                                     };
                                     reader.readAsDataURL(file);
                                 }
                             });
-                            
+
                             document.body.appendChild(fileInput);
                             fileInput.click();
                             document.body.removeChild(fileInput);
@@ -430,7 +433,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                         }
                     });
                 });
-                
+
                 // FontAwesome Icons
                 const icons = rootNode.querySelectorAll("i.fa-solid, i.fa-brands, i.fa-regular");
                 icons.forEach(icon => {
@@ -450,7 +453,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
             // Add a Remove Button function
             function addRemoveButton(element) {
                 if (element.querySelector(".delete-btn")) return;
-                
+
                 element.style.position = "relative"; // Ensure relative positioning
                 const delBtn = document.createElement("button");
                 delBtn.innerHTML = "<i class='fa-solid fa-trash'></i>";
@@ -466,13 +469,13 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 delBtn.style.cursor = "pointer";
                 delBtn.style.zIndex = "10";
                 delBtn.title = "Remove this item";
-                
+
                 delBtn.addEventListener("click", () => {
                     if (confirm("Are you sure you want to remove this item?")) {
                         element.remove();
                     }
                 });
-                
+
                 element.appendChild(delBtn);
             }
 
@@ -495,18 +498,18 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 addBtn.style.fontWeight = "bold";
                 addBtn.style.cursor = "pointer";
                 addBtn.classList.add("edit-badge"); // Ensure it gets removed before saving
-                
+
                 addBtn.addEventListener("click", () => {
                     // Find the items inside the container
                     const items = container.querySelectorAll('.card, .timeline-item, .project-card');
                     if (items.length > 0) {
                         const lastItem = items[items.length - 1];
                         const clone = lastItem.cloneNode(true);
-                        
+
                         // Clear text contents in the clone
                         const textEls = clone.querySelectorAll("h3, p, span, b, li");
                         textEls.forEach(t => t.textContent = "New Data");
-                        
+
                         // Make the cloned text editable
                         textEls.forEach(el => {
                             el.setAttribute("contenteditable", "true");
@@ -521,7 +524,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                         const oldDel = clone.querySelector(".delete-btn");
                         if (oldDel) oldDel.remove();
                         addRemoveButton(clone);
-                        
+
                         if (container.classList.contains("timeline")) {
                             container.insertBefore(clone, container.firstChild);
                         } else {
@@ -550,7 +553,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
     saveBtn.style.borderRadius = "30px";
     saveBtn.style.cursor = "pointer";
     saveBtn.style.boxShadow = "0 5px 15px rgba(0,255,0,0.3)";
-    
+
     saveBtn.addEventListener("click", () => {
         editableSections.forEach(id => {
             const section = document.getElementById(id);
@@ -558,7 +561,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 // Remove the edit badge and add buttons before saving
                 const badges = section.querySelectorAll(".edit-badge");
                 badges.forEach(b => b.remove());
-                
+
                 // Remove contenteditable attributes so they aren't permanent for normal visitors
                 const editableNodes = section.querySelectorAll("[contenteditable]");
                 editableNodes.forEach(n => {
@@ -566,10 +569,10 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                     n.style.outline = "";
                     n.style.background = "";
                 });
-                
+
                 // Clear inline styles we added for edit mode
                 section.style.border = "";
-                
+
                 localStorage.setItem(`saved_section_${id}`, section.innerHTML);
             }
         });
