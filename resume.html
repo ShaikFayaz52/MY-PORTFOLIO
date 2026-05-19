@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
     <style>
+        :root {
+            --text-color: #374151;
+            --header-color: #111827;
+            --border-color: #e5e7eb;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,144 +22,207 @@
 
         body {
             background-color: #f3f4f6;
-            color: #1f2937;
-            padding: 40px;
+            color: var(--text-color);
+            padding: 20px 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        /* Resume A4 Container */
         .resume-container {
             background-color: white;
-            width: 100%;
-            max-width: 800px;
-            min-height: 1122px; /* A4 height */
-            padding: 50px;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 20mm;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Header Section */
         header {
             text-align: center;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #111827;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         header h1 {
-            font-size: 32px;
-            color: #111827;
+            font-size: 26px;
+            color: var(--header-color);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
+            font-weight: 700;
         }
 
         header h3 {
-            font-size: 18px;
+            font-size: 13px;
             color: #4b5563;
-            font-weight: 500;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .contact-info {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
-            font-size: 14px;
+            font-size: 11px;
             color: #4b5563;
+            margin-bottom: 4px;
         }
 
-        .contact-info span {
+        .personal-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 10.5px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .contact-info span, .personal-meta span {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+        }
+
+        .contact-info a {
+            color: #4b5563;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
         }
 
         /* Section Global */
         section {
-            margin-bottom: 25px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
         }
 
         section h2 {
-            font-size: 20px;
-            color: #111827;
-            border-bottom: 2px solid #000000;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
+            font-size: 13px;
+            color: var(--header-color);
+            border-bottom: 1.5px solid #111827;
+            padding-bottom: 3px;
+            margin-bottom: 8px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
 
-        /* Profile Summary */
-        .summary p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #374151;
+        /* Career Objective */
+        .objective p {
+            font-size: 11px;
+            line-height: 1.4;
+            color: var(--text-color);
             text-align: justify;
         }
 
         /* Education & Projects */
         .item-container {
-            margin-bottom: 15px;
+            margin-bottom: 6px;
         }
 
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 5px;
+            margin-bottom: 1px;
         }
 
         .item-title {
             font-weight: 700;
-            font-size: 16px;
-            color: #111827;
+            font-size: 12px;
+            color: var(--header-color);
         }
 
         .item-subtitle {
             font-weight: 500;
-            font-size: 14px;
+            font-size: 11px;
             color: #4b5563;
             font-style: italic;
         }
 
         .item-date {
-            font-size: 13px;
-            color: #6b7280;
+            font-size: 11px;
+            color: #4b5563;
             font-weight: 500;
         }
 
         .item-details {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #374151;
-            margin-left: 15px;
+            font-size: 11px;
+            line-height: 1.4;
+            color: var(--text-color);
+            margin-top: 1px;
         }
 
         /* Skills */
         .skills-list {
             list-style-type: none;
+            padding: 0;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .skills-list li {
-            background-color: #f3f4f6;
-            padding: 5px 12px;
-            border-radius: 5px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #374151;
-            border: 1px solid #e5e7eb;
+            font-size: 11px;
+            line-height: 1.4;
+            color: var(--text-color);
         }
 
-        /* Certificates */
-        .cert-list {
+        .skills-list li strong {
+            color: var(--header-color);
+            font-weight: 600;
+        }
+
+        /* Bullet lists for Certifications & Achievements */
+        .bullet-list {
             list-style-type: disc;
-            margin-left: 20px;
-            font-size: 14px;
-            color: #374151;
-            line-height: 1.6;
+            margin-left: 18px;
+            font-size: 11px;
+            color: var(--text-color);
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        /* Links list styling */
+        .links-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+        }
+
+        .links-list li {
+            font-size: 11px;
+            color: var(--text-color);
+        }
+
+        .links-list li strong {
+            color: var(--header-color);
+            font-weight: 600;
+        }
+
+        .links-list a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .links-list a:hover {
+            text-decoration: underline;
         }
 
         /* Print Specific Styles */
@@ -161,13 +230,18 @@
             body {
                 background-color: white;
                 padding: 0;
+                margin: 0;
                 display: block;
+                width: 210mm;
             }
             .resume-container {
                 box-shadow: none;
-                width: 100%;
-                max-width: 100%;
-                padding: 0;
+                width: 210mm;
+                min-height: 297mm;
+                padding: 15mm 20mm;
+                margin: 0;
+                border: none;
+                box-sizing: border-box;
             }
             .no-print {
                 display: none !important;
@@ -178,23 +252,76 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #00e5ff;
-            color: black;
+            background: #111827;
+            color: white;
             border: none;
             padding: 10px 20px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        
+        .download-btn:hover {
+            background: #374151;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Admin CMS CSS */
+        .admin-controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .admin-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 14px;
             border-radius: 5px;
             cursor: pointer;
             box-shadow: 0 5px 10px rgba(0,0,0,0.2);
             transition: 0.3s;
         }
-        
-        .download-btn:hover {
+
+        .admin-btn:hover {
+            background: #059669;
             transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
         }
 
+        .admin-btn.logout {
+            background: #ef4444;
+        }
+
+        .admin-btn.logout:hover {
+            background: #dc2626;
+        }
+
+        .admin-btn.back {
+            background: #3b82f6;
+        }
+
+        .admin-btn.back:hover {
+            background: #2563eb;
+        }
+
+        .delete-btn {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .delete-btn:hover {
+            background: #ef4444 !important;
+            color: white !important;
+        }
     </style>
 </head>
 <body>
@@ -206,118 +333,788 @@
     <div class="resume-container">
         <!-- Header -->
         <header>
-            <h1>Shaik Fayaz</h1>
-            <h3>Passionate CSE Student | Aspiring Full-Stack Developer</h3>
-            <div class="contact-info">
+            <h1 id="resume-name">Shaik Fayaz</h1>
+            <h3 id="resume-title">3rd Year CSE Student | Aspiring Full-Stack Developer</h3>
+            <div class="contact-info" id="resume-contact">
                 <span><i class="fa-solid fa-phone"></i> +91 6305138534</span>
-                <span><i class="fa-solid fa-envelope"></i> your.email@example.com</span>
-                <span><i class="fa-brands fa-linkedin"></i> linkedin.com/in/shaik-fayaz-987b05333</span>
+                <span><i class="fa-solid fa-envelope"></i> shaikfayu52@example.com</span>
                 <span><i class="fa-solid fa-location-dot"></i> Anantapuramu, India</span>
+            </div>
+            <div class="personal-meta" id="resume-personal-meta">
+                <span><i class="fa-solid fa-language"></i> English, Telugu, Hindi</span>
+                <span>|</span>
+                <span><i class="fa-solid fa-globe"></i> Indian (Nationality)</span>
             </div>
         </header>
 
-        <!-- Profile Summary -->
-        <section class="summary">
-            <h2>Profile Summary</h2>
-            <p>
-                A passionate Computer Science and Engineering student with a strong interest in software development and emerging technologies. Highly motivated to learn, innovate, and create impactful technology. Proven ability to build functional applications and websites, solve real-world challenges, and continuously adapt to new technologies.
+        <!-- Career Objective -->
+        <section class="objective">
+            <h2>Career Objective</h2>
+            <p id="resume-objective">
+                A passionate Computer Science and Engineering student with a strong interest in software development and emerging technologies. Highly motivated to learn, innovate, and create impactful technology. Actively seeking internship opportunities (remote or on-site) in Web Development, App Development, UI/UX Design, and Data & Backend to contribute, grow, and gain real-world experience.
             </p>
         </section>
 
         <!-- Education -->
-        <section class="education">
+        <section>
             <h2>Education</h2>
-            <div class="item-container">
-                <div class="item-header">
-                    <span class="item-title">B.Tech in Computer Science</span>
-                    <span class="item-date">2024 - 2028</span>
+            <div id="resume-education">
+                <div class="item-container">
+                    <div class="item-header">
+                        <span class="item-title">B.Tech in Computer Science</span>
+                        <span class="item-date">2024 - 2028</span>
+                    </div>
+                    <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</div>
                 </div>
-                <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</div>
-            </div>
 
-            <div class="item-container">
-                <div class="item-header">
-                    <span class="item-title">Intermediate (M.P.C Stream)</span>
-                    <span class="item-date">2022 - 2024</span>
+                <div class="item-container">
+                    <div class="item-header">
+                        <span class="item-title">Intermediate (M.P.C Stream)</span>
+                        <span class="item-date">2022 - 2024</span>
+                    </div>
+                    <div class="item-subtitle">Sri Chaitanya Junior College - Anantapuramu</div>
                 </div>
-                <div class="item-subtitle">Sri Chaitanya Junior College - Anantapuramu</div>
-            </div>
 
-            <div class="item-container">
-                <div class="item-header">
-                    <span class="item-title">Secondary School Certificate (SSC)</span>
-                    <span class="item-date">2022</span>
+                <div class="item-container">
+                    <div class="item-header">
+                        <span class="item-title">Secondary School Certificate (SSC)</span>
+                        <span class="item-date">2022</span>
+                    </div>
+                    <div class="item-subtitle">V.V.Model E.M High School - Anantapuramu</div>
                 </div>
-                <div class="item-subtitle">V.V.Model E.M High School - Anantapuramu</div>
             </div>
         </section>
 
-        <!-- Skills -->
-        <section class="skills">
+        <!-- Technical Skills -->
+        <section>
             <h2>Technical Skills</h2>
-            <ul class="skills-list">
-                <li>Java</li>
-                <li>Python</li>
-                <li>C</li>
-                <li>HTML5</li>
-                <li>CSS3</li>
-                <li>JavaScript</li>
-                <li>Firebase</li>
-                <li>Android Development</li>
-                <li>MySQL</li>
-                <li>UI/UX Design</li>
-            </ul>
+            <div id="resume-skills">
+                <ul class="skills-list">
+                    <li><strong>Programming Languages:</strong> Java, Python, C</li>
+                    <li><strong>Web Technologies:</strong> HTML5, CSS3, JavaScript</li>
+                    <li><strong>App Development:</strong> Android Development, Firebase Integration</li>
+                    <li><strong>Database:</strong> MySQL, Firebase</li>
+                    <li><strong>Tools & Platforms:</strong> VS Code, Android Studio, GitHub</li>
+                    <li><strong>Core Skills:</strong> UI/UX Design, Problem Solving, Debugging</li>
+                    <li><strong>Soft Skills:</strong> Team Collaboration, Creative Thinking, Continuous Learning, Communication Skills</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Projects -->
-        <section class="projects">
+        <section>
             <h2>Projects</h2>
-            
-            <div class="item-container">
-                <div class="item-header">
-                    <span class="item-title">Shop Ease Website</span>
+            <div id="resume-projects">
+                <div class="item-container">
+                    <div class="item-header">
+                        <span class="item-title">Shop Ease Website</span>
+                    </div>
+                    <p class="item-details">
+                        Modern e-commerce website designed to provide a smooth and user-friendly online shopping experience. Features include product management, cart functionality, order tracking, and comprehensive admin features for customers and sellers.
+                    </p>
                 </div>
-                <p class="item-details">
-                    Modern e-commerce website designed to provide a smooth and user-friendly online shopping experience. Features include product management, cart functionality, order tracking, and comprehensive admin features for customers and sellers.
-                </p>
-            </div>
 
-            <div class="item-container">
-                <div class="item-header">
-                    <span class="item-title">KindMeals App</span>
+                <div class="item-container">
+                    <div class="item-header">
+                        <span class="item-title">KindMeals App</span>
+                    </div>
+                    <p class="item-details">
+                        A food donation platform connecting food donors with needy people through location-based services. Includes an SOS emergency application feature for rapid response.
+                    </p>
                 </div>
-                <p class="item-details">
-                    A food donation platform connecting food donors with needy people through location-based services. Includes an SOS emergency application feature for rapid response.
-                </p>
-            </div>
 
-            <div class="item-container">
-                <div class="item-header">
-                    <span class="item-title">Carbon Footprint Calculator</span>
+                <div class="item-container">
+                    <div class="item-header">
+                        <span class="item-title">Carbon Footprint Calculator</span>
+                    </div>
+                    <p class="item-details">
+                        An application to calculate and track personal or organizational environmental impact, featuring user-friendly analytics and interactive dashboards.
+                    </p>
                 </div>
-                <p class="item-details">
-                    An application to calculate and track personal or organizational environmental impact, featuring user-friendly analytics and interactive dashboards.
-                </p>
             </div>
         </section>
 
-        <!-- Certificates & Achievements -->
-        <section class="certificates">
-            <h2>Certificates & Achievements</h2>
-            <ul class="cert-list">
-                <li>Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA).</li>
-                <li>Python Programming Certification - Infosys Springboard.</li>
-                <li>Database Management Systems (DBMS) Certification - Infosys Springboard.</li>
-                <li>Data Engineering & Networking Cloud Virtual Internships - EDUSKILLS.</li>
-                <li>Completed and secured ELITE Rank in NPTEL Certification course of Public Speaking.</li>
-            </ul>
+        <!-- Certifications -->
+        <section>
+            <h2>Certifications</h2>
+            <div id="resume-certifications">
+                <ul class="bullet-list">
+                    <li>Python Programming Certification - Infosys Springboard</li>
+                    <li>Database Management Systems (DBMS) Certification - Infosys Springboard</li>
+                    <li>Data Engineering Virtual Internship Certification - EDUSKILLS</li>
+                    <li>Networking Cloud Virtual Internship Certification - EDUSKILLS</li>
+                </ul>
+            </div>
         </section>
 
+        <!-- Achievements -->
+        <section>
+            <h2>Achievements</h2>
+            <div id="resume-achievements">
+                <ul class="bullet-list">
+                    <li>Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA)</li>
+                    <li>Participated and secured 3rd prize in Hackathon event at NEXTGEN 2K25 (SRIT)</li>
+                    <li>MERN Development Workshop Certification - APSSDC</li>
+                    <li>Completed and secured ELITE Rank in NPTEL Certification course of Public Speaking</li>
+                    <li>NSPC 2025 Participation Certificate – National Students Paryavaran Competition</li>
+                    <li>Viksit Bharat Young Leaders Dialogue (VBYLD) 2026 Quiz Participation Certificate – Ministry of Youth Affairs and Sports</li>
+                    <li>NSS Volunteer & Community Service - Dedicated NSS Volunteer committed to community service and social impact</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Links -->
+        <section>
+            <h2>Links</h2>
+            <div id="resume-links">
+                <ul class="links-list">
+                    <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/shaik-fayaz-987b05333" target="_blank">linkedin.com/in/shaik-fayaz-987b05333</a></li>
+                    <li><strong>WhatsApp Chat:</strong> <a href="https://wa.me/+916305138534" target="_blank">wa.me/+916305138534</a></li>
+                    <li><strong>Instagram:</strong> <a href="https://www.instagram.com/_shaikfayaz.x_" target="_blank">instagram.com/_shaikfayaz.x_</a></li>
+                    <li><strong>Portfolio Website:</strong> <a href="home.html" target="_blank">View Live Portfolio</a></li>
+                </ul>
+            </div>
+        </section>
     </div>
 
     <script>
-        // Automatically trigger print dialog if they want
-        // window.onload = function() { window.print(); }
+        document.addEventListener("DOMContentLoaded", () => {
+            syncResumeData();
+        });
+
+        async function syncResumeData() {
+            // Check and load resume direct overrides first
+            let hasOverrides = {
+                name: loadOverride('name', 'resume-name'),
+                title: loadOverride('title', 'resume-title'),
+                contact: loadOverride('contact', 'resume-contact'),
+                personalMeta: loadOverride('personal_meta', 'resume-personal-meta'),
+                objective: loadOverride('objective', 'resume-objective'),
+                education: loadOverride('education', 'resume-education'),
+                skills: loadOverride('skills', 'resume-skills'),
+                projects: loadOverride('projects', 'resume-projects'),
+                certifications: loadOverride('certifications', 'resume-certifications'),
+                achievements: loadOverride('achievements', 'resume-achievements'),
+                links: loadOverride('links', 'resume-links')
+            };
+
+            function loadOverride(key, elementId) {
+                const saved = localStorage.getItem(`resume_saved_${key}`);
+                if (saved) {
+                    document.getElementById(elementId).innerHTML = saved;
+                    return true;
+                }
+                return false;
+            }
+
+            try {
+                // Fetch home.html only if we need fallback data for at least one section
+                const needsFetch = Object.values(hasOverrides).some(val => !val);
+                
+                let homeDoc = null;
+                function getSection(id) {
+                    const savedHtml = localStorage.getItem(`saved_section_${id}`);
+                    if (savedHtml) {
+                        const div = document.createElement('div');
+                        div.innerHTML = savedHtml;
+                        return div;
+                    }
+                    return homeDoc ? homeDoc.getElementById(id) : null;
+                }
+
+                if (needsFetch) {
+                    const response = await fetch('home.html');
+                    if (response.ok) {
+                        const htmlText = await response.text();
+                        const parser = new DOMParser();
+                        homeDoc = parser.parseFromString(htmlText, 'text/html');
+                    }
+                }
+
+                // 1. Header (Name, Title, Contact Info)
+                if (!hasOverrides.name) {
+                    const homeSec = getSection('home');
+                    if (homeSec) {
+                        const nameEl = homeSec.querySelector('h1 span');
+                        if (nameEl && nameEl.textContent.trim()) {
+                            document.getElementById('resume-name').textContent = nameEl.textContent.trim();
+                        }
+                    }
+                }
+
+                if (!hasOverrides.title) {
+                    const homeSec = getSection('home');
+                    if (homeSec) {
+                        const titleEl = homeSec.querySelector('h3 b') || homeSec.querySelector('h3');
+                        if (titleEl && titleEl.textContent.trim()) {
+                            document.getElementById('resume-title').textContent = titleEl.textContent.trim();
+                        }
+                    }
+                }
+
+                if (!hasOverrides.contact || !hasOverrides.personalMeta) {
+                    const aboutSec = getSection('about');
+                    if (aboutSec) {
+                        // Get languages and nationality for personalMeta
+                        if (!hasOverrides.personalMeta) {
+                            const cards = aboutSec.querySelectorAll('.card');
+                            let nationality = '', languages = '';
+                            cards.forEach(card => {
+                                const icon = card.querySelector('i');
+                                const pText = card.querySelector('p')?.textContent.trim() || '';
+                                if (icon) {
+                                    if (icon.classList.contains('fa-globe')) nationality = pText;
+                                    else if (icon.classList.contains('fa-language')) languages = pText;
+                                }
+                            });
+                            if (languages || nationality) {
+                                document.getElementById('resume-personal-meta').innerHTML = `
+                                    ${languages ? `<span><i class="fa-solid fa-language"></i> ${languages}</span>` : ''}
+                                    ${languages && nationality ? `<span>|</span>` : ''}
+                                    ${nationality ? `<span><i class="fa-solid fa-globe"></i> ${nationality} (Nationality)</span>` : ''}
+                                `;
+                            }
+                        }
+
+                        if (!hasOverrides.contact) {
+                            const cards = aboutSec.querySelectorAll('.card');
+                            let phone = '', email = '', location = '';
+                            cards.forEach(card => {
+                                const icon = card.querySelector('i');
+                                const pText = card.querySelector('p')?.textContent.trim() || '';
+                                if (icon) {
+                                    if (icon.classList.contains('fa-phone')) phone = pText;
+                                    else if (icon.classList.contains('fa-envelope')) email = pText;
+                                    else if (icon.classList.contains('fa-location-dot')) location = pText;
+                                }
+                            });
+
+                            const contactContainer = document.getElementById('resume-contact');
+                            const contactItems = [];
+                            if (phone) contactItems.push(`<span><i class="fa-solid fa-phone"></i> ${phone}</span>`);
+                            if (email) contactItems.push(`<span><i class="fa-solid fa-envelope"></i> ${email}</span>`);
+                            if (location) contactItems.push(`<span><i class="fa-solid fa-location-dot"></i> ${location}</span>`);
+                            
+                            contactContainer.innerHTML = contactItems.join(' | ');
+                        }
+                    }
+                }
+
+                // 2. Career Objective (Combines Profile Summary and Internship Preferences Intro)
+                if (!hasOverrides.objective) {
+                    const aboutSec = getSection('about');
+                    const internshipSec = getSection('internship');
+                    let summary = '';
+                    let internshipIntro = '';
+
+                    if (aboutSec) {
+                        const summaryPara = aboutSec.querySelector('p');
+                        if (summaryPara) {
+                            summary = summaryPara.textContent.trim().replace(/\s+/g, ' ');
+                        }
+                    }
+                    if (internshipSec) {
+                        const introPara = internshipSec.querySelector('.internship-intro');
+                        if (introPara) {
+                            internshipIntro = introPara.textContent.trim().replace(/\s+/g, ' ');
+                        }
+                    }
+
+                    if (summary || internshipIntro) {
+                        document.getElementById('resume-objective').textContent = `${summary} ${internshipIntro}`.trim().replace(/\s+/g, ' ');
+                    }
+                }
+
+                // 3. Education
+                if (!hasOverrides.education) {
+                    const eduSec = getSection('education');
+                    if (eduSec) {
+                        const items = eduSec.querySelectorAll('.timeline-content');
+                        const eduContainer = document.getElementById('resume-education');
+                        if (items.length > 0) {
+                            eduContainer.innerHTML = '';
+                            items.forEach(item => {
+                                const degree = item.querySelector('h3')?.textContent.trim() || '';
+                                const school = item.querySelector('p')?.textContent.trim() || '';
+                                const date = item.querySelector('.timeline-date')?.textContent.trim() || '';
+                                
+                                const eduItem = document.createElement('div');
+                                eduItem.className = 'item-container';
+                                eduItem.innerHTML = `
+                                    <div class="item-header">
+                                        <span class="item-title">${degree}</span>
+                                        <span class="item-date">${date}</span>
+                                    </div>
+                                    <div class="item-subtitle">${school}</div>
+                                `;
+                                eduContainer.appendChild(eduItem);
+                            });
+                        }
+                    }
+                }
+
+                // 4. Technical Skills
+                if (!hasOverrides.skills) {
+                    const techSkillsSec = getSection('technical-skills');
+                    const regularSkillsSec = getSection('skills');
+                    const skillsContainer = document.getElementById('resume-skills');
+                    
+                    let techCards = techSkillsSec ? techSkillsSec.querySelectorAll('.card') : [];
+                    let softSkillsText = '';
+                    if (regularSkillsSec) {
+                        const cards = regularSkillsSec.querySelectorAll('.card');
+                        const softs = Array.from(cards).map(c => c.textContent.trim()).filter(t => !["Programming & Problem Solving", "Web Development", "App Development", "Firebase Integration", "UI/UX Design", "Database Management"].includes(t));
+                        softSkillsText = softs.join(', ');
+                    }
+
+                    if (techCards.length > 0) {
+                        skillsContainer.innerHTML = '';
+                        const list = document.createElement('ul');
+                        list.className = 'skills-list';
+                        
+                        techCards.forEach(card => {
+                            const bTag = card.querySelector('b');
+                            if (bTag) {
+                                const category = bTag.textContent.trim();
+                                let skillsText = '';
+                                let foundB = false;
+                                card.childNodes.forEach(node => {
+                                    if (node === bTag) foundB = true;
+                                    else if (foundB && node.nodeType === Node.TEXT_NODE) {
+                                        skillsText += node.textContent;
+                                    }
+                                });
+                                skillsText = skillsText.replace(/^\s*,\s*|\s*,\s*$/g, '').trim().replace(/\s+/g, ' ');
+                                if (category && skillsText) {
+                                    const li = document.createElement('li');
+                                    li.innerHTML = `<strong>${category}:</strong> ${skillsText}`;
+                                    list.appendChild(li);
+                                }
+                            }
+                        });
+                        if (softSkillsText) {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<strong>Soft Skills:</strong> ${softSkillsText}`;
+                            list.appendChild(li);
+                        }
+                        skillsContainer.appendChild(list);
+                    }
+                }
+
+                // 5. Projects
+                if (!hasOverrides.projects) {
+                    const projectsSec = getSection('projects');
+                    if (projectsSec) {
+                        const cards = projectsSec.querySelectorAll('.project-card');
+                        const projectsContainer = document.getElementById('resume-projects');
+                        if (cards.length > 0) {
+                            projectsContainer.innerHTML = '';
+                            cards.forEach(card => {
+                                const title = card.querySelector('h3')?.textContent.trim() || '';
+                                let desc = card.querySelector('p')?.textContent.trim() || '';
+                                desc = desc.replace(/^\s*<br\s*\/?>/gi, '').replace(/\s+/g, ' ').trim();
+
+                                const projectItem = document.createElement('div');
+                                projectItem.className = 'item-container';
+                                projectItem.innerHTML = `
+                                    <div class="item-header">
+                                        <span class="item-title">${title}</span>
+                                    </div>
+                                    <p class="item-details">${desc}</p>
+                                `;
+                                projectsContainer.appendChild(projectItem);
+                            });
+                        }
+                    }
+                }
+
+                // 6. Certifications
+                if (!hasOverrides.certifications) {
+                    const certSec = getSection('certificates');
+                    if (certSec) {
+                        const cards = certSec.querySelectorAll('.card');
+                        const certContainer = document.getElementById('resume-certifications');
+                        if (cards.length > 0) {
+                            certContainer.innerHTML = '';
+                            const ul = document.createElement('ul');
+                            ul.className = 'bullet-list';
+                            
+                            cards.forEach(card => {
+                                const bTag = card.querySelector('b');
+                                let title = bTag ? bTag.textContent.trim() : '';
+                                let details = '';
+                                if (bTag) {
+                                    let foundB = false;
+                                    card.childNodes.forEach(node => {
+                                        if (node === bTag) foundB = true;
+                                        else if (foundB && node.nodeType === Node.TEXT_NODE) {
+                                            details += node.textContent;
+                                        }
+                                    });
+                                    details = details.trim();
+                                } else {
+                                    title = card.textContent.trim();
+                                }
+                                
+                                const li = document.createElement('li');
+                                li.textContent = details ? `${title} - ${details}` : title;
+                                ul.appendChild(li);
+                            });
+                            certContainer.appendChild(ul);
+                        }
+                    }
+                }
+
+                // 7. Achievements
+                if (!hasOverrides.achievements) {
+                    const achSec = getSection('achievements');
+                    const servicesSec = getSection('services');
+                    const achContainer = document.getElementById('resume-achievements');
+                    
+                    let achList = [];
+                    if (achSec) {
+                        const cards = achSec.querySelectorAll('.card');
+                        cards.forEach(card => {
+                            const text = card.textContent.trim().replace(/\s+/g, ' ');
+                            if (text) achList.push(text);
+                        });
+                    }
+
+                    // Append NSS Volunteer service to Achievements if present
+                    if (servicesSec) {
+                        const cards = servicesSec.querySelectorAll('.project-card');
+                        cards.forEach(card => {
+                            const title = card.querySelector('h3')?.textContent.trim() || '';
+                            const desc = card.querySelector('p')?.textContent.trim() || '';
+                            if (title.toLowerCase().includes("nss") || title.toLowerCase().includes("volunteer")) {
+                                achList.push(`${title} - ${desc}`);
+                            }
+                        });
+                    }
+
+                    if (achList.length > 0) {
+                        achContainer.innerHTML = '';
+                        const ul = document.createElement('ul');
+                        ul.className = 'bullet-list';
+                        achList.forEach(text => {
+                            const li = document.createElement('li');
+                            li.textContent = text;
+                            ul.appendChild(li);
+                        });
+                        achContainer.appendChild(ul);
+                    }
+                }
+
+                // 8. Links
+                if (!hasOverrides.links) {
+                    const linksContainer = document.getElementById('resume-links');
+                    let linkedinHref = 'https://linkedin.com/in/shaik-fayaz-987b05333';
+                    let instaHref = 'https://www.instagram.com/_shaikfayaz.x_';
+                    let waHref = 'https://wa.me/+916305138534';
+
+                    if (homeDoc) {
+                        const lLink = homeDoc.querySelector('a[href*="linkedin.com"]');
+                        const iLink = homeDoc.querySelector('a[href*="instagram.com"]');
+                        const wLink = homeDoc.querySelector('a[href*="wa.me"]');
+
+                        if (lLink) linkedinHref = lLink.getAttribute('href');
+                        if (iLink) instaHref = iLink.getAttribute('href');
+                        if (wLink) waHref = wLink.getAttribute('href');
+                    }
+
+                    const cleanLinkedin = linkedinHref.replace(/https?:\/\/(www\.)?/, '').split('?')[0];
+                    const cleanInsta = instaHref.replace(/https?:\/\/(www\.)?/, '').split('?')[0];
+                    const cleanWa = waHref.replace(/https?:\/\/(www\.)?/, '').replace(/\s+/g, '');
+
+                    linksContainer.innerHTML = `
+                        <ul class="links-list">
+                            <li><strong>LinkedIn:</strong> <a href="${linkedinHref}" target="_blank">${cleanLinkedin}</a></li>
+                            <li><strong>WhatsApp Chat:</strong> <a href="${waHref}" target="_blank">${cleanWa}</a></li>
+                            <li><strong>Instagram:</strong> <a href="${instaHref}" target="_blank">${cleanInsta}</a></li>
+                            <li><strong>Portfolio Website:</strong> <a href="home.html" target="_blank">View Live Portfolio</a></li>
+                        </ul>
+                    `;
+                }
+
+            } catch (e) {
+                console.warn('Sync failed, using pre-populated static template. Error:', e);
+            }
+
+            // Setup edit mode if admin is logged in
+            if (localStorage.getItem("portfolio_admin") === "true") {
+                setupAdminEditMode();
+            }
+        }
+
+        function setupAdminEditMode() {
+            // 1. Add Admin Control Panel
+            const adminControls = document.createElement("div");
+            adminControls.className = "admin-controls no-print";
+            
+            // Save Button
+            const saveBtn = document.createElement("button");
+            saveBtn.className = "admin-btn";
+            saveBtn.innerHTML = "<i class='fa-solid fa-floppy-disk'></i> Save Edits";
+            
+            // Back to Portfolio Button
+            const backBtn = document.createElement("button");
+            backBtn.className = "admin-btn back";
+            backBtn.innerHTML = "<i class='fa-solid fa-arrow-left'></i> Portfolio";
+            backBtn.onclick = () => window.location.href = "home.html";
+
+            // Logout Button
+            const logoutBtn = document.createElement("button");
+            logoutBtn.className = "admin-btn logout";
+            logoutBtn.innerHTML = "<i class='fa-solid fa-right-from-bracket'></i> Logout";
+            logoutBtn.onclick = () => {
+                localStorage.removeItem("portfolio_admin");
+                window.location.reload();
+            };
+
+            adminControls.appendChild(backBtn);
+            adminControls.appendChild(saveBtn);
+            adminControls.appendChild(logoutBtn);
+            document.body.appendChild(adminControls);
+
+            // 2. Make Elements Editable
+            const editableContainers = [
+                document.getElementById('resume-name'),
+                document.getElementById('resume-title'),
+                document.getElementById('resume-contact'),
+                document.getElementById('resume-personal-meta'),
+                document.getElementById('resume-objective'),
+                document.getElementById('resume-education'),
+                document.getElementById('resume-skills'),
+                document.getElementById('resume-projects'),
+                document.getElementById('resume-certifications'),
+                document.getElementById('resume-achievements'),
+                document.getElementById('resume-links')
+            ];
+
+            editableContainers.forEach(container => {
+                if (container) {
+                    container.style.border = "1px dashed rgba(37, 99, 235, 0.4)";
+                    container.style.padding = "4px";
+                    container.style.borderRadius = "4px";
+                    container.style.position = "relative";
+                }
+            });
+
+            // Make individual text components editable
+            const makeEditable = (selector) => {
+                document.querySelectorAll(selector).forEach(el => {
+                    el.setAttribute("contenteditable", "true");
+                    el.style.outline = "none";
+                    el.addEventListener("focus", () => el.style.background = "rgba(37, 99, 235, 0.05)");
+                    el.addEventListener("blur", () => el.style.background = "transparent");
+                });
+            };
+
+            makeEditable("#resume-name");
+            makeEditable("#resume-title");
+            makeEditable("#resume-objective");
+            makeEditable("#resume-contact span");
+            makeEditable("#resume-personal-meta span");
+            makeEditable(".item-title");
+            makeEditable(".item-subtitle");
+            makeEditable(".item-date");
+            makeEditable(".item-details");
+            makeEditable(".skills-list li");
+            makeEditable(".bullet-list li");
+            makeEditable(".links-list li");
+
+            // 3. Helper to add delete button to a node
+            function addDeleteButton(item) {
+                if (item.querySelector('.delete-btn')) return;
+                
+                item.style.position = "relative";
+                const delBtn = document.createElement("button");
+                delBtn.innerHTML = "<i class='fa-solid fa-trash'></i>";
+                delBtn.className = "delete-btn no-print";
+                
+                // Style delete button inside container
+                delBtn.style.position = "absolute";
+                delBtn.style.top = "0px";
+                delBtn.style.right = "0px";
+                delBtn.style.background = "rgba(255, 255, 255, 0.9)";
+                delBtn.style.border = "1px solid #ef4444";
+                delBtn.style.borderRadius = "3px";
+                delBtn.style.color = "#ef4444";
+                delBtn.style.cursor = "pointer";
+                delBtn.style.fontSize = "10px";
+                delBtn.style.padding = "1px 4px";
+                delBtn.style.zIndex = "100";
+                delBtn.title = "Delete item";
+                
+                delBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    if (confirm("Delete this item?")) {
+                        item.remove();
+                    }
+                });
+                
+                item.appendChild(delBtn);
+            }
+
+            // Apply delete buttons
+            const applyDeleteHandlers = () => {
+                document.querySelectorAll('#resume-education .item-container').forEach(addDeleteButton);
+                document.querySelectorAll('#resume-projects .item-container').forEach(addDeleteButton);
+                document.querySelectorAll('.skills-list li').forEach(addDeleteButton);
+                document.querySelectorAll('.bullet-list li').forEach(addDeleteButton);
+                document.querySelectorAll('.links-list li').forEach(addDeleteButton);
+            };
+            applyDeleteHandlers();
+
+            // 4. Helper to add "+ Add New" button
+            function addAddButton(containerId, cloneSelector, defaultHTML, parentNode = null) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const addBtn = document.createElement("button");
+                addBtn.innerHTML = "<i class='fa-solid fa-plus'></i> Add New";
+                addBtn.className = "add-btn no-print";
+                
+                // Style Add Button
+                addBtn.style.display = "inline-block";
+                addBtn.style.margin = "5px 0";
+                addBtn.style.background = "#3b82f6";
+                addBtn.style.color = "white";
+                addBtn.style.border = "none";
+                addBtn.style.padding = "3px 8px";
+                addBtn.style.fontSize = "10px";
+                addBtn.style.borderRadius = "3px";
+                addBtn.style.cursor = "pointer";
+                addBtn.style.fontWeight = "bold";
+
+                addBtn.addEventListener("click", () => {
+                    const items = container.querySelectorAll(cloneSelector);
+                    let newItem;
+                    if (items.length > 0) {
+                        newItem = items[items.length - 1].cloneNode(true);
+                        // Remove any cloned delete button
+                        const oldDel = newItem.querySelector('.delete-btn');
+                        if (oldDel) oldDel.remove();
+                        
+                        // Clear text contents in editable areas
+                        newItem.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                            el.textContent = "New Item";
+                        });
+                        if (newItem.tagName === 'LI') {
+                            const strong = newItem.querySelector('strong');
+                            if (strong) {
+                                strong.textContent = "New Category: ";
+                            } else {
+                                newItem.textContent = "New Item";
+                            }
+                        }
+                    } else {
+                        // Create from scratch
+                        if (container.querySelector('ul')) {
+                            newItem = document.createElement('li');
+                            newItem.innerHTML = defaultHTML;
+                        } else {
+                            newItem = document.createElement('div');
+                            newItem.className = 'item-container';
+                            newItem.innerHTML = defaultHTML;
+                        }
+                    }
+
+                    // Append to list or container
+                    if (parentNode) {
+                        container.querySelector(parentNode).appendChild(newItem);
+                    } else {
+                        container.appendChild(newItem);
+                    }
+
+                    // Re-apply editable attributes & delete buttons to the new node
+                    const textEls = newItem.querySelectorAll('h3, p, span, li, strong') || [];
+                    if (newItem.tagName === 'LI') {
+                        newItem.setAttribute("contenteditable", "true");
+                        newItem.style.outline = "none";
+                        newItem.addEventListener("focus", () => newItem.style.background = "rgba(37, 99, 235, 0.05)");
+                        newItem.addEventListener("blur", () => newItem.style.background = "transparent");
+                    }
+                    textEls.forEach(el => {
+                        el.setAttribute("contenteditable", "true");
+                        el.style.outline = "none";
+                        el.addEventListener("focus", () => el.style.background = "rgba(37, 99, 235, 0.05)");
+                        el.addEventListener("blur", () => el.style.background = "transparent");
+                    });
+
+                    addDeleteButton(newItem);
+                });
+
+                // Insert the button right after the container section
+                const section = container.closest('section');
+                if (section) {
+                    section.appendChild(addBtn);
+                } else {
+                    container.after(addBtn);
+                }
+            }
+
+            // Apply Add Buttons
+            addAddButton('resume-education', '.item-container', `
+                <div class="item-header">
+                    <span class="item-title" contenteditable="true">Degree / Program</span>
+                    <span class="item-date" contenteditable="true">2026 - 2028</span>
+                </div>
+                <div class="item-subtitle" contenteditable="true">University / School Name</div>
+            `);
+
+            addAddButton('resume-skills', 'li', `<strong>New Category:</strong> Skills list here`, 'ul');
+
+            addAddButton('resume-projects', '.item-container', `
+                <div class="item-header">
+                    <span class="item-title" contenteditable="true">Project Title</span>
+                </div>
+                <p class="item-details" contenteditable="true">Project description details here...</p>
+            `);
+
+            addAddButton('resume-certifications', 'li', `New Certification Name`, 'ul');
+            addAddButton('resume-achievements', 'li', `New Achievement Detail`, 'ul');
+            addAddButton('resume-links', 'li', `<strong>Label:</strong> <a href="#">Link Url</a>`, 'ul');
+
+            // 5. Saving Logic
+            saveBtn.addEventListener("click", () => {
+                // Remove add/delete buttons before saving html
+                document.querySelectorAll('.add-btn').forEach(btn => btn.remove());
+                document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+
+                // Reset container borders and paddings
+                editableContainers.forEach(container => {
+                    if (container) {
+                        container.style.border = "";
+                        container.style.padding = "";
+                        container.style.borderRadius = "";
+                    }
+                });
+
+                // Remove contenteditable attributes
+                document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                    el.removeAttribute("contenteditable");
+                    el.style.background = "";
+                    el.style.outline = "";
+                });
+
+                // Save to localStorage
+                localStorage.setItem("resume_saved_name", document.getElementById("resume-name").innerHTML.trim());
+                localStorage.setItem("resume_saved_title", document.getElementById("resume-title").innerHTML.trim());
+                localStorage.setItem("resume_saved_contact", document.getElementById("resume-contact").innerHTML.trim());
+                localStorage.setItem("resume_saved_personal_meta", document.getElementById("resume-personal-meta").innerHTML.trim());
+                localStorage.setItem("resume_saved_objective", document.getElementById("resume-objective").innerHTML.trim());
+                localStorage.setItem("resume_saved_education", document.getElementById("resume-education").innerHTML.trim());
+                localStorage.setItem("resume_saved_skills", document.getElementById("resume-skills").innerHTML.trim());
+                localStorage.setItem("resume_saved_projects", document.getElementById("resume-projects").innerHTML.trim());
+                localStorage.setItem("resume_saved_certifications", document.getElementById("resume-certifications").innerHTML.trim());
+                localStorage.setItem("resume_saved_achievements", document.getElementById("resume-achievements").innerHTML.trim());
+                localStorage.setItem("resume_saved_links", document.getElementById("resume-links").innerHTML.trim());
+
+                alert("Resume edits saved successfully!");
+                window.location.reload();
+            });
+        }
     </script>
 </body>
 </html>

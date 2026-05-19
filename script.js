@@ -347,10 +347,18 @@ editableSections.forEach(id => {
 
 // Activate editing if logged in
 if (localStorage.getItem("portfolio_admin") === "true") {
-    // 1. Change Login Nav Link to Logout
+    // 1. Change Login Nav Link to Logout and add Edit Resume Link
     const navLinksList = document.querySelectorAll("nav a");
     navLinksList.forEach(link => {
         if (link.textContent.includes("LOGIN")) {
+            // Create Edit Resume Link
+            const editResume = document.createElement("a");
+            editResume.innerHTML = '<i class="fa-solid fa-file-pen"></i> EDIT RESUME';
+            editResume.href = "resume.html";
+            editResume.style.color = "#00e5ff";
+            editResume.style.marginRight = "15px";
+            link.parentNode.insertBefore(editResume, link);
+
             link.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> LOGOUT';
             link.style.color = "#ff4d4d";
             link.href = "#";
