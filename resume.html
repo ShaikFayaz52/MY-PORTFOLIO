@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,13 +31,80 @@
             min-height: 100vh;
         }
 
+        /* Mode Selector Tab Bar */
+        .resume-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            background: #ffffff;
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            z-index: 999;
+        }
+
+        .selector-btn {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .selector-btn:hover {
+            color: #111827;
+            background: #f3f4f6;
+        }
+
+        .selector-btn.active {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        #company-config-panel {
+            margin-bottom: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            max-width: 210mm;
+            width: 100%;
+        }
+
+        #target-company-input {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #d1d5db;
+            font-size: 13px;
+            font-weight: 500;
+            color: #111827;
+            outline: none;
+        }
+
+        #target-company-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
         /* Resume A4 Container */
         .resume-container {
             background-color: white;
             width: 210mm;
             min-height: 297mm;
             padding: 15mm 20mm;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -87,7 +155,8 @@
             font-weight: 500;
         }
 
-        .contact-info span, .personal-meta span {
+        .contact-info span,
+        .personal-meta span {
             display: flex;
             align-items: center;
             gap: 4px;
@@ -130,6 +199,7 @@
         /* Education & Projects */
         .item-container {
             margin-bottom: 6px;
+            position: relative;
         }
 
         .item-header {
@@ -178,6 +248,7 @@
             font-size: 11px;
             line-height: 1.4;
             color: var(--text-color);
+            position: relative;
         }
 
         .skills-list li strong {
@@ -197,6 +268,10 @@
             gap: 3px;
         }
 
+        .bullet-list li {
+            position: relative;
+        }
+
         /* Links list styling */
         .links-list {
             list-style-type: none;
@@ -209,6 +284,7 @@
         .links-list li {
             font-size: 11px;
             color: var(--text-color);
+            position: relative;
         }
 
         .links-list li strong {
@@ -225,6 +301,27 @@
             text-decoration: underline;
         }
 
+        /* ATS Match Highlight */
+        .ats-match-highlight {
+            background-color: rgba(253, 224, 71, 0.4);
+            font-weight: 600;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+
+        /* Excluded Item Styling in Edit mode */
+        .item-excluded {
+            opacity: 0.35;
+            text-decoration: line-through;
+            border: 1px dotted #ef4444 !important;
+        }
+
+        .exclude-checkbox-container {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 5px;
+        }
+
         /* Print Specific Styles */
         @media print {
             body {
@@ -234,6 +331,7 @@
                 display: block;
                 width: 210mm;
             }
+
             .resume-container {
                 box-shadow: none;
                 width: 210mm;
@@ -243,11 +341,16 @@
                 border: none;
                 box-sizing: border-box;
             }
+
             .no-print {
                 display: none !important;
             }
+
+            .item-excluded {
+                display: none !important;
+            }
         }
-        
+
         .download-btn {
             position: fixed;
             top: 20px;
@@ -260,15 +363,15 @@
             font-size: 14px;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             transition: 0.3s;
             z-index: 1000;
         }
-        
+
         .download-btn:hover {
             background: #374151;
             transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
         }
 
         /* Admin CMS CSS */
@@ -290,7 +393,7 @@
             font-size: 14px;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             transition: 0.3s;
         }
 
@@ -316,15 +419,71 @@
         }
 
         .delete-btn {
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .delete-btn:hover {
             background: #ef4444 !important;
             color: white !important;
         }
     </style>
 </head>
+
 <body>
+
+    <!-- Mode Selector Tab Bar -->
+    <div class="resume-type-selector no-print">
+        <button id="btn-general" class="selector-btn" onclick="switchResumeMode('general')">General Resume</button>
+        <button id="btn-company" class="selector-btn" onclick="switchResumeMode('company')">Company Targeted</button>
+        <button id="btn-internship" class="selector-btn" onclick="switchResumeMode('internship')">Internship
+            Resume</button>
+    </div>
+
+    <!-- Company Config Panel -->
+    <div id="company-config-panel" class="no-print">
+        <div style="display: flex; gap: 15px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <span><strong>Target Company:</strong></span>
+                <input type="text" id="target-company-input" placeholder="e.g. Microsoft"
+                    oninput="changeTargetCompany(this.value)">
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <span><strong>Job Profile Presets:</strong></span>
+                <select id="preset-select" onchange="applyPresetJD(this.value)"
+                    style="padding: 5px; border-radius: 4px; border: 1px solid #d1d5db; font-size: 13px;">
+                    <option value="">-- Select Profile --</option>
+                    <option value="google">Google - Software Engineer</option>
+                    <option value="microsoft">Microsoft - Full-Stack Developer</option>
+                    <option value="infosys">Infosys - Systems Engineer</option>
+                    <option value="android">Mobile Developer (Android)</option>
+                    <option value="web">Web Developer (Frontend/Backend)</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 5px;">
+            <span><strong>Paste Job Description / Company Requirements (for ATS Optimization):</strong></span>
+            <textarea id="job-desc-input" rows="3"
+                style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #d1d5db; font-family: inherit; font-size: 12px; resize: vertical;"
+                placeholder="Paste text from the job post to automatically filter unnecessary items, calculate ATS match score, and generate targeted career objective..."></textarea>
+        </div>
+
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; flex-wrap: wrap; gap: 10px;">
+            <button class="admin-btn" onclick="runATSOptimizer()"
+                style="background: #2563eb; font-size: 12px; padding: 6px 12px;"><i
+                    class="fa-solid fa-wand-magic-sparkles"></i> Optimize & Calculate ATS Match</button>
+            <div id="ats-score-badge"
+                style="display: none; align-items: center; gap: 8px; font-weight: bold; font-size: 13px; color: #059669;">
+                <i class="fa-solid fa-circle-check"></i> ATS Keyword Match: <span id="ats-score-value">0%</span>
+            </div>
+        </div>
+
+        <div id="ats-feedback"
+            style="display: none; font-size: 11.5px; color: #374151; background: #eff6ff; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #3b82f6; margin-top: 5px; line-height: 1.4;">
+            <!-- Feedback -->
+        </div>
+    </div>
 
     <button class="no-print download-btn" onclick="window.print()">
         <i class="fa-solid fa-download"></i> Save as PDF
@@ -349,9 +508,11 @@
 
         <!-- Career Objective -->
         <section class="objective">
-            <h2>Career Objective</h2>
+            <h2 id="objective-title">Career Objective</h2>
             <p id="resume-objective">
-                A passionate Computer Science and Engineering student with a strong interest in software development and emerging technologies. Highly motivated to learn, innovate, and create impactful technology. Actively seeking internship opportunities (remote or on-site) in Web Development, App Development, UI/UX Design, and Data & Backend to contribute, grow, and gain real-world experience.
+                A passionate Computer Science and Engineering student with a strong interest in software development and
+                emerging technologies. Highly motivated to learn, innovate, and create impactful technology. Actively
+                seeking opportunities to contribute, grow, and gain real-world experience.
             </p>
         </section>
 
@@ -359,15 +520,17 @@
         <section>
             <h2>Education</h2>
             <div id="resume-education">
-                <div class="item-container">
+                <div class="item-container" data-keywords="btech computer science srinivasa ramanujan engineering">
                     <div class="item-header">
                         <span class="item-title">B.Tech in Computer Science</span>
                         <span class="item-date">2024 - 2028</span>
                     </div>
-                    <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</div>
+                    <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu
+                    </div>
                 </div>
 
-                <div class="item-container">
+                <div class="item-container"
+                    data-keywords="intermediate chaitanya college mpc mathematics physics chemistry">
                     <div class="item-header">
                         <span class="item-title">Intermediate (M.P.C Stream)</span>
                         <span class="item-date">2022 - 2024</span>
@@ -375,7 +538,7 @@
                     <div class="item-subtitle">Sri Chaitanya Junior College - Anantapuramu</div>
                 </div>
 
-                <div class="item-container">
+                <div class="item-container" data-keywords="ssc high school secondary school certificate vv model">
                     <div class="item-header">
                         <span class="item-title">Secondary School Certificate (SSC)</span>
                         <span class="item-date">2022</span>
@@ -390,13 +553,40 @@
             <h2>Technical Skills</h2>
             <div id="resume-skills">
                 <ul class="skills-list">
-                    <li><strong>Programming Languages:</strong> Java, Python, C</li>
-                    <li><strong>Web Technologies:</strong> HTML5, CSS3, JavaScript</li>
-                    <li><strong>App Development:</strong> Android Development, Firebase Integration</li>
-                    <li><strong>Database:</strong> MySQL, Firebase</li>
-                    <li><strong>Tools & Platforms:</strong> VS Code, Android Studio, GitHub</li>
-                    <li><strong>Core Skills:</strong> UI/UX Design, Problem Solving, Debugging</li>
-                    <li><strong>Soft Skills:</strong> Team Collaboration, Creative Thinking, Continuous Learning, Communication Skills</li>
+                    <li data-keywords="programming languages java python c"><strong>Programming Languages:</strong>
+                        Java, Python, C</li>
+                    <li data-keywords="web technologies html html5 css css3 javascript js"><strong>Web
+                            Technologies:</strong> HTML5, CSS3, JavaScript</li>
+                    <li data-keywords="app development android firebase mobile development application"><strong>App
+                            Development:</strong> Android Development, Firebase Integration</li>
+                    <li data-keywords="database mysql sql firebase management"><strong>Database:</strong> MySQL,
+                        Firebase</li>
+                    <li data-keywords="tools platforms vs code android studio github git"><strong>Tools &
+                            Platforms:</strong> VS Code, Android Studio, GitHub</li>
+                    <li
+                        data-keywords="core skills ui/ux design problem solving debugging coding data structures algorithms">
+                        <strong>Core Skills:</strong> UI/UX Design, Problem Solving, Debugging</li>
+                    <li
+                        data-keywords="soft skills team collaboration teamwork creative thinking continuous learning communication skills">
+                        <strong>Soft Skills:</strong> Team Collaboration, Creative Thinking, Continuous Learning,
+                        Communication Skills</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Internship Preferences & Competencies (Shown only in Internship mode) -->
+        <section id="sec-internship-preferences" style="display: none;">
+            <h2>Internship Preferences & Competencies</h2>
+            <div id="resume-internship-prefs">
+                <ul class="skills-list">
+                    <li data-keywords="web development frontend backend html css javascript"><strong>Web
+                            Development:</strong> Frontend & backend web apps using HTML, CSS, JavaScript and more.</li>
+                    <li data-keywords="app development android firebase mobile apps android studio"><strong>App
+                            Development:</strong> Android & Firebase-based mobile application development.</li>
+                    <li data-keywords="ui/ux design wireframes prototypes user interface user experience"><strong>UI/UX
+                            Design:</strong> Clean, modern, and user-friendly interface design & prototyping.</li>
+                    <li data-keywords="data backend mysql firebase sql databases"><strong>Data & Backend:</strong>
+                        MySQL, Firebase, and database management for real-world projects.</li>
                 </ul>
             </div>
         </section>
@@ -405,30 +595,37 @@
         <section>
             <h2>Projects</h2>
             <div id="resume-projects">
-                <div class="item-container">
+                <div class="item-container"
+                    data-keywords="shop ease website ecommerce web product cart tracking admin seller database mysql javascript html css integration">
                     <div class="item-header">
                         <span class="item-title">Shop Ease Website</span>
                     </div>
                     <p class="item-details">
-                        Modern e-commerce website designed to provide a smooth and user-friendly online shopping experience. Features include product management, cart functionality, order tracking, and comprehensive admin features for customers and sellers.
+                        Modern e-commerce website designed to provide a smooth and user-friendly online shopping
+                        experience. Features include product management, cart functionality, order tracking, and
+                        comprehensive admin features for customers and sellers.
                     </p>
                 </div>
 
-                <div class="item-container">
+                <div class="item-container"
+                    data-keywords="kindmeals app android mobile firebase location location-based sos emergency food donation donor needy integration ui/ux design">
                     <div class="item-header">
                         <span class="item-title">KindMeals App</span>
                     </div>
                     <p class="item-details">
-                        A food donation platform connecting food donors with needy people through location-based services. Includes an SOS emergency application feature for rapid response.
+                        A food donation platform connecting food donors with needy people through location-based
+                        services. Includes an SOS emergency application feature for rapid response.
                     </p>
                 </div>
 
-                <div class="item-container">
+                <div class="item-container"
+                    data-keywords="carbon footprint calculator track calculate environmental impact green analytics dashboards graphs data visual python web application">
                     <div class="item-header">
                         <span class="item-title">Carbon Footprint Calculator</span>
                     </div>
                     <p class="item-details">
-                        An application to calculate and track personal or organizational environmental impact, featuring user-friendly analytics and interactive dashboards.
+                        An application to calculate and track personal or organizational environmental impact, featuring
+                        user-friendly analytics and interactive dashboards.
                     </p>
                 </div>
             </div>
@@ -439,10 +636,15 @@
             <h2>Certifications</h2>
             <div id="resume-certifications">
                 <ul class="bullet-list">
-                    <li>Python Programming Certification - Infosys Springboard</li>
-                    <li>Database Management Systems (DBMS) Certification - Infosys Springboard</li>
-                    <li>Data Engineering Virtual Internship Certification - EDUSKILLS</li>
-                    <li>Networking Cloud Virtual Internship Certification - EDUSKILLS</li>
+                    <li data-keywords="python programming infosys springboard coding certification">Python Programming
+                        Certification - Infosys Springboard</li>
+                    <li data-keywords="database management systems dbms infosys springboard SQL mysql certification">
+                        Database Management Systems (DBMS) Certification - Infosys Springboard</li>
+                    <li data-keywords="data engineering virtual internship eduskills analytics coding certification">
+                        Data Engineering Virtual Internship Certification - EDUSKILLS</li>
+                    <li
+                        data-keywords="networking cloud virtual internship eduskills amazon web services AWS security certification">
+                        Networking Cloud Virtual Internship Certification - EDUSKILLS</li>
                 </ul>
             </div>
         </section>
@@ -452,13 +654,24 @@
             <h2>Achievements</h2>
             <div id="resume-achievements">
                 <ul class="bullet-list">
-                    <li>Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA)</li>
-                    <li>Participated and secured 3rd prize in Hackathon event at NEXTGEN 2K25 (SRIT)</li>
-                    <li>MERN Development Workshop Certification - APSSDC</li>
-                    <li>Completed and secured ELITE Rank in NPTEL Certification course of Public Speaking</li>
-                    <li>NSPC 2025 Participation Certificate – National Students Paryavaran Competition</li>
-                    <li>Viksit Bharat Young Leaders Dialogue (VBYLD) 2026 Quiz Participation Certificate – Ministry of Youth Affairs and Sports</li>
-                    <li>NSS Volunteer & Community Service - Dedicated NSS Volunteer committed to community service and social impact</li>
+                    <li
+                        data-keywords="prompt 2 pixel event winner pixel 2k26 jntuacea artificial intelligence generative tools design coding">
+                        Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA)</li>
+                    <li data-keywords="hackathon third prize nextgen 2k25 srit teamwork prototype development coding">
+                        Participated and secured 3rd prize in Hackathon event at NEXTGEN 2K25 (SRIT)</li>
+                    <li data-keywords="mern development workshop apssdc web react node database certification workshop">
+                        MERN Development Workshop Certification - APSSDC</li>
+                    <li data-keywords="nptel elite public speaking soft skills presentation certification">Completed and
+                        secured ELITE Rank in NPTEL Certification course of Public Speaking</li>
+                    <li
+                        data-keywords="nspc 2025 student national paryavaran competition environmental green certificate">
+                        NSPC 2025 Participation Certificate – National Students Paryavaran Competition</li>
+                    <li data-keywords="viksit bharat young leaders dialog quiz youth affairs ministry certificate">
+                        Viksit Bharat Young Leaders Dialogue (VBYLD) 2026 Quiz Participation Certificate – Ministry of
+                        Youth Affairs and Sports</li>
+                    <li data-keywords="nss volunteer community service social work leadership volunteerism">NSS
+                        Volunteer & Community Service - Dedicated NSS Volunteer committed to community service and
+                        social impact</li>
                 </ul>
             </div>
         </section>
@@ -468,22 +681,407 @@
             <h2>Links</h2>
             <div id="resume-links">
                 <ul class="links-list">
-                    <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/shaik-fayaz-987b05333" target="_blank">linkedin.com/in/shaik-fayaz-987b05333</a></li>
-                    <li><strong>WhatsApp Chat:</strong> <a href="https://wa.me/+916305138534" target="_blank">wa.me/+916305138534</a></li>
-                    <li><strong>Instagram:</strong> <a href="https://www.instagram.com/_shaikfayaz.x_" target="_blank">instagram.com/_shaikfayaz.x_</a></li>
-                    <li><strong>Portfolio Website:</strong> <a href="home.html" target="_blank">View Live Portfolio</a></li>
+                    <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/shaik-fayaz-987b05333"
+                            target="_blank">linkedin.com/in/shaik-fayaz-987b05333</a></li>
+                    <li><strong>WhatsApp Chat:</strong> <a href="https://wa.me/+916305138534"
+                            target="_blank">wa.me/+916305138534</a></li>
+                    <li><strong>Instagram:</strong> <a href="https://www.instagram.com/_shaikfayaz.x_"
+                            target="_blank">instagram.com/_shaikfayaz.x_</a></li>
+                    <li><strong>Portfolio Website:</strong> <a href="home.html" target="_blank">View Live Portfolio</a>
+                    </li>
                 </ul>
             </div>
         </section>
     </div>
 
     <script>
+        // Global State
+        let currentMode = localStorage.getItem("resume_active_mode") || "general";
+        let targetCompany = localStorage.getItem("resume_target_company") || "Microsoft";
+        let targetJD = localStorage.getItem(`resume_target_jd_${currentMode}`) || "";
+
+        // Preset JDs for popular profiles
+        const presets = {
+            google: "Software Engineer position. Requirements: Solid programming skills in Java, Python, or C. Experience with data structures, algorithms, problem solving, debugging, and collaborative tools like GitHub. Excellent analytical skills and creative thinking.",
+            microsoft: "Full-Stack Developer. Technical requirements: Frontend development with HTML5, CSS3, JavaScript. Backend databases including MySQL and Firebase. Hands-on experience with web applications, VS Code, and Git/GitHub.",
+            infosys: "Systems Engineer. Requirements: Knowledge of programming languages like Java or Python. Understanding of Database Management Systems (DBMS), MySQL, and basic Web Technologies. Good communication skills and eagerness for continuous learning.",
+            android: "Mobile Application Developer. Requirements: Specialized in Android Development, Firebase Integration, mobile UI/UX Design, and Android Studio IDE. Java or Kotlin experience is essential.",
+            web: "Web Developer role. Requirements: Strong experience in building responsive web designs using HTML, CSS, JavaScript. Proficiency in UI/UX prototyping, VS Code, and MySQL database management."
+        };
+
+        // Model prebuilt data for Company and Internship modes
+        const prebuiltModels = {
+            company: {
+                title: "Aspiring Software Engineer",
+                objective: `A passionate and detail-oriented Computer Science and Engineering student seeking to leverage technical competencies in full-stack web development and software engineering to contribute effectively to ${targetCompany}. Motivated to build scalable, high-performance applications, solve algorithmic challenges, and collaborate in agile team environments.`,
+                education: `
+                    <div class="item-container" data-keywords="btech computer science srinivasa ramanujan engineering">
+                        <div class="item-header">
+                            <span class="item-title">B.Tech in Computer Science</span>
+                            <span class="item-date">2024 - 2028</span>
+                        </div>
+                        <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</div>
+                    </div>
+                    <div class="item-container" data-keywords="intermediate chaitanya college mpc mathematics physics chemistry">
+                        <div class="item-header">
+                            <span class="item-title">Intermediate (M.P.C Stream)</span>
+                            <span class="item-date">2022 - 2024</span>
+                        </div>
+                        <div class="item-subtitle">Sri Chaitanya Junior College - Anantapuramu</div>
+                    </div>
+                `,
+                skills: `
+                    <ul class="skills-list">
+                        <li data-keywords="programming languages java python c"><strong>Programming Languages:</strong> Java, Python, C</li>
+                        <li data-keywords="web technologies html html5 css css3 javascript js"><strong>Web Technologies:</strong> HTML5, CSS3, JavaScript</li>
+                        <li data-keywords="database mysql sql firebase management"><strong>Database:</strong> MySQL, Firebase</li>
+                        <li data-keywords="tools platforms vs code android studio github git"><strong>Tools & Platforms:</strong> VS Code, GitHub, Android Studio</li>
+                        <li data-keywords="core skills ui/ux design problem solving debugging coding data structures algorithms"><strong>Core Skills:</strong> Problem Solving, Debugging, UI/UX Design</li>
+                        <li data-keywords="soft skills team collaboration teamwork creative thinking continuous learning communication skills"><strong>Soft Skills:</strong> Team Collaboration, Creative Thinking, Communication Skills</li>
+                    </ul>
+                `,
+                projects: `
+                    <div class="item-container" data-keywords="shop ease website ecommerce web product cart tracking admin seller database mysql javascript html css integration">
+                        <div class="item-header">
+                            <span class="item-title">Shop Ease Website</span>
+                        </div>
+                        <p class="item-details">
+                            Modern e-commerce website designed to provide a smooth and user-friendly online shopping experience. Features include product management, cart functionality, order tracking, and comprehensive admin features for customers and sellers.
+                        </p>
+                    </div>
+                    <div class="item-container" data-keywords="carbon footprint calculator track calculate environmental impact green analytics dashboards graphs data visual python web application">
+                        <div class="item-header">
+                            <span class="item-title">Carbon Footprint Calculator</span>
+                        </div>
+                        <p class="item-details">
+                            An application to calculate and track personal or organizational environmental impact, featuring user-friendly analytics and interactive dashboards.
+                        </p>
+                    </div>
+                `,
+                certifications: `
+                    <ul class="bullet-list">
+                        <li data-keywords="python programming infosys springboard coding certification">Python Programming Certification - Infosys Springboard</li>
+                        <li data-keywords="database management systems dbms infosys springboard SQL mysql certification">Database Management Systems (DBMS) Certification - Infosys Springboard</li>
+                        <li data-keywords="networking cloud virtual internship eduskills amazon web services AWS security certification">Networking Cloud Virtual Internship Certification - EDUSKILLS</li>
+                    </ul>
+                `,
+                achievements: `
+                    <ul class="bullet-list">
+                        <li data-keywords="prompt 2 pixel event winner pixel 2k26 jntuacea artificial intelligence generative tools design coding">Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA)</li>
+                        <li data-keywords="hackathon third prize nextgen 2k25 srit teamwork prototype development coding">Participated and secured 3rd prize in Hackathon event at NEXTGEN 2K25 (SRIT)</li>
+                        <li data-keywords="mern development workshop apssdc web react node database certification workshop">MERN Development Workshop Certification - APSSDC</li>
+                        <li data-keywords="nptel elite public speaking soft skills presentation certification">Completed and secured ELITE Rank in NPTEL Certification course of Public Speaking</li>
+                    </ul>
+                `
+            },
+            internship: {
+                title: "3rd Year Computer Science Student",
+                objective: "A motivated Computer Science and Engineering student actively seeking internship opportunities where I can apply my web development and mobile app engineering skills. Available for remote or on-site roles to contribute to real-world projects, learn new frameworks, and accelerate professional growth.",
+                education: `
+                    <div class="item-container" data-keywords="btech computer science srinivasa ramanujan engineering">
+                        <div class="item-header">
+                            <span class="item-title">B.Tech in Computer Science</span>
+                            <span class="item-date">2024 - 2028</span>
+                        </div>
+                        <div class="item-subtitle">Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</div>
+                    </div>
+                    <div class="item-container" data-keywords="intermediate chaitanya college mpc mathematics physics chemistry">
+                        <div class="item-header">
+                            <span class="item-title">Intermediate (M.P.C Stream)</span>
+                            <span class="item-date">2022 - 2024</span>
+                        </div>
+                        <div class="item-subtitle">Sri Chaitanya Junior College - Anantapuramu</div>
+                    </div>
+                    <div class="item-container" data-keywords="ssc high school secondary school certificate vv model">
+                        <div class="item-header">
+                            <span class="item-title">Secondary School Certificate (SSC)</span>
+                            <span class="item-date">2022</span>
+                        </div>
+                        <div class="item-subtitle">V.V.Model E.M High School - Anantapuramu</div>
+                    </div>
+                `,
+                internshipPrefs: `
+                    <ul class="skills-list">
+                        <li data-keywords="web development frontend backend html css javascript"><strong>Web Development:</strong> Frontend & backend web apps using HTML, CSS, JavaScript.</li>
+                        <li data-keywords="app development android firebase mobile apps android studio"><strong>App Development:</strong> Android & Firebase-based mobile application development.</li>
+                        <li data-keywords="ui/ux design wireframes prototypes user interface user experience"><strong>UI/UX Design:</strong> Clean, modern, and user-friendly interface design & prototyping.</li>
+                        <li data-keywords="data backend mysql firebase sql databases"><strong>Data & Backend:</strong> MySQL, Firebase, and database management.</li>
+                    </ul>
+                `,
+                skills: `
+                    <ul class="skills-list">
+                        <li data-keywords="programming languages java python c"><strong>Programming Languages:</strong> Java, Python, C</li>
+                        <li data-keywords="web technologies html html5 css css3 javascript js"><strong>Web Technologies:</strong> HTML5, CSS3, JavaScript</li>
+                        <li data-keywords="app development android firebase mobile development application"><strong>App Development:</strong> Android Development, Firebase Integration</li>
+                        <li data-keywords="database mysql sql firebase management"><strong>Database:</strong> MySQL, Firebase</li>
+                        <li data-keywords="tools platforms vs code android studio github git"><strong>Tools & Platforms:</strong> VS Code, Android Studio, GitHub</li>
+                        <li data-keywords="core skills ui/ux design problem solving debugging coding data structures algorithms"><strong>Core Skills:</strong> UI/UX Design, Problem Solving, Debugging</li>
+                        <li data-keywords="soft skills teamwork creative thinking continuous learning communication"><strong>Soft Skills:</strong> Teamwork, Creative Thinking, Continuous Learning, Communication</li>
+                    </ul>
+                `,
+                projects: `
+                    <div class="item-container" data-keywords="kindmeals app android mobile firebase location location-based sos emergency food donation donor needy integration ui/ux design">
+                        <div class="item-header">
+                            <span class="item-title">KindMeals App</span>
+                        </div>
+                        <p class="item-details">
+                            A food donation platform connecting food donors with needy people through location-based services. Includes an SOS emergency application feature for rapid response.
+                        </p>
+                    </div>
+                    <div class="item-container" data-keywords="shop ease website ecommerce web product cart tracking admin seller database mysql javascript html css integration">
+                        <div class="item-header">
+                            <span class="item-title">Shop Ease Website</span>
+                        </div>
+                        <p class="item-details">
+                            Modern e-commerce website designed to provide a smooth and user-friendly online shopping experience. Features include product management, cart functionality, and admin portals.
+                        </p>
+                    </div>
+                `,
+                certifications: `
+                    <ul class="bullet-list">
+                        <li data-keywords="data engineering virtual internship eduskills analytics coding certification">Data Engineering Virtual Internship Certification - EDUSKILLS</li>
+                        <li data-keywords="networking cloud virtual internship eduskills amazon web services AWS security certification">Networking Cloud Virtual Internship Certification - EDUSKILLS</li>
+                        <li data-keywords="python programming infosys springboard coding certification">Python Programming Certification - Infosys Springboard</li>
+                        <li data-keywords="database management systems dbms infosys springboard SQL mysql certification">Database Management Systems (DBMS) Certification - Infosys Springboard</li>
+                    </ul>
+                `,
+                achievements: `
+                    <ul class="bullet-list">
+                        <li data-keywords="prompt 2 pixel event winner pixel 2k26 jntuacea artificial intelligence generative tools design coding">Winner in "Prompt 2 Pixel" event at PIXEL 2K26 (JNTUACEA)</li>
+                        <li data-keywords="hackathon third prize nextgen 2k25 srit teamwork prototype development coding">Participated and secured 3rd prize in Hackathon event at NEXTGEN 2K25 (SRIT)</li>
+                        <li data-keywords="nss volunteer community service social work leadership volunteerism">NSS Volunteer & Community Service - Dedicated NSS Volunteer committed to community service and social impact.</li>
+                    </ul>
+                `
+            }
+        };
+
         document.addEventListener("DOMContentLoaded", () => {
+            // Apply current mode highlight
+            document.querySelectorAll('.selector-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${currentMode}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Render elements based on active mode
+            if (currentMode === 'company') {
+                const configPanel = document.getElementById('company-config-panel');
+                const compInput = document.getElementById('target-company-input');
+                const jdInput = document.getElementById('job-desc-input');
+
+                if (configPanel) configPanel.style.display = 'flex';
+                if (compInput) compInput.value = targetCompany;
+                if (jdInput) jdInput.value = targetJD;
+            }
+
+            if (currentMode === 'internship') {
+                const internshipPrefs = document.getElementById('sec-internship-preferences');
+                if (internshipPrefs) internshipPrefs.style.display = 'block';
+
+                const configPanel = document.getElementById('company-config-panel');
+                const jdInput = document.getElementById('job-desc-input');
+                if (configPanel) {
+                    configPanel.style.display = 'flex';
+                    // Hide company input in internship mode since it is general internship
+                    configPanel.querySelector('div').style.display = 'none';
+                }
+                if (jdInput) jdInput.value = targetJD;
+            }
+
             syncResumeData();
         });
 
+        function switchResumeMode(mode) {
+            localStorage.setItem("resume_active_mode", mode);
+            window.location.reload();
+        }
+
+        function changeTargetCompany(val) {
+            localStorage.setItem("resume_target_company", val);
+            targetCompany = val;
+
+            // Live update Career Objective company placeholder if not overridden
+            const hasObjectiveOverride = localStorage.getItem(`resume_saved_${currentMode}_objective`);
+            if (!hasObjectiveOverride) {
+                const defaultObj = getDefaultObjective(currentMode);
+                document.getElementById('resume-objective').textContent = defaultObj;
+            }
+        }
+
+        function applyPresetJD(val) {
+            if (presets[val]) {
+                document.getElementById('job-desc-input').value = presets[val];
+                runATSOptimizer();
+            }
+        }
+
+        function runATSOptimizer() {
+            const jdText = document.getElementById('job-desc-input').value.trim();
+            localStorage.setItem(`resume_target_jd_${currentMode}`, jdText);
+
+            if (!jdText) {
+                alert("Please paste a Job Description first!");
+                return;
+            }
+
+            const cleanJD = jdText.toLowerCase();
+
+            // Database of skills with matching keywords
+            const skillsKeywords = {
+                "java": ["java", "oop", "backend"],
+                "python": ["python", "scripts", "analytics", "data engineering"],
+                "c": ["c ", "programming", "low-level"],
+                "html": ["html", "html5", "frontend", "responsive"],
+                "css": ["css", "css3", "bootstrap", "tailwind", "styling"],
+                "javascript": ["javascript", "js", "frontend", "scripting", "mern", "web development"],
+                "android": ["android", "mobile", "app", "xml", "studio"],
+                "firebase": ["firebase", "nosql", "auth", "cloud"],
+                "mysql": ["mysql", "sql", "database", "rdbms", "dbms"],
+                "github": ["github", "git", "version control", "collaborative"],
+                "vs code": ["vs code", "editor", "visual studio code"],
+                "android studio": ["android studio", "sdk"],
+                "ui/ux": ["ui/ux", "wireframe", "design", "figma", "prototype", "user interface", "user experience"],
+                "problem solving": ["problem solving", "algorithms", "data structures", "analytical", "logic"],
+                "debugging": ["debugging", "testing", "troubleshooting", "error handling"],
+                "team collaboration": ["collaboration", "team", "cooperation", "teamwork"],
+                "creative thinking": ["creative", "innovative", "brainstorming"],
+                "continuous learning": ["continuous learning", "fast learner", "adaptable", "learning"],
+                "communication": ["communication", "writing", "presentation", "speaking"]
+            };
+
+            let matchedSkills = [];
+            let totalSkills = Object.keys(skillsKeywords).length;
+            let hits = 0;
+            let misses = [];
+
+            // 1. Reset highlights
+            document.querySelectorAll('.ats-match-highlight').forEach(el => {
+                el.replaceWith(el.textContent);
+            });
+
+            // 2. Perform Keyword Match & Highlight on Skills, Projects, and Certifications
+            const items = document.querySelectorAll('[data-keywords]');
+            let matchedItemsCount = 0;
+
+            items.forEach(item => {
+                const kwAttr = item.getAttribute('data-keywords').toLowerCase();
+                const kwArray = kwAttr.split(' ');
+                let matchCount = 0;
+
+                kwArray.forEach(kw => {
+                    if (kw && cleanJD.includes(kw)) {
+                        matchCount++;
+                    }
+                });
+
+                // Highlight matches in text
+                const textNodes = getTextNodes(item);
+                textNodes.forEach(node => {
+                    let parent = node.parentNode;
+                    let text = node.textContent;
+                    let newHTML = text;
+
+                    kwArray.forEach(kw => {
+                        if (kw && kw.length > 2 && cleanJD.includes(kw)) {
+                            const regex = new RegExp(`\\b(${kw})\\b`, 'gi');
+                            newHTML = newHTML.replace(regex, '<span class="ats-match-highlight">$1</span>');
+                        }
+                    });
+
+                    if (newHTML !== text) {
+                        const tempSpan = document.createElement('span');
+                        tempSpan.innerHTML = newHTML;
+                        parent.replaceChild(tempSpan, node);
+                    }
+                });
+
+                if (matchCount > 0) {
+                    matchedItemsCount++;
+                    // Keep it fully visible
+                    item.classList.remove('item-excluded');
+                    const checkbox = item.querySelector('.exclude-checkbox');
+                    if (checkbox) checkbox.checked = true;
+                } else {
+                    // It's unnecessary/irrelevant - mark as excluded automatically to make resume shortlist-ready!
+                    item.classList.add('item-excluded');
+                    const checkbox = item.querySelector('.exclude-checkbox');
+                    if (checkbox) checkbox.checked = false;
+                }
+            });
+
+            // Calculate skill match score
+            Object.entries(skillsKeywords).forEach(([skill, kws]) => {
+                let matches = kws.some(kw => cleanJD.includes(kw));
+                if (matches) {
+                    matchedSkills.push(skill);
+                    hits++;
+                } else {
+                    misses.push(skill);
+                }
+            });
+
+            const score = Math.round((hits / 10) * 100); // normalized match out of 10 core keywords
+            const scoreValue = Math.min(score, 100);
+
+            // 3. Show ATS Badge
+            const badge = document.getElementById('ats-score-badge');
+            const scoreValSpan = document.getElementById('ats-score-value');
+            if (badge && scoreValSpan) {
+                badge.style.display = 'flex';
+                scoreValSpan.textContent = `${scoreValue}%`;
+                if (scoreValue >= 80) {
+                    badge.style.color = '#059669'; // green
+                } else if (scoreValue >= 50) {
+                    badge.style.color = '#d97706'; // orange
+                } else {
+                    badge.style.color = '#dc2626'; // red
+                }
+            }
+
+            // 4. Update Objective
+            const companyPart = currentMode === 'company' ? `at ${targetCompany}` : 'in an internship role';
+            const objectiveText = `A motivated Computer Science and Engineering student with specialized skills in ${matchedSkills.slice(0, 4).join(', ')}. Eager to apply technical expertise in ${matchedSkills.slice(4, 7).join(', ') || 'software development'} to drive success ${companyPart}. Proven ability to build responsive applications, collaborate in teams, and learn new systems quickly.`;
+
+            document.getElementById('resume-objective').textContent = objectiveText;
+
+            // 5. Generate Feedback Panel
+            const feedbackPanel = document.getElementById('ats-feedback');
+            if (feedbackPanel) {
+                feedbackPanel.style.display = 'block';
+                feedbackPanel.innerHTML = `
+                    <strong>ATS Analysis Complete:</strong><br>
+                    • <strong>Matching Skills Identified:</strong> ${matchedSkills.length > 0 ? matchedSkills.join(', ') : 'None yet'}.<br>
+                    • <strong>Unnecessary Items Hidden:</strong> Irrelevant projects or certifications have been marked as excluded. These will be hidden when printing or exporting to PDF.<br>
+                    • <strong>Keyword Suggestion:</strong> Consider adding keywords like: <em>${misses.slice(0, 4).join(', ')}</em> to your details to increase your match score.
+                `;
+            }
+        }
+
+        // Helper to get text nodes in element recursively
+        function getTextNodes(node) {
+            let textNodes = [];
+            if (node.nodeType === Node.TEXT_NODE) {
+                textNodes.push(node);
+            } else {
+                let children = node.childNodes;
+                for (let i = 0; i < children.length; i++) {
+                    textNodes.push(...getTextNodes(children[i]));
+                }
+            }
+            return textNodes;
+        }
+
+        function getDefaultObjective(mode) {
+            if (mode === 'general') {
+                return "A passionate Computer Science and Engineering student with a strong interest in software development and emerging technologies. Highly motivated to learn, innovate, and create impactful technology. Proven ability to build functional applications and websites, solve real-world challenges, and continuously adapt to new technologies.";
+            } else if (mode === 'company') {
+                return prebuiltModels.company.objective;
+            } else if (mode === 'internship') {
+                return prebuiltModels.internship.objective;
+            }
+            return "";
+        }
+
         async function syncResumeData() {
-            // Check and load resume direct overrides first
+            // Mode-specific localStorage overrides
             let hasOverrides = {
                 name: loadOverride('name', 'resume-name'),
                 title: loadOverride('title', 'resume-title'),
@@ -492,6 +1090,7 @@
                 objective: loadOverride('objective', 'resume-objective'),
                 education: loadOverride('education', 'resume-education'),
                 skills: loadOverride('skills', 'resume-skills'),
+                internshipPrefs: loadOverride('internship_prefs', 'resume-internship-prefs'),
                 projects: loadOverride('projects', 'resume-projects'),
                 certifications: loadOverride('certifications', 'resume-certifications'),
                 achievements: loadOverride('achievements', 'resume-achievements'),
@@ -499,18 +1098,21 @@
             };
 
             function loadOverride(key, elementId) {
-                const saved = localStorage.getItem(`resume_saved_${key}`);
+                const saved = localStorage.getItem(`resume_saved_${currentMode}_${key}`);
                 if (saved) {
-                    document.getElementById(elementId).innerHTML = saved;
-                    return true;
+                    const el = document.getElementById(elementId);
+                    if (el) {
+                        el.innerHTML = saved;
+                        return true;
+                    }
                 }
                 return false;
             }
 
             try {
-                // Fetch home.html only if we need fallback data for at least one section
+                // Fetch home.html only if fallback is needed for at least one section
                 const needsFetch = Object.values(hasOverrides).some(val => !val);
-                
+
                 let homeDoc = null;
                 function getSection(id) {
                     const savedHtml = localStorage.getItem(`saved_section_${id}`);
@@ -531,7 +1133,7 @@
                     }
                 }
 
-                // 1. Header (Name, Title, Contact Info)
+                // Load Name and Title
                 if (!hasOverrides.name) {
                     const homeSec = getSection('home');
                     if (homeSec) {
@@ -543,19 +1145,23 @@
                 }
 
                 if (!hasOverrides.title) {
-                    const homeSec = getSection('home');
-                    if (homeSec) {
-                        const titleEl = homeSec.querySelector('h3 b') || homeSec.querySelector('h3');
-                        if (titleEl && titleEl.textContent.trim()) {
-                            document.getElementById('resume-title').textContent = titleEl.textContent.trim();
+                    if (currentMode === 'general') {
+                        const homeSec = getSection('home');
+                        if (homeSec) {
+                            const titleEl = homeSec.querySelector('h3 b') || homeSec.querySelector('h3');
+                            if (titleEl && titleEl.textContent.trim()) {
+                                document.getElementById('resume-title').textContent = titleEl.textContent.trim();
+                            }
                         }
+                    } else {
+                        document.getElementById('resume-title').textContent = prebuiltModels[currentMode].title;
                     }
                 }
 
+                // Contact and Personal Details
                 if (!hasOverrides.contact || !hasOverrides.personalMeta) {
                     const aboutSec = getSection('about');
                     if (aboutSec) {
-                        // Get languages and nationality for personalMeta
                         if (!hasOverrides.personalMeta) {
                             const cards = aboutSec.querySelectorAll('.card');
                             let nationality = '', languages = '';
@@ -594,218 +1200,222 @@
                             if (phone) contactItems.push(`<span><i class="fa-solid fa-phone"></i> ${phone}</span>`);
                             if (email) contactItems.push(`<span><i class="fa-solid fa-envelope"></i> ${email}</span>`);
                             if (location) contactItems.push(`<span><i class="fa-solid fa-location-dot"></i> ${location}</span>`);
-                            
+
                             contactContainer.innerHTML = contactItems.join(' | ');
                         }
                     }
                 }
 
-                // 2. Career Objective (Combines Profile Summary and Internship Preferences Intro)
+                // 2. Career Objective
                 if (!hasOverrides.objective) {
-                    const aboutSec = getSection('about');
-                    const internshipSec = getSection('internship');
-                    let summary = '';
-                    let internshipIntro = '';
-
-                    if (aboutSec) {
-                        const summaryPara = aboutSec.querySelector('p');
-                        if (summaryPara) {
-                            summary = summaryPara.textContent.trim().replace(/\s+/g, ' ');
-                        }
-                    }
-                    if (internshipSec) {
-                        const introPara = internshipSec.querySelector('.internship-intro');
-                        if (introPara) {
-                            internshipIntro = introPara.textContent.trim().replace(/\s+/g, ' ');
-                        }
-                    }
-
-                    if (summary || internshipIntro) {
-                        document.getElementById('resume-objective').textContent = `${summary} ${internshipIntro}`.trim().replace(/\s+/g, ' ');
-                    }
+                    document.getElementById('resume-objective').textContent = getDefaultObjective(currentMode);
                 }
 
                 // 3. Education
                 if (!hasOverrides.education) {
-                    const eduSec = getSection('education');
-                    if (eduSec) {
-                        const items = eduSec.querySelectorAll('.timeline-content');
-                        const eduContainer = document.getElementById('resume-education');
-                        if (items.length > 0) {
-                            eduContainer.innerHTML = '';
-                            items.forEach(item => {
-                                const degree = item.querySelector('h3')?.textContent.trim() || '';
-                                const school = item.querySelector('p')?.textContent.trim() || '';
-                                const date = item.querySelector('.timeline-date')?.textContent.trim() || '';
-                                
-                                const eduItem = document.createElement('div');
-                                eduItem.className = 'item-container';
-                                eduItem.innerHTML = `
-                                    <div class="item-header">
-                                        <span class="item-title">${degree}</span>
-                                        <span class="item-date">${date}</span>
-                                    </div>
-                                    <div class="item-subtitle">${school}</div>
-                                `;
-                                eduContainer.appendChild(eduItem);
-                            });
+                    if (currentMode === 'general') {
+                        const eduSec = getSection('education');
+                        if (eduSec) {
+                            const items = eduSec.querySelectorAll('.timeline-content');
+                            const eduContainer = document.getElementById('resume-education');
+                            if (items.length > 0) {
+                                eduContainer.innerHTML = '';
+                                items.forEach(item => {
+                                    const degree = item.querySelector('h3')?.textContent.trim() || '';
+                                    const school = item.querySelector('p')?.textContent.trim() || '';
+                                    const date = item.querySelector('.timeline-date')?.textContent.trim() || '';
+
+                                    const eduItem = document.createElement('div');
+                                    eduItem.className = 'item-container';
+                                    eduItem.innerHTML = `
+                                        <div class="item-header">
+                                            <span class="item-title">${degree}</span>
+                                            <span class="item-date">${date}</span>
+                                        </div>
+                                        <div class="item-subtitle">${school}</div>
+                                    `;
+                                    eduContainer.appendChild(eduItem);
+                                });
+                            }
                         }
+                    } else {
+                        document.getElementById('resume-education').innerHTML = prebuiltModels[currentMode].education;
                     }
                 }
 
                 // 4. Technical Skills
                 if (!hasOverrides.skills) {
-                    const techSkillsSec = getSection('technical-skills');
-                    const regularSkillsSec = getSection('skills');
-                    const skillsContainer = document.getElementById('resume-skills');
-                    
-                    let techCards = techSkillsSec ? techSkillsSec.querySelectorAll('.card') : [];
-                    let softSkillsText = '';
-                    if (regularSkillsSec) {
-                        const cards = regularSkillsSec.querySelectorAll('.card');
-                        const softs = Array.from(cards).map(c => c.textContent.trim()).filter(t => !["Programming & Problem Solving", "Web Development", "App Development", "Firebase Integration", "UI/UX Design", "Database Management"].includes(t));
-                        softSkillsText = softs.join(', ');
-                    }
+                    if (currentMode === 'general') {
+                        const techSkillsSec = getSection('technical-skills');
+                        const regularSkillsSec = getSection('skills');
+                        const skillsContainer = document.getElementById('resume-skills');
 
-                    if (techCards.length > 0) {
-                        skillsContainer.innerHTML = '';
-                        const list = document.createElement('ul');
-                        list.className = 'skills-list';
-                        
-                        techCards.forEach(card => {
-                            const bTag = card.querySelector('b');
-                            if (bTag) {
-                                const category = bTag.textContent.trim();
-                                let skillsText = '';
-                                let foundB = false;
-                                card.childNodes.forEach(node => {
-                                    if (node === bTag) foundB = true;
-                                    else if (foundB && node.nodeType === Node.TEXT_NODE) {
-                                        skillsText += node.textContent;
-                                    }
-                                });
-                                skillsText = skillsText.replace(/^\s*,\s*|\s*,\s*$/g, '').trim().replace(/\s+/g, ' ');
-                                if (category && skillsText) {
-                                    const li = document.createElement('li');
-                                    li.innerHTML = `<strong>${category}:</strong> ${skillsText}`;
-                                    list.appendChild(li);
-                                }
-                            }
-                        });
-                        if (softSkillsText) {
-                            const li = document.createElement('li');
-                            li.innerHTML = `<strong>Soft Skills:</strong> ${softSkillsText}`;
-                            list.appendChild(li);
+                        let techCards = techSkillsSec ? techSkillsSec.querySelectorAll('.card') : [];
+                        let softSkillsText = '';
+                        if (regularSkillsSec) {
+                            const cards = regularSkillsSec.querySelectorAll('.card');
+                            const softs = Array.from(cards).map(c => c.textContent.trim()).filter(t => !["Programming & Problem Solving", "Web Development", "App Development", "Firebase Integration", "UI/UX Design", "Database Management"].includes(t));
+                            softSkillsText = softs.join(', ');
                         }
-                        skillsContainer.appendChild(list);
-                    }
-                }
 
-                // 5. Projects
-                if (!hasOverrides.projects) {
-                    const projectsSec = getSection('projects');
-                    if (projectsSec) {
-                        const cards = projectsSec.querySelectorAll('.project-card');
-                        const projectsContainer = document.getElementById('resume-projects');
-                        if (cards.length > 0) {
-                            projectsContainer.innerHTML = '';
-                            cards.forEach(card => {
-                                const title = card.querySelector('h3')?.textContent.trim() || '';
-                                let desc = card.querySelector('p')?.textContent.trim() || '';
-                                desc = desc.replace(/^\s*<br\s*\/?>/gi, '').replace(/\s+/g, ' ').trim();
+                        if (techCards.length > 0) {
+                            skillsContainer.innerHTML = '';
+                            const list = document.createElement('ul');
+                            list.className = 'skills-list';
 
-                                const projectItem = document.createElement('div');
-                                projectItem.className = 'item-container';
-                                projectItem.innerHTML = `
-                                    <div class="item-header">
-                                        <span class="item-title">${title}</span>
-                                    </div>
-                                    <p class="item-details">${desc}</p>
-                                `;
-                                projectsContainer.appendChild(projectItem);
-                            });
-                        }
-                    }
-                }
-
-                // 6. Certifications
-                if (!hasOverrides.certifications) {
-                    const certSec = getSection('certificates');
-                    if (certSec) {
-                        const cards = certSec.querySelectorAll('.card');
-                        const certContainer = document.getElementById('resume-certifications');
-                        if (cards.length > 0) {
-                            certContainer.innerHTML = '';
-                            const ul = document.createElement('ul');
-                            ul.className = 'bullet-list';
-                            
-                            cards.forEach(card => {
+                            techCards.forEach(card => {
                                 const bTag = card.querySelector('b');
-                                let title = bTag ? bTag.textContent.trim() : '';
-                                let details = '';
                                 if (bTag) {
+                                    const category = bTag.textContent.trim();
+                                    let skillsText = '';
                                     let foundB = false;
                                     card.childNodes.forEach(node => {
                                         if (node === bTag) foundB = true;
                                         else if (foundB && node.nodeType === Node.TEXT_NODE) {
-                                            details += node.textContent;
+                                            skillsText += node.textContent;
                                         }
                                     });
-                                    details = details.trim();
-                                } else {
-                                    title = card.textContent.trim();
+                                    skillsText = skillsText.replace(/^\s*,\s*|\s*,\s*$/g, '').trim().replace(/\s+/g, ' ');
+                                    if (category && skillsText) {
+                                        const li = document.createElement('li');
+                                        li.innerHTML = `<strong>${category}:</strong> ${skillsText}`;
+                                        list.appendChild(li);
+                                    }
                                 }
-                                
+                            });
+                            if (softSkillsText) {
                                 const li = document.createElement('li');
-                                li.textContent = details ? `${title} - ${details}` : title;
+                                li.innerHTML = `<strong>Soft Skills:</strong> ${softSkillsText}`;
+                                list.appendChild(li);
+                            }
+                            skillsContainer.appendChild(list);
+                        }
+                    } else {
+                        document.getElementById('resume-skills').innerHTML = prebuiltModels[currentMode].skills;
+                    }
+                }
+
+                // 5. Internship Preferences (Only in Internship mode)
+                if (currentMode === 'internship' && !hasOverrides.internshipPrefs) {
+                    document.getElementById('resume-internship-prefs').innerHTML = prebuiltModels.internship.internshipPrefs;
+                }
+
+                // 6. Projects
+                if (!hasOverrides.projects) {
+                    if (currentMode === 'general') {
+                        const projectsSec = getSection('projects');
+                        if (projectsSec) {
+                            const cards = projectsSec.querySelectorAll('.project-card');
+                            const projectsContainer = document.getElementById('resume-projects');
+                            if (cards.length > 0) {
+                                projectsContainer.innerHTML = '';
+                                cards.forEach(card => {
+                                    const title = card.querySelector('h3')?.textContent.trim() || '';
+                                    let desc = card.querySelector('p')?.textContent.trim() || '';
+                                    desc = desc.replace(/^\s*<br\s*\/?>/gi, '').replace(/\s+/g, ' ').trim();
+
+                                    const projectItem = document.createElement('div');
+                                    projectItem.className = 'item-container';
+                                    projectItem.innerHTML = `
+                                        <div class="item-header">
+                                            <span class="item-title">${title}</span>
+                                        </div>
+                                        <p class="item-details">${desc}</p>
+                                    `;
+                                    projectsContainer.appendChild(projectItem);
+                                });
+                            }
+                        }
+                    } else {
+                        document.getElementById('resume-projects').innerHTML = prebuiltModels[currentMode].projects;
+                    }
+                }
+
+                // 7. Certifications
+                if (!hasOverrides.certifications) {
+                    if (currentMode === 'general') {
+                        const certSec = getSection('certificates');
+                        if (certSec) {
+                            const cards = certSec.querySelectorAll('.card');
+                            const certContainer = document.getElementById('resume-certifications');
+                            if (cards.length > 0) {
+                                certContainer.innerHTML = '';
+                                const ul = document.createElement('ul');
+                                ul.className = 'bullet-list';
+
+                                cards.forEach(card => {
+                                    const bTag = card.querySelector('b');
+                                    let title = bTag ? bTag.textContent.trim() : '';
+                                    let details = '';
+                                    if (bTag) {
+                                        let foundB = false;
+                                        card.childNodes.forEach(node => {
+                                            if (node === bTag) foundB = true;
+                                            else if (foundB && node.nodeType === Node.TEXT_NODE) {
+                                                details += node.textContent;
+                                            }
+                                        });
+                                        details = details.trim();
+                                    } else {
+                                        title = card.textContent.trim();
+                                    }
+
+                                    const li = document.createElement('li');
+                                    li.textContent = details ? `${title} - ${details}` : title;
+                                    ul.appendChild(li);
+                                });
+                                certContainer.appendChild(ul);
+                            }
+                        }
+                    } else {
+                        document.getElementById('resume-certifications').innerHTML = prebuiltModels[currentMode].certifications;
+                    }
+                }
+
+                // 8. Achievements
+                if (!hasOverrides.achievements) {
+                    if (currentMode === 'general') {
+                        const achSec = getSection('achievements');
+                        const servicesSec = getSection('services');
+                        const achContainer = document.getElementById('resume-achievements');
+
+                        let achList = [];
+                        if (achSec) {
+                            const cards = achSec.querySelectorAll('.card');
+                            cards.forEach(card => {
+                                const text = card.textContent.trim().replace(/\s+/g, ' ');
+                                if (text) achList.push(text);
+                            });
+                        }
+
+                        if (servicesSec) {
+                            const cards = servicesSec.querySelectorAll('.project-card');
+                            cards.forEach(card => {
+                                const title = card.querySelector('h3')?.textContent.trim() || '';
+                                const desc = card.querySelector('p')?.textContent.trim() || '';
+                                if (title.toLowerCase().includes("nss") || title.toLowerCase().includes("volunteer")) {
+                                    achList.push(`${title} - ${desc}`);
+                                }
+                            });
+                        }
+
+                        if (achList.length > 0) {
+                            achContainer.innerHTML = '';
+                            const ul = document.createElement('ul');
+                            ul.className = 'bullet-list';
+                            achList.forEach(text => {
+                                const li = document.createElement('li');
+                                li.textContent = text;
                                 ul.appendChild(li);
                             });
-                            certContainer.appendChild(ul);
+                            achContainer.appendChild(ul);
                         }
+                    } else {
+                        document.getElementById('resume-achievements').innerHTML = prebuiltModels[currentMode].achievements;
                     }
                 }
 
-                // 7. Achievements
-                if (!hasOverrides.achievements) {
-                    const achSec = getSection('achievements');
-                    const servicesSec = getSection('services');
-                    const achContainer = document.getElementById('resume-achievements');
-                    
-                    let achList = [];
-                    if (achSec) {
-                        const cards = achSec.querySelectorAll('.card');
-                        cards.forEach(card => {
-                            const text = card.textContent.trim().replace(/\s+/g, ' ');
-                            if (text) achList.push(text);
-                        });
-                    }
-
-                    // Append NSS Volunteer service to Achievements if present
-                    if (servicesSec) {
-                        const cards = servicesSec.querySelectorAll('.project-card');
-                        cards.forEach(card => {
-                            const title = card.querySelector('h3')?.textContent.trim() || '';
-                            const desc = card.querySelector('p')?.textContent.trim() || '';
-                            if (title.toLowerCase().includes("nss") || title.toLowerCase().includes("volunteer")) {
-                                achList.push(`${title} - ${desc}`);
-                            }
-                        });
-                    }
-
-                    if (achList.length > 0) {
-                        achContainer.innerHTML = '';
-                        const ul = document.createElement('ul');
-                        ul.className = 'bullet-list';
-                        achList.forEach(text => {
-                            const li = document.createElement('li');
-                            li.textContent = text;
-                            ul.appendChild(li);
-                        });
-                        achContainer.appendChild(ul);
-                    }
-                }
-
-                // 8. Links
+                // 9. Links
                 if (!hasOverrides.links) {
                     const linksContainer = document.getElementById('resume-links');
                     let linkedinHref = 'https://linkedin.com/in/shaik-fayaz-987b05333';
@@ -836,6 +1446,14 @@
                     `;
                 }
 
+                // Set up item exclusion status from localStorage
+                document.querySelectorAll('[data-keywords]').forEach((item, index) => {
+                    const isExcluded = localStorage.getItem(`resume_excl_${currentMode}_${index}`) === 'true';
+                    if (isExcluded) {
+                        item.classList.add('item-excluded');
+                    }
+                });
+
             } catch (e) {
                 console.warn('Sync failed, using pre-populated static template. Error:', e);
             }
@@ -850,12 +1468,12 @@
             // 1. Add Admin Control Panel
             const adminControls = document.createElement("div");
             adminControls.className = "admin-controls no-print";
-            
+
             // Save Button
             const saveBtn = document.createElement("button");
             saveBtn.className = "admin-btn";
             saveBtn.innerHTML = "<i class='fa-solid fa-floppy-disk'></i> Save Edits";
-            
+
             // Back to Portfolio Button
             const backBtn = document.createElement("button");
             backBtn.className = "admin-btn back";
@@ -890,6 +1508,10 @@
                 document.getElementById('resume-achievements'),
                 document.getElementById('resume-links')
             ];
+
+            if (currentMode === 'internship') {
+                editableContainers.push(document.getElementById('resume-internship-prefs'));
+            }
 
             editableContainers.forEach(container => {
                 if (container) {
@@ -926,12 +1548,12 @@
             // 3. Helper to add delete button to a node
             function addDeleteButton(item) {
                 if (item.querySelector('.delete-btn')) return;
-                
+
                 item.style.position = "relative";
                 const delBtn = document.createElement("button");
                 delBtn.innerHTML = "<i class='fa-solid fa-trash'></i>";
                 delBtn.className = "delete-btn no-print";
-                
+
                 // Style delete button inside container
                 delBtn.style.position = "absolute";
                 delBtn.style.top = "0px";
@@ -945,16 +1567,47 @@
                 delBtn.style.padding = "1px 4px";
                 delBtn.style.zIndex = "100";
                 delBtn.title = "Delete item";
-                
+
                 delBtn.addEventListener("click", (e) => {
                     e.stopPropagation();
                     if (confirm("Delete this item?")) {
                         item.remove();
                     }
                 });
-                
+
                 item.appendChild(delBtn);
             }
+
+            // 4. Exclude Toggles (Checkboxes to manually exclude/include items dynamically)
+            document.querySelectorAll('[data-keywords]').forEach((item, index) => {
+                if (item.querySelector('.exclude-checkbox-container')) return;
+
+                const container = document.createElement('span');
+                container.className = 'exclude-checkbox-container no-print';
+                container.style.fontSize = '9px';
+                container.style.color = '#ef4444';
+                container.style.fontWeight = 'bold';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'exclude-checkbox';
+                checkbox.style.marginRight = '2px';
+                checkbox.checked = !item.classList.contains('item-excluded');
+
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        item.classList.remove('item-excluded');
+                        localStorage.setItem(`resume_excl_${currentMode}_${index}`, 'false');
+                    } else {
+                        item.classList.add('item-excluded');
+                        localStorage.setItem(`resume_excl_${currentMode}_${index}`, 'true');
+                    }
+                });
+
+                container.appendChild(checkbox);
+                container.appendChild(document.createTextNode("Keep"));
+                item.prepend(container);
+            });
 
             // Apply delete buttons
             const applyDeleteHandlers = () => {
@@ -966,7 +1619,7 @@
             };
             applyDeleteHandlers();
 
-            // 4. Helper to add "+ Add New" button
+            // 5. Helper to add "+ Add New" button
             function addAddButton(containerId, cloneSelector, defaultHTML, parentNode = null) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
@@ -974,7 +1627,7 @@
                 const addBtn = document.createElement("button");
                 addBtn.innerHTML = "<i class='fa-solid fa-plus'></i> Add New";
                 addBtn.className = "add-btn no-print";
-                
+
                 // Style Add Button
                 addBtn.style.display = "inline-block";
                 addBtn.style.margin = "5px 0";
@@ -992,10 +1645,12 @@
                     let newItem;
                     if (items.length > 0) {
                         newItem = items[items.length - 1].cloneNode(true);
-                        // Remove any cloned delete button
+                        // Remove any cloned delete button or checkbox
                         const oldDel = newItem.querySelector('.delete-btn');
                         if (oldDel) oldDel.remove();
-                        
+                        const oldCheck = newItem.querySelector('.exclude-checkbox-container');
+                        if (oldCheck) oldCheck.remove();
+
                         // Clear text contents in editable areas
                         newItem.querySelectorAll('[contenteditable="true"]').forEach(el => {
                             el.textContent = "New Item";
@@ -1065,6 +1720,10 @@
 
             addAddButton('resume-skills', 'li', `<strong>New Category:</strong> Skills list here`, 'ul');
 
+            if (currentMode === 'internship') {
+                addAddButton('resume-internship-prefs', 'li', `<strong>New Area:</strong> Description here`, 'ul');
+            }
+
             addAddButton('resume-projects', '.item-container', `
                 <div class="item-header">
                     <span class="item-title" contenteditable="true">Project Title</span>
@@ -1078,9 +1737,10 @@
 
             // 5. Saving Logic
             saveBtn.addEventListener("click", () => {
-                // Remove add/delete buttons before saving html
+                // Remove add/delete buttons and keep checkboxes before saving html
                 document.querySelectorAll('.add-btn').forEach(btn => btn.remove());
                 document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+                document.querySelectorAll('.exclude-checkbox-container').forEach(c => c.remove());
 
                 // Reset container borders and paddings
                 editableContainers.forEach(container => {
@@ -1098,23 +1758,34 @@
                     el.style.outline = "";
                 });
 
-                // Save to localStorage
-                localStorage.setItem("resume_saved_name", document.getElementById("resume-name").innerHTML.trim());
-                localStorage.setItem("resume_saved_title", document.getElementById("resume-title").innerHTML.trim());
-                localStorage.setItem("resume_saved_contact", document.getElementById("resume-contact").innerHTML.trim());
-                localStorage.setItem("resume_saved_personal_meta", document.getElementById("resume-personal-meta").innerHTML.trim());
-                localStorage.setItem("resume_saved_objective", document.getElementById("resume-objective").innerHTML.trim());
-                localStorage.setItem("resume_saved_education", document.getElementById("resume-education").innerHTML.trim());
-                localStorage.setItem("resume_saved_skills", document.getElementById("resume-skills").innerHTML.trim());
-                localStorage.setItem("resume_saved_projects", document.getElementById("resume-projects").innerHTML.trim());
-                localStorage.setItem("resume_saved_certifications", document.getElementById("resume-certifications").innerHTML.trim());
-                localStorage.setItem("resume_saved_achievements", document.getElementById("resume-achievements").innerHTML.trim());
-                localStorage.setItem("resume_saved_links", document.getElementById("resume-links").innerHTML.trim());
+                // Save individual exclusion checkmarks
+                document.querySelectorAll('[data-keywords]').forEach((item, index) => {
+                    const isExcl = item.classList.contains('item-excluded');
+                    localStorage.setItem(`resume_excl_${currentMode}_${index}`, isExcl ? 'true' : 'false');
+                });
 
-                alert("Resume edits saved successfully!");
+                // Save to localStorage under currentMode prefix
+                localStorage.setItem(`resume_saved_${currentMode}_name`, document.getElementById("resume-name").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_title`, document.getElementById("resume-title").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_contact`, document.getElementById("resume-contact").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_personal_meta`, document.getElementById("resume-personal-meta").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_objective`, document.getElementById("resume-objective").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_education`, document.getElementById("resume-education").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_skills`, document.getElementById("resume-skills").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_projects`, document.getElementById("resume-projects").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_certifications`, document.getElementById("resume-certifications").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_achievements`, document.getElementById("resume-achievements").innerHTML.trim());
+                localStorage.setItem(`resume_saved_${currentMode}_links`, document.getElementById("resume-links").innerHTML.trim());
+
+                if (currentMode === 'internship') {
+                    localStorage.setItem(`resume_saved_${currentMode}_internship_prefs`, document.getElementById("resume-internship-prefs").innerHTML.trim());
+                }
+
+                alert(`Saved changes for ${currentMode.toUpperCase()} resume mode successfully!`);
                 window.location.reload();
             });
         }
     </script>
 </body>
+
 </html>
