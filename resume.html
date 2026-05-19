@@ -565,11 +565,13 @@
                             Platforms:</strong> VS Code, Android Studio, GitHub</li>
                     <li
                         data-keywords="core skills ui/ux design problem solving debugging coding data structures algorithms">
-                        <strong>Core Skills:</strong> UI/UX Design, Problem Solving, Debugging</li>
+                        <strong>Core Skills:</strong> UI/UX Design, Problem Solving, Debugging
+                    </li>
                     <li
                         data-keywords="soft skills team collaboration teamwork creative thinking continuous learning communication skills">
                         <strong>Soft Skills:</strong> Team Collaboration, Creative Thinking, Continuous Learning,
-                        Communication Skills</li>
+                        Communication Skills
+                    </li>
                 </ul>
             </div>
         </section>
@@ -696,7 +698,11 @@
 
     <script>
         // Global State
-        let currentMode = localStorage.getItem("resume_active_mode") || "general";
+        const isAdmin = localStorage.getItem("portfolio_admin") === "true";
+        let currentMode = "general";
+        if (isAdmin) {
+            currentMode = localStorage.getItem("resume_active_mode") || "general";
+        }
         let targetCompany = localStorage.getItem("resume_target_company") || "Microsoft";
         let targetJD = localStorage.getItem(`resume_target_jd_${currentMode}`) || "";
 
@@ -856,40 +862,58 @@
         };
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Apply current mode highlight
-            document.querySelectorAll('.selector-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-${currentMode}`);
-            if (activeBtn) activeBtn.classList.add('active');
+            const isAdmin = localStorage.getItem("portfolio_admin") === "true";
 
-            // Render elements based on active mode
-            if (currentMode === 'company') {
-                const configPanel = document.getElementById('company-config-panel');
-                const compInput = document.getElementById('target-company-input');
-                const jdInput = document.getElementById('job-desc-input');
+            // Hide selector tabs and download button if not admin
+            const selectorBar = document.querySelector('.resume-type-selector');
+            const downloadBtn = document.querySelector('.download-btn');
 
-                if (configPanel) configPanel.style.display = 'flex';
-                if (compInput) compInput.value = targetCompany;
-                if (jdInput) jdInput.value = targetJD;
-            }
+            if (!isAdmin) {
+                if (selectorBar) selectorBar.style.setProperty('display', 'none', 'important');
+                if (downloadBtn) downloadBtn.style.setProperty('display', 'none', 'important');
 
-            if (currentMode === 'internship') {
-                const internshipPrefs = document.getElementById('sec-internship-preferences');
-                if (internshipPrefs) internshipPrefs.style.display = 'block';
+                // Force mode to general for non-admins
+                currentMode = 'general';
+            } else {
+                // Apply current mode highlight for admin
+                document.querySelectorAll('.selector-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.getElementById(`btn-${currentMode}`);
+                if (activeBtn) activeBtn.classList.add('active');
 
-                const configPanel = document.getElementById('company-config-panel');
-                const jdInput = document.getElementById('job-desc-input');
-                if (configPanel) {
-                    configPanel.style.display = 'flex';
-                    // Hide company input in internship mode since it is general internship
-                    configPanel.querySelector('div').style.display = 'none';
+                // Render elements based on active mode
+                if (currentMode === 'company') {
+                    const configPanel = document.getElementById('company-config-panel');
+                    const compInput = document.getElementById('target-company-input');
+                    const jdInput = document.getElementById('job-desc-input');
+
+                    if (configPanel) configPanel.style.display = 'flex';
+                    if (compInput) compInput.value = targetCompany;
+                    if (jdInput) jdInput.value = targetJD;
                 }
-                if (jdInput) jdInput.value = targetJD;
+
+                if (currentMode === 'internship') {
+                    const internshipPrefs = document.getElementById('sec-internship-preferences');
+                    if (internshipPrefs) internshipPrefs.style.display = 'block';
+
+                    const configPanel = document.getElementById('company-config-panel');
+                    const jdInput = document.getElementById('job-desc-input');
+                    if (configPanel) {
+                        configPanel.style.display = 'flex';
+                        // Hide company input in internship mode since it is general internship
+                        const firstDiv = configPanel.querySelector('div');
+                        if (firstDiv) firstDiv.style.display = 'none';
+                    }
+                    if (jdInput) jdInput.value = targetJD;
+                }
             }
 
             syncResumeData();
         });
 
         function switchResumeMode(mode) {
+            if (localStorage.getItem("portfolio_admin") !== "true") {
+                return;
+            }
             localStorage.setItem("resume_active_mode", mode);
             window.location.reload();
         }
