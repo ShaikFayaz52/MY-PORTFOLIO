@@ -116,20 +116,21 @@ button.btn-outline:hover {
 /* Cards */
 .card,
 .project-card {
-    background: var(--surface);
-    padding: 28px;
-    border-radius: var(--radius);
-    text-align: center;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    transition: 0.3s ease;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    text-align: left;
+    border: none;
+    box-shadow: none;
+    transition: none;
 }
 
+/* Remove hover effects for a clean look */
 .card:hover,
 .project-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--primary-light);
+    transform: none;
+    box-shadow: none;
+    border-color: transparent;
 }
 
 .card h3 {
