@@ -319,7 +319,7 @@ interactives.forEach(el => {
         if (cursorOutline) {
             cursorOutline.style.width = "50px";
             cursorOutline.style.height = "50px";
-            cursorOutline.style.backgroundColor = "rgba(0, 229, 255, 0.2)";
+            cursorOutline.style.backgroundColor = "rgba(79, 70, 229, 0.25)";
         }
     });
     el.addEventListener("mouseleave", () => {
@@ -332,18 +332,79 @@ interactives.forEach(el => {
 });
 
 // =========================
-// In-Line Editor (CMS) Logic
+// Firebase Integration (Optional Cloud Save)
 // =========================
+// To enable live saving to the cloud for all visitors:
+// 1. Create a Firebase project at console.firebase.google.com
+// 2. Add a Web App, copy its config below
+// 3. Set up Realtime Database in your Firebase project (using 'Start in Test Mode' or set read/write rules to true)
+// 4. Fill in your databaseURL and other config properties below!
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDGYiauwyEbvyiTJvwydqv52C9JxwkmtUY",
+
+    authDomain: "my-portfolio-662a5.firebaseapp.com",
+
+    databaseURL: "https://my-portfolio-662a5-default-rtdb.firebaseio.com/",
+
+    projectId: "my-portfolio-662a5",
+
+    storageBucket: "my-portfolio-662a5.firebasestorage.app",
+
+    messagingSenderId: "583696101996",
+
+    appId: "1:583696101996:web:14e5206a1043598c4f9e49",
+
+    measurementId: "G-9VQY34G4L9"
+
+};
+
+// Initialize Firebase Realtime Database if configured
+let db = null;
+if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+    } catch (e) {
+        console.error("Firebase initialization failed:", e);
+    }
+}
+
 const editableSections = ["home", "about", "interests", "education", "skills", "technical-skills", "projects", "certificates", "services", "achievements"];
 
-// Load saved data on page load
-editableSections.forEach(id => {
-    const savedHtml = localStorage.getItem(`saved_section_${id}`);
-    if (savedHtml) {
-        const section = document.getElementById(id);
-        if (section) section.innerHTML = savedHtml;
-    }
-});
+// Load from LocalStorage as initial quick fallback
+loadFromLocalStorage();
+
+// If Firebase is initialized, fetch the latest live sections and overwrite
+if (db) {
+    db.ref("portfolio/sections").once("value").then(snapshot => {
+        const data = snapshot.val();
+        if (data) {
+            editableSections.forEach(id => {
+                if (data[id]) {
+                    const section = document.getElementById(id);
+                    if (section) {
+                        section.innerHTML = data[id];
+                        // Cache it in localStorage for offline/fast load
+                        localStorage.setItem(`saved_section_${id}`, data[id]);
+                    }
+                }
+            });
+        }
+    }).catch(err => {
+        console.error("Failed to fetch from Firebase, using localStorage:", err);
+    });
+}
+
+function loadFromLocalStorage() {
+    editableSections.forEach(id => {
+        const savedHtml = localStorage.getItem(`saved_section_${id}`);
+        if (savedHtml) {
+            const section = document.getElementById(id);
+            if (section) section.innerHTML = savedHtml;
+        }
+    });
+}
 
 // Activate editing if logged in
 if (localStorage.getItem("portfolio_admin") === "true") {
@@ -355,7 +416,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
             const editResume = document.createElement("a");
             editResume.innerHTML = '<i class="fa-solid fa-file-pen"></i> EDIT RESUME';
             editResume.href = "resume.html";
-            editResume.style.color = "#00e5ff";
+            editResume.style.color = "var(--primary)";
             editResume.style.marginRight = "15px";
             link.parentNode.insertBefore(editResume, link);
 
@@ -375,7 +436,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
         const section = document.getElementById(id);
         if (section) {
             // Give visual feedback that it's editable
-            section.style.border = "2px dashed rgba(0, 229, 255, 0.5)";
+            section.style.border = "2px dashed rgba(79, 70, 229, 0.5)";
             section.style.borderRadius = "10px";
             section.style.position = "relative";
 
@@ -385,8 +446,8 @@ if (localStorage.getItem("portfolio_admin") === "true") {
             badge.style.position = "absolute";
             badge.style.top = "0";
             badge.style.right = "0";
-            badge.style.background = "#00e5ff";
-            badge.style.color = "black";
+            badge.style.background = "var(--primary)";
+            badge.style.color = "white";
             badge.style.padding = "2px 10px";
             badge.style.fontSize = "12px";
             badge.style.borderBottomLeftRadius = "10px";
@@ -499,8 +560,8 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 addBtn.style.display = "block";
                 addBtn.style.margin = "20px auto 0";
                 addBtn.style.padding = "10px 20px";
-                addBtn.style.background = "#00e5ff";
-                addBtn.style.color = "black";
+                addBtn.style.background = "var(--primary)";
+                addBtn.style.color = "white";
                 addBtn.style.border = "none";
                 addBtn.style.borderRadius = "10px";
                 addBtn.style.fontWeight = "bold";
@@ -554,7 +615,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
     saveBtn.style.zIndex = "9999";
     saveBtn.style.background = "#0b782c";
     saveBtn.style.color = "white";
-    saveBtn.style.border = "2px solid #00e5ff";
+    saveBtn.style.border = "2px solid var(--primary-light)";
     saveBtn.style.padding = "15px 25px";
     saveBtn.style.fontSize = "16px";
     saveBtn.style.fontWeight = "bold";
@@ -563,15 +624,21 @@ if (localStorage.getItem("portfolio_admin") === "true") {
     saveBtn.style.boxShadow = "0 5px 15px rgba(0,255,0,0.3)";
 
     saveBtn.addEventListener("click", () => {
+        const updates = {};
+        let activeElementsCount = 0;
+
         editableSections.forEach(id => {
             const section = document.getElementById(id);
             if (section) {
-                // Remove the edit badge and add buttons before saving
-                const badges = section.querySelectorAll(".edit-badge");
+                // Create a clone of the section so we can clean up CMS controls without affecting current editing session
+                const clone = section.cloneNode(true);
+
+                // Remove the edit badges and add/delete buttons from the clone
+                const badges = clone.querySelectorAll(".edit-badge, .delete-btn");
                 badges.forEach(b => b.remove());
 
-                // Remove contenteditable attributes so they aren't permanent for normal visitors
-                const editableNodes = section.querySelectorAll("[contenteditable]");
+                // Remove contenteditable attributes
+                const editableNodes = clone.querySelectorAll("[contenteditable]");
                 editableNodes.forEach(n => {
                     n.removeAttribute("contenteditable");
                     n.style.outline = "";
@@ -579,13 +646,29 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 });
 
                 // Clear inline styles we added for edit mode
-                section.style.border = "";
+                clone.style.border = "";
 
-                localStorage.setItem(`saved_section_${id}`, section.innerHTML);
+                const cleanHtml = clone.innerHTML;
+                localStorage.setItem(`saved_section_${id}`, cleanHtml);
+                updates[id] = cleanHtml;
+                activeElementsCount++;
             }
         });
-        alert("All edits saved successfully! They are now live on your browser.");
-        window.location.reload(); // Reload to show saved state cleanly
+
+        if (db && activeElementsCount > 0) {
+            db.ref("portfolio/sections").update(updates)
+                .then(() => {
+                    alert("All edits saved to Firebase Cloud! Your changes are now live for everyone.");
+                    window.location.reload();
+                })
+                .catch(err => {
+                    alert("Failed to save to cloud: " + err.message + "\nYour changes have been saved to local browser storage only.");
+                    window.location.reload();
+                });
+        } else {
+            alert("All edits saved successfully on your local browser! (Connect Firebase in script.js to make it live for other devices)");
+            window.location.reload();
+        }
     });
 
     document.body.appendChild(saveBtn);
