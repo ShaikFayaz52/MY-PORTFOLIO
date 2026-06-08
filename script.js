@@ -340,31 +340,23 @@ interactives.forEach(el => {
 // 3. Set up Realtime Database in your Firebase project (using 'Start in Test Mode' or set read/write rules to true)
 // 4. Fill in your databaseURL and other config properties below!
 const firebaseConfig = {
-
     apiKey: "AIzaSyDGYiauwyEbvyiTJvwydqv52C9JxwkmtUY",
-
     authDomain: "my-portfolio-662a5.firebaseapp.com",
-
     databaseURL: "https://my-portfolio-662a5-default-rtdb.firebaseio.com/",
-
     projectId: "my-portfolio-662a5",
-
     storageBucket: "my-portfolio-662a5.firebasestorage.app",
-
     messagingSenderId: "583696101996",
-
     appId: "1:583696101996:web:14e5206a1043598c4f9e49",
-
     measurementId: "G-9VQY34G4L9"
-
 };
 
 // Initialize Firebase Realtime Database if configured
 let db = null;
-if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY" && firebaseConfig.databaseURL !== "YOUR_DATABASE_URL") {
     try {
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
+        console.log("✅ Firebase connected successfully!");
     } catch (e) {
         console.error("Firebase initialization failed:", e);
     }
