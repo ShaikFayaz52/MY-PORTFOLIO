@@ -361,7 +361,7 @@ const firebaseConfig = {
 
 // Initialize Firebase Realtime Database if configured
 let db = null;
-if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "AIzaSyDGYiauwyEbvyiTJvwydqv52C9JxwkmtUY") {
+if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
     try {
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
