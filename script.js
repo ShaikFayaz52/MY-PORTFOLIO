@@ -362,7 +362,7 @@ if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY" 
     }
 }
 
-const editableSections = ["home", "about", "interests", "education", "skills", "technical-skills", "projects", "certificates", "services", "achievements"];
+const editableSections = ["home", "about", "interests", "education", "skills", "technical-skills", "projects", "certificates", "services", "achievements", "internship", "contact", "footer"];
 
 // Load from LocalStorage as initial quick fallback
 loadFromLocalStorage();
@@ -400,6 +400,7 @@ function loadFromLocalStorage() {
 
 // Activate editing if logged in
 if (localStorage.getItem("portfolio_admin") === "true") {
+    let isPreviewActive = false;
     // 1. Change Login Nav Link to Logout and add Edit Resume Link
     const navLinksList = document.querySelectorAll("nav a");
     navLinksList.forEach(link => {
@@ -463,6 +464,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                     img.style.cursor = "pointer";
                     img.title = "Click to upload an image or take a selfie";
                     img.addEventListener("click", () => {
+                        if (isPreviewActive) return;
                         if (confirm("Click OK to Upload from Gallery / Take Photo. Click Cancel to enter a Web URL instead.")) {
                             const fileInput = document.createElement("input");
                             fileInput.type = "file";
@@ -502,6 +504,7 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                     icon.style.cursor = "pointer";
                     icon.title = "Click to change FontAwesome icon";
                     icon.addEventListener("click", () => {
+                        if (isPreviewActive) return;
                         const newClass = prompt("Enter new FontAwesome classes (e.g. 'fa-solid fa-laptop'):", icon.className);
                         if (newClass) icon.className = newClass;
                     });
@@ -522,16 +525,32 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 delBtn.style.position = "absolute";
                 delBtn.style.top = "10px";
                 delBtn.style.right = "10px";
-                delBtn.style.background = "rgba(255, 77, 77, 0.2)";
-                delBtn.style.color = "#ff4d4d";
-                delBtn.style.border = "1px solid #ff4d4d";
-                delBtn.style.borderRadius = "5px";
-                delBtn.style.padding = "5px 8px";
+                delBtn.style.background = "#ef4444"; // Solid Red
+                delBtn.style.color = "white"; // White trash icon
+                delBtn.style.border = "none";
+                delBtn.style.borderRadius = "50%"; // Circular button
+                delBtn.style.width = "30px";
+                delBtn.style.height = "30px";
+                delBtn.style.display = "flex";
+                delBtn.style.alignItems = "center";
+                delBtn.style.justifyContent = "center";
                 delBtn.style.cursor = "pointer";
                 delBtn.style.zIndex = "10";
+                delBtn.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+                delBtn.style.transition = "transform 0.2s ease, background-color 0.2s ease";
                 delBtn.title = "Remove this item";
 
-                delBtn.addEventListener("click", () => {
+                delBtn.addEventListener("mouseover", () => {
+                    delBtn.style.transform = "scale(1.15)";
+                    delBtn.style.background = "#dc2626";
+                });
+                delBtn.addEventListener("mouseout", () => {
+                    delBtn.style.transform = "scale(1)";
+                    delBtn.style.background = "#ef4444";
+                });
+
+                delBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
                     if (confirm("Are you sure you want to remove this item?")) {
                         element.remove();
                     }
@@ -551,14 +570,27 @@ if (localStorage.getItem("portfolio_admin") === "true") {
                 addBtn.innerHTML = "<i class='fa-solid fa-plus'></i> Add New Data";
                 addBtn.style.display = "block";
                 addBtn.style.margin = "20px auto 0";
-                addBtn.style.padding = "10px 20px";
+                addBtn.style.padding = "10px 25px";
                 addBtn.style.background = "var(--primary)";
                 addBtn.style.color = "white";
                 addBtn.style.border = "none";
-                addBtn.style.borderRadius = "10px";
+                addBtn.style.borderRadius = "50px"; // Rounded pill shape
                 addBtn.style.fontWeight = "bold";
                 addBtn.style.cursor = "pointer";
+                addBtn.style.boxShadow = "0 4px 10px rgba(79, 70, 229, 0.2)";
+                addBtn.style.transition = "all 0.3s ease";
                 addBtn.classList.add("edit-badge"); // Ensure it gets removed before saving
+
+                addBtn.addEventListener("mouseover", () => {
+                    addBtn.style.background = "var(--primary-light)";
+                    addBtn.style.transform = "translateY(-2px)";
+                    addBtn.style.boxShadow = "0 6px 15px rgba(79, 70, 229, 0.35)";
+                });
+                addBtn.addEventListener("mouseout", () => {
+                    addBtn.style.background = "var(--primary)";
+                    addBtn.style.transform = "translateY(0)";
+                    addBtn.style.boxShadow = "0 4px 10px rgba(79, 70, 229, 0.2)";
+                });
 
                 addBtn.addEventListener("click", () => {
                     // Find the items inside the container
@@ -598,22 +630,170 @@ if (localStorage.getItem("portfolio_admin") === "true") {
         }
     });
 
-    // 3. Add Global Save Button
+    // 3. Create Admin Control Panel Container
+    const adminPanel = document.createElement("div");
+    adminPanel.style.position = "fixed";
+    adminPanel.style.bottom = "120px"; // Above Chatbot
+    adminPanel.style.left = "30px";
+    adminPanel.style.zIndex = "9999";
+    adminPanel.style.display = "flex";
+    adminPanel.style.flexDirection = "column";
+    adminPanel.style.gap = "10px";
+    adminPanel.style.background = "rgba(15, 23, 42, 0.9)";
+    adminPanel.style.backdropFilter = "blur(10px)";
+    adminPanel.style.border = "1px solid rgba(255, 255, 255, 0.15)";
+    adminPanel.style.padding = "15px";
+    adminPanel.style.borderRadius = "15px";
+    adminPanel.style.boxShadow = "0 10px 25px rgba(0, 0, 0, 0.3)";
+    adminPanel.style.color = "white";
+    adminPanel.style.fontFamily = "'Poppins', sans-serif";
+    adminPanel.style.width = "220px";
+
+    const panelTitle = document.createElement("div");
+    panelTitle.innerHTML = "<strong><i class='fa-solid fa-user-gear'></i> Admin CMS Panel</strong>";
+    panelTitle.style.fontSize = "14px";
+    panelTitle.style.marginBottom = "8px";
+    panelTitle.style.textAlign = "center";
+    panelTitle.style.color = "#818cf8"; // Light Indigo
+    adminPanel.appendChild(panelTitle);
+
+    // Save Button
     const saveBtn = document.createElement("button");
     saveBtn.innerHTML = "<i class='fa-solid fa-floppy-disk'></i> Save All Edits";
-    saveBtn.style.position = "fixed";
-    saveBtn.style.bottom = "120px"; // Above Chatbot
-    saveBtn.style.left = "30px";
-    saveBtn.style.zIndex = "9999";
+    saveBtn.style.width = "100%";
     saveBtn.style.background = "#0b782c";
     saveBtn.style.color = "white";
-    saveBtn.style.border = "2px solid var(--primary-light)";
-    saveBtn.style.padding = "15px 25px";
-    saveBtn.style.fontSize = "16px";
+    saveBtn.style.border = "none";
+    saveBtn.style.padding = "10px 15px";
+    saveBtn.style.fontSize = "14px";
     saveBtn.style.fontWeight = "bold";
-    saveBtn.style.borderRadius = "30px";
+    saveBtn.style.borderRadius = "8px";
     saveBtn.style.cursor = "pointer";
-    saveBtn.style.boxShadow = "0 5px 15px rgba(0,255,0,0.3)";
+    saveBtn.style.transition = "0.3s";
+    saveBtn.addEventListener("mouseover", () => saveBtn.style.background = "#085c21");
+    saveBtn.addEventListener("mouseout", () => saveBtn.style.background = "#0b782c");
+    adminPanel.appendChild(saveBtn);
+
+    // Preview Mode / Hide Edit Options Button
+    const previewBtn = document.createElement("button");
+    previewBtn.innerHTML = "<i class='fa-solid fa-eye-slash'></i> Hide Edit Options";
+    previewBtn.style.width = "100%";
+    previewBtn.style.background = "#4b5563"; // gray-600
+    previewBtn.style.color = "white";
+    previewBtn.style.border = "none";
+    previewBtn.style.padding = "10px 15px";
+    previewBtn.style.fontSize = "14px";
+    previewBtn.style.fontWeight = "bold";
+    previewBtn.style.borderRadius = "8px";
+    previewBtn.style.cursor = "pointer";
+    previewBtn.style.transition = "0.3s";
+    adminPanel.appendChild(previewBtn);
+
+    // Edit Resume Link Button
+    const editResumeBtn = document.createElement("button");
+    editResumeBtn.innerHTML = "<i class='fa-solid fa-file-pen'></i> Edit Resume";
+    editResumeBtn.style.width = "100%";
+    editResumeBtn.style.background = "#3b82f6";
+    editResumeBtn.style.color = "white";
+    editResumeBtn.style.border = "none";
+    editResumeBtn.style.padding = "10px 15px";
+    editResumeBtn.style.fontSize = "14px";
+    editResumeBtn.style.fontWeight = "bold";
+    editResumeBtn.style.borderRadius = "8px";
+    editResumeBtn.style.cursor = "pointer";
+    editResumeBtn.style.transition = "0.3s";
+    editResumeBtn.addEventListener("click", () => window.open("resume.html", "_blank"));
+    adminPanel.appendChild(editResumeBtn);
+
+    // Logout Button
+    const logoutBtn = document.createElement("button");
+    logoutBtn.innerHTML = "<i class='fa-solid fa-right-from-bracket'></i> Logout";
+    logoutBtn.style.width = "100%";
+    logoutBtn.style.background = "#ef4444";
+    logoutBtn.style.color = "white";
+    logoutBtn.style.border = "none";
+    logoutBtn.style.padding = "10px 15px";
+    logoutBtn.style.fontSize = "14px";
+    logoutBtn.style.fontWeight = "bold";
+    logoutBtn.style.borderRadius = "8px";
+    logoutBtn.style.cursor = "pointer";
+    logoutBtn.style.transition = "0.3s";
+    logoutBtn.addEventListener("mouseover", () => logoutBtn.style.background = "#dc2626");
+    logoutBtn.addEventListener("mouseout", () => logoutBtn.style.background = "#ef4444");
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("portfolio_admin");
+        window.location.reload();
+    });
+    adminPanel.appendChild(logoutBtn);
+
+    document.body.appendChild(adminPanel);
+
+    // Preview mode visibility update function
+    function updateEditControlsVisibility() {
+        editableSections.forEach(id => {
+            const section = document.getElementById(id);
+            if (section) {
+                // Toggle borders
+                if (isPreviewActive) {
+                    section.style.border = "none";
+                    section.style.borderRadius = "";
+                } else {
+                    section.style.border = "2px dashed rgba(79, 70, 229, 0.5)";
+                    section.style.borderRadius = "10px";
+                }
+
+                // Toggle contenteditable
+                const textElements = section.querySelectorAll("h1, h2, h3, p, span, li, b, .card, .project-card, .timeline-content");
+                textElements.forEach(el => {
+                    el.setAttribute("contenteditable", isPreviewActive ? "false" : "true");
+                });
+
+                // Toggle images and icons pointers
+                const images = section.querySelectorAll("img");
+                images.forEach(img => {
+                    if (isPreviewActive) {
+                        img.style.cursor = "";
+                        img.removeAttribute("title");
+                    } else {
+                        img.style.cursor = "pointer";
+                        img.title = "Click to upload an image or take a selfie";
+                    }
+                });
+
+                const icons = section.querySelectorAll("i.fa-solid, i.fa-brands, i.fa-regular");
+                icons.forEach(icon => {
+                    if (icon.classList.contains("fa-trash") || icon.classList.contains("fa-plus")) return;
+                    if (isPreviewActive) {
+                        icon.style.cursor = "";
+                        icon.removeAttribute("title");
+                    } else {
+                        icon.style.cursor = "pointer";
+                        icon.title = "Click to change FontAwesome icon";
+                    }
+                });
+
+                // Toggle visibility of delete buttons and badges
+                const cmsElements = section.querySelectorAll(".edit-badge, .delete-btn");
+                cmsElements.forEach(el => {
+                    el.style.display = isPreviewActive ? "none" : "";
+                });
+            }
+        });
+
+        // Update preview button styling
+        if (isPreviewActive) {
+            previewBtn.innerHTML = "<i class='fa-solid fa-eye'></i> Show Edit Options";
+            previewBtn.style.background = "#3b82f6"; // Indigo/blue when active
+        } else {
+            previewBtn.innerHTML = "<i class='fa-solid fa-eye-slash'></i> Hide Edit Options";
+            previewBtn.style.background = "#4b5563"; // Gray
+        }
+    }
+
+    previewBtn.addEventListener("click", () => {
+        isPreviewActive = !isPreviewActive;
+        updateEditControlsVisibility();
+    });
 
     saveBtn.addEventListener("click", () => {
         const updates = {};
