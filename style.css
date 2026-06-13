@@ -4,10 +4,13 @@
    CSS Variables
 ========================= */
 :root {
-    --primary: #4f46e5;        /* Indigo */
+    --primary: #4f46e5;
+    /* Indigo */
     --primary-light: #6366f1;
-    --primary-soft: #eef2ff;   /* Very light indigo tint */
-    --accent: #06b6d4;         /* Cyan accent */
+    --primary-soft: #eef2ff;
+    /* Very light indigo tint */
+    --accent: #06b6d4;
+    /* Cyan accent */
     --white: #ffffff;
     --bg: #f8fafc;
     --surface: #ffffff;
@@ -116,21 +119,20 @@ button.btn-outline:hover {
 /* Cards */
 .card,
 .project-card {
-    background: transparent;
-    padding: 0;
-    border-radius: 0;
-    text-align: left;
-    border: none;
-    box-shadow: none;
-    transition: none;
+    background: var(--surface);
+    padding: 28px;
+    border-radius: var(--radius);
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: 0.3s ease;
 }
 
-/* Remove hover effects for a clean look */
 .card:hover,
 .project-card:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: transparent;
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
 }
 
 .card h3 {
@@ -652,13 +654,29 @@ footer p {
 }
 
 @keyframes pulseDot {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.5); opacity: 0.5; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
 }
 
 @keyframes pulseBorder {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.25); }
-    50% { box-shadow: 0 0 0 7px rgba(79, 70, 229, 0); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.25);
+    }
+
+    50% {
+        box-shadow: 0 0 0 7px rgba(79, 70, 229, 0);
+    }
 }
 
 /* =========================
