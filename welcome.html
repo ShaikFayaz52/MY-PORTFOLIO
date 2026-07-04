@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome | Shaik Fayaz</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #312e81;
+            --text-dark: #0f172a;
+            --text-mid: #475569;
+            --surface: rgba(255, 255, 255, 0.82);
+            --border: rgba(79, 70, 229, 0.16);
+            --shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,93 +24,114 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 50%, #eef2ff 100%);
+            background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 45%, #e0e7ff 100%);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            color: #1e293b;
-            height: 100vh;
+            color: var(--text-dark);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             position: relative;
+            padding: 24px;
+            /* Fixed: Changed overflow: hidden to allow scrolling on small landscape devices */
+            overflow-x: hidden; 
         }
 
         @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .welcome-container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 60px 50px;
-            border-radius: 30px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(79, 70, 229, 0.15);
-            box-shadow: 0 20px 50px rgba(79, 70, 229, 0.08);
+            background: var(--surface);
+            padding: 56px 42px;
+            border-radius: 32px;
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
             animation: fadeInUP 1.2s ease-out forwards;
             opacity: 0;
             transform: translateY(30px);
-            max-width: 600px;
-            width: 90%;
+            max-width: 620px;
+            width: min(100%, 620px);
             z-index: 10;
+            position: relative;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .welcome-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
         }
 
         @keyframes fadeInUP {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .welcome-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #1e293b;
-            letter-spacing: 1px;
-            line-height: 1.2;
+            font-size: clamp(2.1rem, 4vw, 3.2rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
         }
 
         .welcome-title span {
-            color: #4f46e5;
+            display: inline-block;
+            color: var(--primary);
+            margin-top: 6px;
         }
 
         .welcome-text {
-            font-size: 18px;
-            color: #475569;
-            margin-bottom: 40px;
-            line-height: 1.6;
+            font-size: clamp(1rem, 1.6vw, 1.1rem);
+            color: var(--text-mid);
+            margin-bottom: 34px;
+            line-height: 1.7;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .enter-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 16px 40px;
-            background: #4f46e5;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
             color: #ffffff;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
             text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s ease;
+            border-radius: 999px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
             position: relative;
             overflow: hidden;
             z-index: 1;
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.24);
         }
 
         .enter-btn::before {
@@ -113,8 +141,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: all 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+            transition: left 0.5s ease;
             z-index: -1;
         }
 
@@ -123,59 +151,58 @@
         }
 
         .enter-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.35);
-            background: #6366f1;
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(79, 70, 229, 0.32);
+            background: linear-gradient(135deg, #4338ca, var(--primary));
         }
 
-        /* Floating particles background effect */
+        /* Fixed: Replaced fixed 'bottom' with 'top' and updated transform logic to prevent layout clipping */
         .particle {
             position: absolute;
             background: rgba(79, 70, 229, 0.08);
             border-radius: 50%;
             animation: float 10s infinite linear;
-            bottom: -50px;
+            top: 105vh;
+            pointer-events: none; /* Fixed: Prevents particles from blocking button clicks */
         }
 
+        .particle.one { width: 15px; height: 15px; left: 10%; animation-duration: 8s; }
+        .particle.two { width: 25px; height: 25px; left: 30%; animation-duration: 12s; animation-delay: 2s; }
+        .particle.three { width: 10px; height: 10px; left: 60%; animation-duration: 6s; animation-delay: 1s; }
+        .particle.four { width: 20px; height: 20px; left: 80%; animation-duration: 10s; animation-delay: 3s; }
+        .particle.five { width: 12px; height: 12px; left: 50%; animation-duration: 9s; animation-delay: 4s; }
+        .particle.six { width: 18px; height: 18px; left: 20%; animation-duration: 11s; animation-delay: 5s; }
+        .particle.seven { width: 14px; height: 14px; left: 75%; animation-duration: 7s; animation-delay: 2.5s; }
+
         @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-220vh) translateX(20px); opacity: 0; }
+        }
 
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-120vh) translateX(20px);
-                opacity: 0;
-            }
+        @media (max-width: 600px) {
+            .welcome-container { padding: 42px 24px; }
+            .welcome-title { font-size: 2rem; }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- Simple animated particles -->
-    <div class="particle" style="width: 15px; height: 15px; left: 10%; animation-duration: 8s;"></div>
-    <div class="particle" style="width: 25px; height: 25px; left: 30%; animation-duration: 12s; animation-delay: 2s;"></div>
-    <div class="particle" style="width: 10px; height: 10px; left: 60%; animation-duration: 6s; animation-delay: 1s;"></div>
-    <div class="particle" style="width: 20px; height: 20px; left: 80%; animation-duration: 10s; animation-delay: 3s;"></div>
-    <div class="particle" style="width: 12px; height: 12px; left: 50%; animation-duration: 9s; animation-delay: 4s;"></div>
-    <div class="particle" style="width: 18px; height: 18px; left: 20%; animation-duration: 11s; animation-delay: 5s;"></div>
-    <div class="particle" style="width: 14px; height: 14px; left: 75%; animation-duration: 7s; animation-delay: 2.5s;"></div>
+    <div class="particle one"></div>
+    <div class="particle two"></div>
+    <div class="particle three"></div>
+    <div class="particle four"></div>
+    <div class="particle five"></div>
+    <div class="particle six"></div>
+    <div class="particle seven"></div>
 
     <div class="welcome-container">
+        <div class="welcome-badge">Portfolio Welcome</div>
         <h1 class="welcome-title">Welcome to<br><span>Fayaz's Portfolio</span></h1>
-        <p class="welcome-text">Discover my work, skills, and journey as a passionate Computer Science Student & Developer.</p>
+        <p class="welcome-text">Discover my work, skills, and journey as a passionate computer science student and developer.</p>
         <a href="home.html" class="enter-btn">Enter Portfolio</a>
     </div>
 
 </body>
-
 </html>

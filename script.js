@@ -1,59 +1,44 @@
-// =========================
-// Scroll To Top Button
-// =========================
-
 const topBtn = document.getElementById("topBtn");
-
-if (topBtn) {
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            topBtn.style.display = "block";
-        } else {
-            topBtn.style.display = "none";
-        }
-    });
-
-    topBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-}
-
-
-// =========================
-// Dark Mode Toggle
-// =========================
-
 const darkModeBtn = document.getElementById("darkModeBtn");
+const menuToggle = document.getElementById("menuToggle");
+const header = document.querySelector(".site-header");
+const typingText = document.querySelector(".typing-text");
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".nav-links a[href^='#']");
+const form = document.querySelector(".contact-form");
+const aiChatToggle = document.getElementById("ai-chat-toggle");
+const aiChatBox = document.getElementById("ai-chat-box");
+const aiChatClose = document.getElementById("ai-chat-close");
+const aiChatInput = document.getElementById("ai-chat-input-field");
+const aiChatSend = document.getElementById("ai-chat-send");
+const aiChatMessages = document.getElementById("ai-chat-messages");
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorOutline = document.querySelector(".cursor-outline");
+const revealElements = document.querySelectorAll(".card, .project-card, .hero-card, .hero-copy, .hero-visual");
 
-if (darkModeBtn) {
-    darkModeBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
+function applyTheme(theme) {
+    const isDark = theme === "dark";
+    document.body.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    document.body.classList.toggle("dark-mode", isDark);
 
-        // Change Icon
-        const icon = darkModeBtn.querySelector("i");
+    const icon = darkModeBtn?.querySelector("i");
+    if (icon) {
+        icon.classList.toggle("fa-moon", !isDark);
+        icon.classList.toggle("fa-sun", isDark);
+    }
 
-        if (document.body.classList.contains("dark-mode")) {
-            icon.classList.remove("fa-moon");
-            icon.classList.add("fa-sun");
-        } else {
-            icon.classList.remove("fa-sun");
-            icon.classList.add("fa-moon");
-        }
-    });
+    localStorage.setItem("portfolio_theme", theme);
 }
 
-
-// =========================
-// Typing Animation
-// =========================
-
-const typingText = document.querySelector(".typing-text");
+function initTheme() {
+    const savedTheme = localStorage.getItem("portfolio_theme");
+    const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    applyTheme(savedTheme || preferredTheme);
+}
 
 const textArray = [
-    "Passionate CSE Student",
+    "3rd Year CSE Student",
     "Aspiring Full-Stack Developer",
     "Creative App Developer",
     "Tech Enthusiast"
@@ -63,137 +48,126 @@ let textIndex = 0;
 let charIndex = 0;
 
 function typeEffect() {
+    if (!typingText) return;
 
     if (charIndex < textArray[textIndex].length) {
-
         typingText.textContent += textArray[textIndex].charAt(charIndex);
-
         charIndex++;
-
         setTimeout(typeEffect, 100);
-
     } else {
-
-        setTimeout(eraseEffect, 1500);
+        setTimeout(eraseEffect, 1400);
     }
 }
 
 function eraseEffect() {
+    if (!typingText) return;
 
     if (charIndex > 0) {
-
-        typingText.textContent =
-            textArray[textIndex].substring(0, charIndex - 1);
-
+        typingText.textContent = textArray[textIndex].substring(0, charIndex - 1);
         charIndex--;
-
         setTimeout(eraseEffect, 50);
-
     } else {
-
-        textIndex++;
-
-        if (textIndex >= textArray.length) {
-            textIndex = 0;
-        }
-
+        textIndex = (textIndex + 1) % textArray.length;
         setTimeout(typeEffect, 500);
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    if (textArray.length) {
-        setTimeout(typeEffect, 1000);
-    }
-});
-
-
-// =========================
-// Navbar Active Link
-// =========================
-
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll("nav a");
-
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(section => {
-
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute("id");
-        }
-    });
-
-    navLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-        if (link.getAttribute("href") === `#${current}`) {
-            link.classList.add("active");
-        }
-    });
-});
-
-
-// =========================
-// Reveal Animation On Scroll
-// =========================
-
-const revealElements = document.querySelectorAll(
-    ".card, .project-card, .hero-text, .hero-image"
-);
-
-window.addEventListener("scroll", revealOnScroll);
-
 function revealOnScroll() {
-
     const windowHeight = window.innerHeight;
 
     revealElements.forEach(element => {
-
         const revealTop = element.getBoundingClientRect().top;
-
-        if (revealTop < windowHeight - 100) {
-
+        if (revealTop < windowHeight - 90) {
             element.classList.add("show");
         }
     });
 }
 
+function updateActiveLink() {
+    let current = "";
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 220) {
+            current = section.getAttribute("id");
+        }
+    });
 
-// =========================
-// Contact Form Alert
-// =========================
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+        }
+    });
+}
 
-const form = document.querySelector("form");
+function addRipple(event) {
+    const button = event.currentTarget;
+    const circle = document.createElement("span");
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    circle.style.width = `${size}px`;
+    circle.style.height = `${size}px`;
+    circle.style.left = `${event.clientX - rect.left}px`;
+    circle.style.top = `${event.clientY - rect.top}px`;
+    circle.classList.add("ripple");
+    button.appendChild(circle);
+    setTimeout(() => circle.remove(), 600);
+}
+
+if (topBtn) {
+    window.addEventListener("scroll", () => {
+        topBtn.style.display = window.scrollY > 300 ? "flex" : "none";
+        if (header) {
+            header.classList.toggle("scrolled", window.scrollY > 20);
+        }
+    });
+
+    topBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+
+if (darkModeBtn) {
+    darkModeBtn.addEventListener("click", () => {
+        const nextTheme = document.body.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+    });
+}
+
+if (menuToggle && header) {
+    menuToggle.addEventListener("click", () => {
+        header.classList.toggle("nav-open");
+        const expanded = header.classList.contains("nav-open");
+        menuToggle.setAttribute("aria-expanded", String(expanded));
+    });
+}
+
+window.addEventListener("scroll", updateActiveLink);
+window.addEventListener("scroll", revealOnScroll);
+
+if (typingText) {
+    setTimeout(typeEffect, 1000);
+}
+
+document.querySelectorAll(".btn, .nav-links a, .theme-toggle, button, .text-link, .contact-form button").forEach(button => {
+    button.addEventListener("click", addRipple);
+});
 
 if (form) {
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Prevent page reload
-
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
         const actionUrl = form.getAttribute("action");
-
-        // Check if user has updated the Formspree URL
         if (!actionUrl || actionUrl.includes("YOUR_FORM_ID")) {
-            alert("Please replace the Formspree URL in index.html to send emails!");
+            alert("Please replace the Formspree URL to send emails.");
             return;
         }
 
         const formData = new FormData(form);
-
         try {
             const response = await fetch(actionUrl, {
                 method: "POST",
                 body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                headers: { Accept: "application/json" }
             });
 
             if (response.ok) {
@@ -208,19 +182,10 @@ if (form) {
     });
 }
 
-// =========================
-// AI Chatbot Logic
-// =========================
-const aiChatToggle = document.getElementById("ai-chat-toggle");
-const aiChatBox = document.getElementById("ai-chat-box");
-const aiChatClose = document.getElementById("ai-chat-close");
-const aiChatInput = document.getElementById("ai-chat-input-field");
-const aiChatSend = document.getElementById("ai-chat-send");
-const aiChatMessages = document.getElementById("ai-chat-messages");
-
-if (aiChatToggle) {
+if (aiChatToggle && aiChatBox && aiChatClose && aiChatInput && aiChatSend && aiChatMessages) {
     aiChatToggle.addEventListener("click", () => {
         aiChatBox.classList.remove("hidden");
+        aiChatInput.focus();
     });
 
     aiChatClose.addEventListener("click", () => {
@@ -238,91 +203,69 @@ if (aiChatToggle) {
 
     function getAIResponse(userText) {
         const text = userText.toLowerCase();
-
         if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
             return "Hello! I am Fayaz's AI portfolio assistant. How can I help you?";
         } else if (text.includes("project") || text.includes("work")) {
-            return "Fayaz has built several projects like Shop Ease (e-commerce), KindMeals App (food donation platform), and a Carbon Footprint Calculator. Check out the Projects section!";
+            return "Fayaz has built projects like Shop Ease, KindMeals App, and a Carbon Footprint Calculator. Check out the Projects section!";
         } else if (text.includes("skill") || text.includes("tech") || text.includes("know")) {
-            return "Fayaz is skilled in Java, Python, C, HTML, CSS, JavaScript, Firebase, Android Development, MySQL, and more!";
+            return "Fayaz is skilled in Java, Python, C, HTML, CSS, JavaScript, Firebase, Android Development, MySQL, and more.";
         } else if (text.includes("contact") || text.includes("email") || text.includes("phone")) {
-            return "You can reach Fayaz at +91 6305138534 or through the contact form at the bottom of the page.";
+            return "You can reach Fayaz at +91 6305138534 or through the contact form on the page.";
         } else if (text.includes("education") || text.includes("study") || text.includes("student")) {
             return "Fayaz is currently pursuing a B.Tech in Computer Science at Srinivasa Ramanujan Institute of Technology (2024 - 2028).";
         } else if (text.includes("about") || text.includes("who")) {
-            return "Fayaz is a passionate Computer Science and Engineering student with a strong interest in software development, building innovative apps, and solving real-world challenges.";
-        } else if (text.includes("intership") || text.includes("intership")) {
-            return "I'm a 3rd Year B.Tech CSE student actively seeking internship opportunities where I can contribute, grow, and gain real-world experience. I'm available for both remote and on-site internships.";
+            return "Fayaz is a passionate Computer Science and Engineering student with a strong interest in building thoughtful software and solving real-world challenges.";
+        } else if (text.includes("internship") || text.includes("internship")) {
+            return "I’m a 3rd-year B.Tech CSE student actively seeking internship opportunities in web development, app development, and UI/UX design.";
         }
-        else {
-            return "That's interesting! If you want to know more about my skills, projects, or education, just ask. Otherwise, feel free to use the contact form to reach out to Fayaz directly!";
-        }
+        return "That sounds interesting! You can ask about my skills, projects, education, or get in touch through the contact section.";
     }
 
     function handleSend() {
         const text = aiChatInput.value.trim();
-        if (text === "") return;
-
+        if (!text) return;
         addMessage(text, "user");
         aiChatInput.value = "";
-
-        // Simulate AI thinking
-        setTimeout(() => {
-            const response = getAIResponse(text);
-            addMessage(response, "ai");
-        }, 600);
+        setTimeout(() => addMessage(getAIResponse(text), "ai"), 600);
     }
 
     aiChatSend.addEventListener("click", handleSend);
-    aiChatInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") handleSend();
+    aiChatInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") handleSend();
     });
 }
 
-// =========================
-// Scroll Progress Bar
-// =========================
 window.addEventListener("scroll", () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
     const scrollProgress = document.getElementById("scroll-progress");
     if (scrollProgress) {
-        scrollProgress.style.width = scrolled + "%";
+        scrollProgress.style.width = `${scrolled}%`;
     }
 });
 
-// =========================
-// Custom Cursor
-// =========================
-const cursorDot = document.querySelector(".cursor-dot");
-const cursorOutline = document.querySelector(".cursor-outline");
-
-window.addEventListener("mousemove", (e) => {
-    const posX = e.clientX;
-    const posY = e.clientY;
-
+window.addEventListener("mousemove", (event) => {
     if (cursorDot && cursorOutline) {
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
-
-        cursorOutline.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 500, fill: "forwards" });
+        cursorDot.style.left = `${event.clientX}px`;
+        cursorDot.style.top = `${event.clientY}px`;
+        cursorOutline.animate(
+            { left: `${event.clientX}px`, top: `${event.clientY}px` },
+            { duration: 500, fill: "forwards" }
+        );
     }
 });
 
 const interactives = document.querySelectorAll("a, button, input, textarea, .card");
-interactives.forEach(el => {
-    el.addEventListener("mouseenter", () => {
+interactives.forEach(element => {
+    element.addEventListener("mouseenter", () => {
         if (cursorOutline) {
-            cursorOutline.style.width = "50px";
-            cursorOutline.style.height = "50px";
-            cursorOutline.style.backgroundColor = "rgba(79, 70, 229, 0.25)";
+            cursorOutline.style.width = "48px";
+            cursorOutline.style.height = "48px";
+            cursorOutline.style.backgroundColor = "rgba(79, 70, 229, 0.16)";
         }
     });
-    el.addEventListener("mouseleave", () => {
+    element.addEventListener("mouseleave", () => {
         if (cursorOutline) {
             cursorOutline.style.width = "30px";
             cursorOutline.style.height = "30px";
@@ -331,14 +274,6 @@ interactives.forEach(el => {
     });
 });
 
-// =========================
-// Firebase Integration (Optional Cloud Save)
-// =========================
-// To enable live saving to the cloud for all visitors:
-// 1. Create a Firebase project at console.firebase.google.com
-// 2. Add a Web App, copy its config below
-// 3. Set up Realtime Database in your Firebase project (using 'Start in Test Mode' or set read/write rules to true)
-// 4. Fill in your databaseURL and other config properties below!
 const firebaseConfig = {
     apiKey: "AIzaSyDGYiauwyEbvyiTJvwydqv52C9JxwkmtUY",
     authDomain: "my-portfolio-662a5.firebaseapp.com",
@@ -350,24 +285,31 @@ const firebaseConfig = {
     measurementId: "G-9VQY34G4L9"
 };
 
-// Initialize Firebase Realtime Database if configured
 let db = null;
-if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY" && firebaseConfig.databaseURL !== "YOUR_DATABASE_URL") {
+if (typeof firebase !== "undefined" && firebaseConfig.apiKey !== "YOUR_API_KEY" && firebaseConfig.databaseURL !== "YOUR_DATABASE_URL") {
     try {
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
         console.log("✅ Firebase connected successfully!");
-    } catch (e) {
-        console.error("Firebase initialization failed:", e);
+    } catch (error) {
+        console.error("Firebase initialization failed:", error);
     }
 }
 
 const editableSections = ["home", "about", "interests", "education", "skills", "technical-skills", "projects", "certificates", "services", "achievements", "internship", "contact", "footer"];
 
-// Load from LocalStorage as initial quick fallback
+function loadFromLocalStorage() {
+    editableSections.forEach(id => {
+        const savedHtml = localStorage.getItem(`saved_section_${id}`);
+        const section = document.getElementById(id);
+        if (savedHtml && section) {
+            section.innerHTML = savedHtml;
+        }
+    });
+}
+
 loadFromLocalStorage();
 
-// If Firebase is initialized, fetch the latest live sections and overwrite
 if (db) {
     db.ref("portfolio/sections").once("value").then(snapshot => {
         const data = snapshot.val();
@@ -377,26 +319,21 @@ if (db) {
                     const section = document.getElementById(id);
                     if (section) {
                         section.innerHTML = data[id];
-                        // Cache it in localStorage for offline/fast load
                         localStorage.setItem(`saved_section_${id}`, data[id]);
                     }
                 }
             });
         }
-    }).catch(err => {
-        console.error("Failed to fetch from Firebase, using localStorage:", err);
+    }).catch(error => {
+        console.error("Failed to fetch from Firebase, using localStorage:", error);
     });
 }
 
-function loadFromLocalStorage() {
-    editableSections.forEach(id => {
-        const savedHtml = localStorage.getItem(`saved_section_${id}`);
-        if (savedHtml) {
-            const section = document.getElementById(id);
-            if (section) section.innerHTML = savedHtml;
-        }
-    });
-}
+window.addEventListener("DOMContentLoaded", () => {
+    initTheme();
+    revealOnScroll();
+    updateActiveLink();
+});
 
 // Activate editing if logged in
 if (localStorage.getItem("portfolio_admin") === "true") {

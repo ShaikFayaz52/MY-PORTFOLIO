@@ -1,408 +1,542 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MY PORTFOLIO</title>
+    <meta name="description" content="Premium personal portfolio for Shaik Fayaz with projects, experience, resume, and contact information." />
+    <title>Shaik Fayaz | Portfolio</title>
 
     <link rel="stylesheet" href="style.css" />
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
 </head>
-
 <body>
-
     <div id="scroll-progress"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
-    <!-- Navbar -->
-    <header>
-        <div class="logo-container">
-            <img src="image.png" alt="Profile" class="nav-img">
-            <h2 class="logo">SHAIK FAYAZ</h2>
-        </div>
+    <header class="site-header">
+        <a class="logo-container" href="#home" aria-label="Go to home section">
+            <img src="image.png" alt="Shaik Fayaz profile" class="nav-img" loading="lazy" />
+            <span class="logo">SHAIK FAYAZ</span>
+        </a>
 
-        <nav>
-            <a href="#home">HOME</a>
-            <a href="#about">ABOUT</a>
-            <a href="#skills">SKILLS</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="#internship">INTERNSHIP</a>
-            <a href="#contact">CONTACT</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
 
-            <!-- WhatsApp -->
-            <a href="https://wa.me/+91 6305138534" target="_blank">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/_shaikfayaz.x_?utm_source=qr&igsh=MTRoM3A3dmg2MTV1Zg==" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-
-            <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/in/shaik-fayaz-987b05333?utm_source=share_via&utm_content=profile&utm_medium=member_android"
-                target="_blank">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-
-            <a href="login.html" style="color: var(--primary);"><i class="fa-solid fa-lock"></i> LOGIN</a>
-
+        <nav class="nav-links" aria-label="Primary navigation">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
+            <a href="#internship">Internship</a>
+            <a href="#contact">Contact</a>
+            <a href="https://wa.me/+916305138534" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/_shaikfayaz.x_?utm_source=qr&igsh=MTRoM3A3dmg2MTV1Zg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/shaik-fayaz-987b05333?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="login.html" class="nav-login"><i class="fa-solid fa-lock"></i> Login</a>
         </nav>
+
+        <button class="theme-toggle" id="darkModeBtn" aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon"></i>
+        </button>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-orb orb-one"></div>
+            <div class="hero-orb orb-two"></div>
 
-        <div class="hero-text">
-            <!-- Internship Badge -->
-            <div class="internship-badge">
-                <span class="badge-dot"></span>
-                <span>Open for Internships &mdash; 2026</span>
-            </div>
-
-            <h1>Hello, I'm <span>SHAIK FAYAZ</span></h1>
-
-            <h3><b>3rd Year CSE Student | Aspiring Full-Stack Developer</b></h3>
-
-            <p style="font-size: 20px;">
-                I'm a Passionate Computer Science and Engineering Student who loves building innovative apps and
-                real-world software projects.<br><br>
-                I enjoy learning new technologies, solving problems, and creating impactful digital solutions.
-            </p>
-
-            <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;">
-                <a href="resume.html" target="_blank" style="text-decoration: none;">
-                    <button type="button">Download Resume</button>
-                </a>
-                <a href="#internship" style="text-decoration: none;">
-                    <button type="button" class="btn-outline">Hire Me</button>
-                </a>
-            </div>
-        </div>
-
-        <div class="hero-image">
-            <img src="image.png" alt="profile" />
-        </div>
-
-    </section>
-
-    <!-- About -->
-    <section class="about" id="about">
-
-        <h2>About Me</h2>
-        <div class="hero-image">
-            <p style="font-size: 18px;">
-                I’m a passionate Computer Science and Engineering student with a strong interest in software development
-                and
-                emerging technologies. I enjoy exploring new technologies, enhancing my technical skills, and working on
-                projects that improve user experience while solving real-world challenges through continuous
-                learning.<br><br>
-
-                I strongly believe in learning by building and constantly pushing myself to grow both technically and
-                creatively. I’m highly motivated to learn, innovate, and create impactful technology for the future. My
-                goal
-                is to develop meaningful applications, contribute to innovative projects, and build a successful career
-                in
-                the field of technology.
-            </p>
-        </div>
-        <br><br>
-
-        <h2
-            style="text-align: center; font-size: 30px; color: var(--primary); margin: 60px 0 30px; font-family: 'Poppins', sans-serif;">
-            Personal Information
-        </h2>
-
-        <div class="skill-box" style="max-width: 1000px; margin: auto;">
-            <div class="card">
-                <i class="fa-solid fa-phone" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Phone</h3>
-                <p style="font-size: 16px;">+91 6305138534</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-envelope"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Email</h3>
-                <p style="font-size: 16px;">shaikfayu52@example.com</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-globe" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Nationality</h3>
-                <p style="font-size: 16px;">Indian</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-language"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Languages</h3>
-                <p style="font-size: 16px;">English, Telugu, Hindi</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-location-dot"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Locality</h3>
-                <p style="font-size: 16px;">Ananatapuramu, Andhra Pradesh, India-515001</p>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Interests -->
-    <section class="interests" id="interests">
-        <h2>My Interests</h2>
-        <div class="skill-box" style="max-width: 1000px; margin: auto;">
-            <div class="card">
-                <i class="fa-solid fa-camera-retro"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Photography</h3>
-                <p style="font-size: 15px;">Capturing moments and framing stories through the lens.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-wand-magic-sparkles"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Editing</h3>
-                <p style="font-size: 15px;">Enhancing visual media with creative post-processing.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-plane-departure"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Travelling</h3>
-                <p style="font-size: 15px;">Experiencing new cultures and widening perspectives.</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-map-location-dot"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 22px; margin-bottom: 5px;">Exploring</h3>
-                <p style="font-size: 15px;">Discovering hidden gems and exploring new locations.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education -->
-    <section id="education">
-        <h2>Education Timeline</h2>
-
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content card">
-                    <h3>B.Tech in Computer Science</h3>
-                    <p>Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</p>
-                    <span class="timeline-date">2024 - 2028</span>
+            <div class="hero-copy">
+                <div class="internship-badge">
+                    <span class="badge-dot"></span>
+                    <span>Open for internships · 2026</span>
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content card">
-                    <h3>Intermediate (M.P.C Stream)</h3>
-                    <p>Sri Chaitanya Junior College (Anantapuramu)</p>
-                    <span class="timeline-date">2022 - 2024</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content card">
-                    <h3>Secondary School Certificate (SSC)</h3>
-                    <p>V.V. Model E.M High School - Anantapuramu</p>
-                    <span class="timeline-date">2022</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills -->
-    <section class="skills" id="skills">
-        <h2>Skills</h2>
-        <div class="skill-box">
-            <div class="card">Programming & Problem Solving</div>
-            <div class="card">Web Development</div>
-            <div class="card">App Development</div>
-            <div class="card">Firebase Integration</div>
-            <div class="card">UI/UX Design</div>
-            <div class="card">Database Management</div>
-            <div class="card">Team Collaboration</div>
-            <div class="card">Creative Thinking</div>
-            <div class="card">Continuous Learning</div>
-            <div class="card">Communication Skills</div>
-        </div>
-    </section>
-
-    <!-- Technical Skills -->
-    <section class="skills" id="technical-skills">
-        <h2>Technical Skills</h2>
-
-        <div class="skill-box">
-            <div class="card">
-                <i class="fa-solid fa-code" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <br><b>Programming Languages</b><br><br>Java, Python, C
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-laptop-code"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <br><b>Web Technologies</b><br><br> HTML, CSS, JavaScript
-            </div>
-            <div class="card">
-                <i class="fa-brands fa-android"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <br><b>App Development</b><br><br>Firebase, Android Development
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-database"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <br><b>Database</b><br><br> MySQL, Firebase
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-toolbox" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <br><b>Tools & Platforms</b><br><br> GitHub, VS Code, Android Studio
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-lightbulb"
-                    style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-                <br><b>Core Skills</b><br><br>Problem Solving, UI/UX Design, Debugging
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects -->
-    <section class="projects" id="projects">
-        <h2>Projects</h2>
-
-        <div class="project-container">
-            <div class="project-card">
-                <h3>SHOP EASE WEBSITE</h3>
-                <p><br>Shop Ease is a modern e-commerce website designed to provide a smooth and user-friendly online
-                    shopping experience.
-                    It includes product management, cart, order tracking, and admin features for customers and sellers.
+                <p class="section-label">Hello there, I’m</p>
+                <h1>Shaik <span>Fayaz</span></h1>
+                <h2 class="typing-heading">
+                    <span class="typing-text"></span>
+                </h2>
+                <p class="hero-description">
+                    I’m a passionate Computer Science and Engineering student who loves turning ideas into polished digital products, smart utilities, and real-world software experiences.
                 </p>
-            </div>
-            <div class="project-card">
-                <h3>KindMeals App</h3>
-                <p><br>Food donation platform connecting food donors with needy people through location based services
-                    and SOS emergency application.</p>
-            </div>
-            <div class="project-card">
-                <h3>Carbon Footprint Calculator</h3>
-                <p><br>Application to calculate and track environmental impact with user Friendly analytics.</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Certificates -->
-    <section id="certificates">
-        <h2>Certificates</h2>
+                <div class="hero-actions">
+                    <a href="resume.html" target="_blank" class="btn">Download Resume</a>
+                    <a href="#internship" class="btn btn-outline">Hire Me</a>
+                </div>
 
-        <div class="skill-box">
-            <div class="card"><b>Python Programming Certification</b><br><br>Infosys Springboard</div>
-            <div class="card"><b>Database Management Systems(DBMS) Certification</b><br><br>Infosys Springboard</div>
-            <div class="card"><b>Python Programming Certification</b><br><br>Infosys Springboard</div>
-            <div class="card"><b>Data Engineering Virtual Internship Certification</b><br><br>EDUSKILLS</div>
-            <div class="card"><b>Networking Cloud Virtual Internship Certification</b><br><br>EDUSKILLS</div>
-        </div>
-    </section>
-
-    <!-- Achievements -->
-    <section id="achievements">
-        <h2>Achievements</h2>
-
-        <div class="skill-box">
-            <div class="card">
-                <b>Winner</b> in “Prompt 2 Pixel” event at PIXEL 2K26 organized by the Department of
-                Computer Science and Engineering, <b>JNTUACEA</b>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <strong>10+</strong>
+                        <span>Projects</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong>5+</strong>
+                        <span>Certificates</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong>6+</strong>
+                        <span>Achievements</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong>2+</strong>
+                        <span>Internships</span>
+                    </div>
+                </div>
             </div>
-            <div class="card">Participated and got <b>Third Prize</b> in "Hackathon" event at NEXTGEN 2K25 organized by
-                SRIT</div>
-            <div class="card">MERN Development Workshop Certification - APSSDC</div>
-            <div class="card">Completed and secured <b>ELITE Rank</b> in NPTEL Certification course of Public Speaking
-            </div>
-            <div class="card">NSPC 2025 Participation Certificate – Ministry of Education National Students Paryavaran
-                Competition (NSPC) 2025</div>
-            <div class="card">Viksit Bharat Young Leaders Dialogue (VBYLD) 2026 Quiz Participation Certificate –
-                Ministry of Youth Affairs and Sports via MY Bharat</div>
-        </div>
-    </section>
 
-    <!-- Services -->
-    <section id="services">
-        <h2>Services</h2>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <img src="image.png" alt="Shaik Fayaz portrait" loading="lazy" />
+                    <div class="hero-card-badge">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Full Stack Enthusiast</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="project-container">
-            <div class="project-card">
-                <h3>Web Development</h3>
-                <p>Modern responsive websites using HTML, CSS & JavaScript.</p>
+        <section class="about" id="about">
+            <div class="section-heading">
+                <p class="section-label">About me</p>
+                <h2>Crafting thoughtful software with curiosity and care.</h2>
             </div>
-            <div class="project-card">
-                <h3>UI/UX Design</h3>
-                <p>Clean and modern user interface designs.</p>
-            </div>
-            <div class="project-card">
-                <h3>NSS Volunteer & Community Service</h3>
-                <p>Dedicated NSS Volunteer committed to community service and social impact.</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Internship Section -->
-    <section id="internship" class="internship-section">
-        <h2>Open for Internships opportunities</h2>
-        <p class="internship-intro">
-            I'm a <strong>3rd Year B.Tech CSE student</strong> actively seeking internship opportunities where I can
-            contribute, grow, and gain real-world experience. I'm available for both <strong>remote and on-site</strong>
-            internships.
-        </p>
+            <div class="about-grid">
+                <div class="about-card card">
+                    <p>
+                        I’m a passionate Computer Science and Engineering student with a strong interest in software development and emerging technologies. I enjoy exploring new tools, enhancing my technical skills, and building projects that improve user experience while solving real-world challenges through continuous learning.
+                    </p>
+                    <p>
+                        I strongly believe in learning by building and constantly pushing myself to grow both technically and creatively. My goal is to develop meaningful applications, contribute to innovative projects, and build a successful career in technology.
+                    </p>
+                </div>
 
-        <div class="skill-box" style="max-width: 1100px; margin: auto;">
-            <div class="card internship-card">
-                <i class="fa-solid fa-globe" style="font-size: 38px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3>Web Development</h3>
-                <p>Frontend & backend web apps using HTML, CSS, JavaScript and more.</p>
+                <div class="profile-card card">
+                    <img src="image.png" alt="Portrait of Shaik Fayaz" loading="lazy" />
+                    <div class="profile-meta">
+                        <h3>Quick Snapshot</h3>
+                        <ul>
+                            <li><span>Phone</span><strong>+91 6305138534</strong></li>
+                            <li><span>Email</span><strong>shaikfayu52@example.com</strong></li>
+                            <li><span>Location</span><strong>Anantapuramu, India</strong></li>
+                            <li><span>Languages</span><strong>English, Telugu, Hindi</strong></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="card internship-card">
-                <i class="fa-brands fa-android"
-                    style="font-size: 38px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3>App Development</h3>
-                <p>Android & Firebase-based mobile application development.</p>
-            </div>
-            <div class="card internship-card">
-                <i class="fa-solid fa-pen-ruler"
-                    style="font-size: 38px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3>UI/UX Design</h3>
-                <p>Clean, modern, and user-friendly interface design & prototyping.</p>
-            </div>
-            <div class="card internship-card">
-                <i class="fa-solid fa-database"
-                    style="font-size: 38px; color: var(--primary); margin-bottom: 15px;"></i>
-                <h3>Data & Backend</h3>
-                <p>MySQL, Firebase, and database management for real-world projects.</p>
-            </div>
-        </div>
 
-        <div class="internship-cta">
-            <p>Interested in working together? Let's connect!</p>
-            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
-                <a href="#contact" class="enter-btn" style="font-size:15px;">📩 Contact Me</a>
-                <a href="https://www.linkedin.com/in/shaik-fayaz-987b05333" target="_blank" class="enter-btn"
-                    style="font-size:15px; background:#0077b5;">🔗 LinkedIn</a>
-                <a href="https://wa.me/+91 6305138534" target="_blank" class="enter-btn"
-                    style="font-size:15px; background:#25d366; color:#000;">💬 WhatsApp</a>
+            <div class="info-grid">
+                <div class="card info-card">
+                    <i class="fa-solid fa-phone"></i>
+                    <h3>Phone</h3>
+                    <p>+91 6305138534</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>shaikfayu52@example.com</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>Nationality</h3>
+                    <p>Indian</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-language"></i>
+                    <h3>Languages</h3>
+                    <p>English, Telugu, Hindi</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>Locality</h3>
+                    <p>Ananatapuramu, Andhra Pradesh, India-515001</p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact -->
-    <section class="contact" id="contact">
-        <h2>Contact Me</h2>
+        <section class="interests" id="interests">
+            <div class="section-heading">
+                <p class="section-label">Interests</p>
+                <h2>Curiosity beyond code.</h2>
+            </div>
+            <div class="info-grid">
+                <div class="card info-card">
+                    <i class="fa-solid fa-camera-retro"></i>
+                    <h3>Photography</h3>
+                    <p>Capturing moments and framing stories through the lens.</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <h3>Editing</h3>
+                    <p>Enhancing visual media with creative post-processing.</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <h3>Travelling</h3>
+                    <p>Experiencing new cultures and widening perspectives.</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <h3>Exploring</h3>
+                    <p>Discovering hidden gems and exploring new locations.</p>
+                </div>
+            </div>
+        </section>
 
-        <form action="https://formspree.io/f/xnjrabqe" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required />
-            <input type="email" name="email" placeholder="Your Email" required />
-            <textarea name="message" placeholder="Message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </section>
+        <section id="education">
+            <div class="section-heading">
+                <p class="section-label">Education</p>
+                <h2>Learning path and academic foundation.</h2>
+            </div>
 
-    <!-- AI Chatbot Widget -->
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content card">
+                        <h3>B.Tech in Computer Science</h3>
+                        <p>Srinivasa Ramanujan Institute of Technology (Autonomous) - Anantapuramu</p>
+                        <span class="timeline-date">2024 - 2028</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content card">
+                        <h3>Intermediate (M.P.C Stream)</h3>
+                        <p>Sri Chaitanya Junior College (Anantapuramu)</p>
+                        <span class="timeline-date">2022 - 2024</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content card">
+                        <h3>Secondary School Certificate (SSC)</h3>
+                        <p>V.V. Model E.M High School - Anantapuramu</p>
+                        <span class="timeline-date">2022</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills" id="skills">
+            <div class="section-heading">
+                <p class="section-label">Skills</p>
+                <h2>Core strengths that shape my work.</h2>
+            </div>
+            <div class="info-grid">
+                <div class="card skill-card">
+                    <div class="skill-card-head">
+                        <i class="fa-solid fa-brain"></i>
+                        <h3>Problem Solving</h3>
+                    </div>
+                    <div class="skill-progress"><span class="skill-fill skill-fill-92"></span></div>
+                    <p>92%</p>
+                </div>
+                <div class="card skill-card">
+                    <div class="skill-card-head">
+                        <i class="fa-solid fa-globe"></i>
+                        <h3>Web Development</h3>
+                    </div>
+                    <div class="skill-progress"><span class="skill-fill skill-fill-90"></span></div>
+                    <p>90%</p>
+                </div>
+                <div class="card skill-card">
+                    <div class="skill-card-head">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <h3>App Development</h3>
+                    </div>
+                    <div class="skill-progress"><span class="skill-fill skill-fill-84"></span></div>
+                    <p>84%</p>
+                </div>
+                <div class="card skill-card">
+                    <div class="skill-card-head">
+                        <i class="fa-solid fa-fire"></i>
+                        <h3>Firebase</h3>
+                    </div>
+                    <div class="skill-progress"><span class="skill-fill skill-fill-88"></span></div>
+                    <p>88%</p>
+                </div>
+                <div class="card skill-card">
+                    <div class="skill-card-head">
+                        <i class="fa-solid fa-palette"></i>
+                        <h3>UI/UX Design</h3>
+                    </div>
+                    <div class="skill-progress"><span class="skill-fill skill-fill-86"></span></div>
+                    <p>86%</p>
+                </div>
+                <div class="card skill-card">
+                    <div class="skill-card-head">
+                        <i class="fa-solid fa-database"></i>
+                        <h3>Database Management</h3>
+                    </div>
+                    <div class="skill-progress"><span class="skill-fill skill-fill-82"></span></div>
+                    <p>82%</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills" id="technical-skills">
+            <div class="section-heading">
+                <p class="section-label">Technical skills</p>
+                <h2>Stack and tools I actively use.</h2>
+            </div>
+
+            <div class="info-grid">
+                <div class="card info-card">
+                    <i class="fa-solid fa-code"></i>
+                    <h3>Programming Languages</h3>
+                    <p>Java, Python, C</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-laptop-code"></i>
+                    <h3>Web Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-brands fa-android"></i>
+                    <h3>App Development</h3>
+                    <p>Firebase, Android Development</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-database"></i>
+                    <h3>Database</h3>
+                    <p>MySQL, Firebase</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-toolbox"></i>
+                    <h3>Tools & Platforms</h3>
+                    <p>GitHub, VS Code, Android Studio</p>
+                </div>
+                <div class="card info-card">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h3>Core Skills</h3>
+                    <p>Problem Solving, UI/UX Design, Debugging</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="section-heading">
+                <p class="section-label">Projects</p>
+                <h2>Selected work that blends product thinking and engineering.</h2>
+            </div>
+
+            <div class="project-grid">
+                <article class="project-card card">
+                    <div class="project-media media-one"></div>
+                    <div class="project-body">
+                        <h3>Shop Ease Website</h3>
+                        <p>Modern e-commerce experience with product management, cart flow, order tracking, and admin-ready features.</p>
+                        <div class="tag-row">
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="text-link"><i class="fa-brands fa-github"></i> GitHub</a>
+                            <a href="#" class="text-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card card">
+                    <div class="project-media media-two"></div>
+                    <div class="project-body">
+                        <h3>KindMeals App</h3>
+                        <p>Food donation platform connecting donors and receivers through location-based services and rescue support flows.</p>
+                        <div class="tag-row">
+                            <span>Firebase</span><span>Android</span><span>UI</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="text-link"><i class="fa-brands fa-github"></i> GitHub</a>
+                            <a href="#" class="text-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card card">
+                    <div class="project-media media-three"></div>
+                    <div class="project-body">
+                        <h3>Carbon Footprint Calculator</h3>
+                        <p>Interactive sustainability calculator that helps users measure and understand their environmental impact.</p>
+                        <div class="tag-row">
+                            <span>Analytics</span><span>JavaScript</span><span>UX</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="#" class="text-link"><i class="fa-brands fa-github"></i> GitHub</a>
+                            <a href="#" class="text-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="certificates">
+            <div class="section-heading">
+                <p class="section-label">Certificates</p>
+                <h2>Recognitions that reflect consistent growth.</h2>
+            </div>
+
+            <div class="cert-grid">
+                <div class="card cert-card">
+                    <h3>Python Programming Certification</h3>
+                    <p>Infosys Springboard</p>
+                </div>
+                <div class="card cert-card">
+                    <h3>Database Management Systems</h3>
+                    <p>Infosys Springboard</p>
+                </div>
+                <div class="card cert-card">
+                    <h3>Data Engineering Virtual Internship</h3>
+                    <p>EDUSKILLS</p>
+                </div>
+                <div class="card cert-card">
+                    <h3>Networking Cloud Virtual Internship</h3>
+                    <p>EDUSKILLS</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements">
+            <div class="section-heading">
+                <p class="section-label">Achievements</p>
+                <h2>Milestones that keep motivating me forward.</h2>
+            </div>
+
+            <div class="achievement-list">
+                <div class="card achievement-card">
+                    <strong>Winner</strong>
+                    <p>Prompt 2 Pixel at PIXEL 2K26, JNTUACEA</p>
+                </div>
+                <div class="card achievement-card">
+                    <strong>Third Prize</strong>
+                    <p>Hackathon at NEXTGEN 2K25, SRIT</p>
+                </div>
+                <div class="card achievement-card">
+                    <strong>MERN Workshop</strong>
+                    <p>Certification from APSSDC</p>
+                </div>
+                <div class="card achievement-card">
+                    <strong>Elite Rank</strong>
+                    <p>NPTEL Certification in Public Speaking</p>
+                </div>
+                <div class="card achievement-card">
+                    <strong>NSPC Participation</strong>
+                    <p>Ministry of Education National Students Paryavaran Competition</p>
+                </div>
+                <div class="card achievement-card">
+                    <strong>VBYLD Quiz</strong>
+                    <p>Participation certificate via MY Bharat</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="section-heading">
+                <p class="section-label">Services</p>
+                <h2>Support for digital products, design, and learning.</h2>
+            </div>
+
+            <div class="project-grid">
+                <div class="project-card card">
+                    <h3>Web Development</h3>
+                    <p>Modern responsive websites using HTML, CSS, and JavaScript.</p>
+                </div>
+                <div class="project-card card">
+                    <h3>UI/UX Design</h3>
+                    <p>Clean and modern interface systems designed for clarity.</p>
+                </div>
+                <div class="project-card card">
+                    <h3>NSS Volunteer & Community Service</h3>
+                    <p>Dedicated community service and social impact initiatives.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="internship" class="internship-section">
+            <div class="internship-shell card">
+                <div class="internship-badge">
+                    <span class="badge-dot"></span>
+                    <span>Available now</span>
+                </div>
+                <h2>Open for internship opportunities.</h2>
+                <p>
+                    I’m a 3rd-year B.Tech CSE student actively seeking internship experiences where I can contribute, grow, and learn through practical work in development, design, and technology.
+                </p>
+                <div class="project-grid internship-grid">
+                    <div class="project-card card">
+                        <i class="fa-solid fa-globe"></i>
+                        <h3>Web Development</h3>
+                        <p>Frontend and backend web apps using modern tools.</p>
+                    </div>
+                    <div class="project-card card">
+                        <i class="fa-brands fa-android"></i>
+                        <h3>App Development</h3>
+                        <p>Android and Firebase-powered mobile experiences.</p>
+                    </div>
+                    <div class="project-card card">
+                        <i class="fa-solid fa-pen-ruler"></i>
+                        <h3>UI/UX Design</h3>
+                        <p>Polished interfaces and thoughtful product flows.</p>
+                    </div>
+                    <div class="project-card card">
+                        <i class="fa-solid fa-database"></i>
+                        <h3>Data & Backend</h3>
+                        <p>MySQL, Firebase, and practical database solutions.</p>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn">Contact Me</a>
+                    <a href="https://www.linkedin.com/in/shaik-fayaz-987b05333" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn</a>
+                    <a href="https://wa.me/+916305138534" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-success">WhatsApp</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="section-heading">
+                <p class="section-label">Contact</p>
+                <h2>Let’s build something meaningful together.</h2>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="card contact-card">
+                        <i class="fa-solid fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>shaikfayu52@example.com</p>
+                    </div>
+                    <div class="card contact-card">
+                        <i class="fa-solid fa-phone"></i>
+                        <h3>Phone</h3>
+                        <p>+91 6305138534</p>
+                    </div>
+                    <div class="card contact-card">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <h3>Location</h3>
+                        <p>Anantapuramu, Andhra Pradesh, India</p>
+                    </div>
+                    <div class="card map-card">
+                        <div class="map-placeholder">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>Google Map Placeholder</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form card" action="https://formspree.io/f/xnjrabqe" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="email" placeholder="Your Email" required />
+                    <textarea name="message" placeholder="Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
     <div id="ai-chat-widget">
         <button id="ai-chat-toggle" class="ai-chat-btn">
             <i class="fa-solid fa-robot"></i> Chat with AI
@@ -410,31 +544,45 @@
         <div id="ai-chat-box" class="ai-chat-box hidden">
             <div class="ai-chat-header">
                 <h3>Fayaz AI Assistant</h3>
-                <button id="ai-chat-close"><i class="fa-solid fa-xmark"></i></button>
+                <button id="ai-chat-close" title="Close chatbot"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="ai-chat-messages" class="ai-chat-messages">
-                <div class="message ai-message">Hi! I am an AI assistant trained on Fayaz's portfolio. How can I help
-                    you today?</div>
+                <div class="message ai-message">Hi! I am an AI assistant trained on Fayaz's portfolio. How can I help you today?</div>
             </div>
             <div class="ai-chat-input">
-                <input type="text" id="ai-chat-input-field" placeholder="Ask about skills, projects...">
-                <button id="ai-chat-send"><i class="fa-solid fa-paper-plane"></i></button>
+                <input type="text" id="ai-chat-input-field" placeholder="Ask about skills, projects..." />
+                <button id="ai-chat-send" title="Send message"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <button id="topBtn" class="top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
     <script src="script.js"></script>
-    
+
     <footer id="footer">
-        <p>© 2026 SHAIK FAYAZ | All Rights Reserved</p>
+        <div class="footer-shell">
+            <div>
+                <h3>SHAIK FAYAZ</h3>
+                <p>Creative developer building thoughtful digital experiences.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h4>Social</h4>
+                <a href="https://www.linkedin.com/in/shaik-fayaz-987b05333" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://wa.me/+916305138534" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a href="https://www.instagram.com/_shaikfayaz.x_?utm_source=qr&igsh=MTRoM3A3dmg2MTV1Zg==" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+        </div>
+        <p class="footer-copy">© 2026 SHAIK FAYAZ | All Rights Reserved</p>
     </footer>
 </body>
 </html>
