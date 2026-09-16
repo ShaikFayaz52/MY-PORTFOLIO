@@ -38,7 +38,7 @@ Edit the HTML files to change content, update `style.css` to tweak the design, a
 
 ## Author
 
-Your Name
+shaik Fayaz
 
 ## License
 
