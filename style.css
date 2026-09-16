@@ -510,24 +510,684 @@ body.dark-mode .hero-image img {
 /* =========================
    Projects & Services Layout
 ========================= */
-.project-container {
+.project-container,
+.project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 26px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 25px;
 }
 
-.project-card h3 {
-    font-size: 22px;
-    color: var(--primary);
-    margin-bottom: 12px;
+.project-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s ease;
+    text-align: left;
+    height: 100%;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary);
+}
+
+.project-media {
+    height: 170px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.media-one {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
+}
+
+.media-two {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+}
+
+.media-three {
+    background: linear-gradient(135deg, #059669 0%, #10b981 50%, #14b8a6 100%);
+}
+
+.media-four {
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #10b981 100%);
+}
+
+.project-icon-badge {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-icon-badge {
+    transform: scale(1.15) rotate(6deg);
+}
+
+.project-body {
+    padding: 24px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.project-body h3 {
+    font-size: 21px;
     font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.project-body p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-mid);
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.tag-row span {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1px solid rgba(79, 70, 229, 0.15);
+}
+
+.project-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.project-actions .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-mid);
+    background: transparent;
+    border: 1.5px solid var(--border);
+    transition: all 0.25s ease;
+}
+
+.project-actions .text-link:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateY(-2px);
+}
+
+.project-actions .live-demo-btn {
+    background: var(--primary);
+    color: #ffffff !important;
+    border-color: var(--primary);
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+}
+
+.project-actions .live-demo-btn:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-light);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+}
+
+/* =========================
+   Certificates Grid & Cards
+========================= */
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 25px;
+}
+
+.cert-card {
+    display: flex;
+    flex-direction: column;
+    padding: 26px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cert-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary);
+}
+
+.cert-card:hover::before {
+    opacity: 1;
+}
+
+.cert-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(79, 70, 229, 0.15);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cert-card:hover .cert-card-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.cert-issuer-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.cert-card-body h3.cert-title {
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.cert-card-body p.cert-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-mid);
+    margin-bottom: 16px;
+}
+
+.cert-card-action {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.cert-tap-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    transition: gap 0.25s ease;
+}
+
+.cert-card:hover .cert-tap-hint {
+    gap: 12px;
+}
+
+/* =========================
+   Achievement Grid & Cards
+========================= */
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 25px;
+}
+
+.achievement-card {
+    display: flex;
+    flex-direction: column;
+    padding: 26px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.achievement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #fbbf24, #f59e0b);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: #f59e0b;
+}
+
+.achievement-card:hover::before {
+    opacity: 1;
+}
+
+.achievement-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(245, 158, 11, 0.14);
+    color: #b45309;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.achievement-card:hover .achievement-card-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: #ffffff;
+}
+
+.achievement-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    background: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+    margin-bottom: 8px;
+}
+
+.achievement-card-body h3.achievement-title {
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.achievement-card-body p.achievement-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-mid);
+    margin-bottom: 16px;
+}
+
+.achievement-card-action {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.achievement-tap-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b45309;
+    transition: gap 0.25s ease;
+}
+
+.achievement-card:hover .achievement-tap-hint {
+    gap: 12px;
+}
+
+/* =========================================
+   Certificate Interactive Zoom Viewer Modal
+   ========================================= */
+.cert-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cert-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cert-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.78);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.cert-modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    max-height: 90vh;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cert-modal-overlay.active .cert-modal-container {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Header & Controls */
+.cert-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.cert-modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cert-modal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+}
+
+.cert-modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.cert-modal-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cert-zoom-controls {
+    display: inline-flex;
+    align-items: center;
+    background: var(--primary-soft);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 3px 6px;
+    gap: 4px;
+}
+
+.cert-tool-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cert-tool-btn:hover {
+    background: var(--primary);
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.cert-zoom-badge {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0 8px;
+    color: var(--primary);
+    min-width: 50px;
+    text-align: center;
+    user-select: none;
+}
+
+/* Upload Button in Modal */
+.cert-upload-btn {
+    width: auto;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 50px;
+    background: var(--primary-soft);
+    border: 1px solid var(--border);
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 13px;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.cert-upload-btn:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
+/* Close "into" (X) Button */
+.cert-close-btn {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 6px;
+}
+
+.cert-close-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+/* Modal Body / Zoomable Viewport */
+.cert-modal-body {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 380px;
+    max-height: 650px;
+    background: #0b0f19;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    cursor: grab;
+}
+
+.cert-modal-body.is-dragging {
+    cursor: grabbing;
+}
+
+.cert-canvas-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1);
+    will-change: transform;
+}
+
+.cert-modal-image {
+    max-width: 90%;
+    max-height: 54vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: filter 0.3s ease;
+}
+
+/* Modal Footer */
+.cert-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-mid);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cert-footer-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cert-footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #10b981;
     font-weight: 600;
 }
 
-.project-card p {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--text-mid);
+/* Dark Mode Overrides */
+body[data-theme="dark"] .cert-modal-container,
+body.dark-mode .cert-modal-container {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+body[data-theme="dark"] .cert-modal-header,
+body.dark-mode .cert-modal-header,
+body[data-theme="dark"] .cert-modal-footer,
+body.dark-mode .cert-modal-footer {
+    background: #0f172a;
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+body[data-theme="dark"] .cert-card,
+body.dark-mode .cert-card {
+    background: #0f172a;
+    border-color: rgba(148, 163, 184, 0.15);
+}
+
+body[data-theme="dark"] .cert-card-body h3.cert-title,
+body.dark-mode .cert-card-body h3.cert-title {
+    color: #f8fafc;
+}
+
+body[data-theme="dark"] .project-body h3,
+body.dark-mode .project-body h3 {
+    color: #f8fafc;
 }
 
 /* Alternating section backgrounds */

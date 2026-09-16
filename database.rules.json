@@ -1,0 +1,12 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": false,
+    "portfolio": {
+      "sections": {
+        ".read": true,
+        ".write": "auth != null && auth.token.email == 'shaikfayu52@gmail.com'"
+      }
+    }
+  }
+}

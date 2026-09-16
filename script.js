@@ -286,14 +286,20 @@ const firebaseConfig = {
 };
 
 let db = null;
+let auth = null;
 if (typeof firebase !== "undefined" && firebaseConfig.apiKey !== "YOUR_API_KEY" && firebaseConfig.databaseURL !== "YOUR_DATABASE_URL") {
     try {
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
+        auth = firebase.auth();
         console.log("✅ Firebase connected successfully!");
     } catch (error) {
         console.error("Firebase initialization failed:", error);
     }
+}
+
+function isPortfolioAdminLoggedIn() {
+    return localStorage.getItem("portfolio_admin") === "true" || (auth && auth.currentUser);
 }
 
 const editableSections = ["home", "about", "interests", "education", "skills", "technical-skills", "projects", "certificates", "services", "achievements", "internship", "contact", "footer"];
@@ -306,6 +312,16 @@ function loadFromLocalStorage() {
             section.innerHTML = savedHtml;
         }
     });
+}
+
+function saveSectionContentToCloud(updates) {
+    if (!db) {
+        return Promise.resolve(false);
+    }
+
+    return db.ref("portfolio/sections").update(updates)
+        .then(() => true)
+        .catch(() => false);
 }
 
 loadFromLocalStorage();
@@ -336,7 +352,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // Activate editing if logged in
-if (localStorage.getItem("portfolio_admin") === "true") {
+if (isPortfolioAdminLoggedIn()) {
     let isPreviewActive = false;
     // 1. Change Login Nav Link to Logout and add Edit Resume Link
     const navLinksList = document.querySelectorAll("nav a");
@@ -764,21 +780,276 @@ if (localStorage.getItem("portfolio_admin") === "true") {
             }
         });
 
-        if (db && activeElementsCount > 0) {
-            db.ref("portfolio/sections").update(updates)
-                .then(() => {
-                    alert("All edits saved to Firebase Cloud! Your changes are now live for everyone.");
-                    window.location.reload();
-                })
-                .catch(err => {
-                    alert("Failed to save to cloud: " + err.message + "\nYour changes have been saved to local browser storage only.");
-                    window.location.reload();
-                });
+        if (activeElementsCount > 0) {
+            saveSectionContentToCloud(updates).then((cloudSaved) => {
+                if (cloudSaved) {
+                    alert("All edits saved to Firebase Cloud! Your portfolio updates are now live on every device with the same login.");
+                } else {
+                    alert("Your changes were saved on this device only. Connect Firebase to sync updates across devices.");
+                }
+                window.location.reload();
+            });
         } else {
-            alert("All edits saved successfully on your local browser! (Connect Firebase in script.js to make it live for other devices)");
+            alert("All edits saved successfully on your local browser.");
             window.location.reload();
         }
     });
 
     document.body.appendChild(saveBtn);
 }
+
+/* =========================================================
+   CERTIFICATE INTERACTIVE ZOOM VIEWER & UPLOAD CONTROLLER
+   ========================================================= */
+(function initCertificateViewer() {
+    const certModal = document.getElementById("certModal");
+    const certModalBackdrop = document.getElementById("certModalBackdrop");
+    const certModalClose = document.getElementById("certModalClose");
+    const certModalTitle = document.getElementById("certModalTitle");
+    const certModalIssuer = document.getElementById("certModalIssuer");
+    const certModalFooterDate = document.getElementById("certModalFooterDate");
+    const certModalImg = document.getElementById("certModalImg");
+    const certCanvasWrapper = document.getElementById("certCanvasWrapper");
+    const certModalBody = document.getElementById("certModalBody");
+    const certZoomIn = document.getElementById("certZoomIn");
+    const certZoomOut = document.getElementById("certZoomOut");
+    const certZoomReset = document.getElementById("certZoomReset");
+    const certZoomBadge = document.getElementById("certZoomBadge");
+    const certUploadInput = document.getElementById("certUploadInput");
+
+    if (!certModal || !certModalImg || !certCanvasWrapper || !certModalBody) return;
+
+    let currentCertId = "";
+    let currentZoom = 1.0;
+    let panX = 0;
+    let panY = 0;
+    let isDragging = false;
+    let startDragX = 0;
+    let startDragY = 0;
+
+    const MIN_ZOOM = 0.5;
+    const MAX_ZOOM = 3.5;
+    const ZOOM_STEP = 0.25;
+
+    function updateTransform() {
+        certCanvasWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+        if (certZoomBadge) {
+            certZoomBadge.textContent = `${Math.round(currentZoom * 100)}%`;
+        }
+    }
+
+    function resetZoomAndPan() {
+        currentZoom = 1.0;
+        panX = 0;
+        panY = 0;
+        updateTransform();
+    }
+
+    function openCertModal(card) {
+        currentCertId = card.getAttribute("data-cert-id") || "default";
+        const title = card.getAttribute("data-cert-title") || card.querySelector(".cert-title, h3")?.textContent || "Certificate";
+        const issuer = card.getAttribute("data-cert-issuer") || card.querySelector(".cert-issuer-badge, p")?.textContent || "Verified Credential";
+        const date = card.getAttribute("data-cert-date") || "Credential Verified";
+        const defaultImg = card.getAttribute("data-cert-img") || "";
+
+        // Check if user uploaded a custom certificate into localStorage
+        const savedImg = localStorage.getItem(`portfolio_cert_${currentCertId}`);
+        const finalImgSrc = savedImg || defaultImg || "image.png";
+
+        certModalImg.src = finalImgSrc;
+        certModalImg.alt = `${title} - Preview`;
+
+        if (certModalTitle) certModalTitle.textContent = title;
+        if (certModalIssuer) {
+            certModalIssuer.innerHTML = `<i class="fa-solid fa-certificate"></i> ${issuer}`;
+        }
+        if (certModalFooterDate) {
+            certModalFooterDate.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${date.includes("Verified") ? date : "Issued: " + date}`;
+        }
+
+        resetZoomAndPan();
+        certModal.classList.add("active");
+        certModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeCertModal() {
+        certModal.classList.remove("active");
+        certModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        isDragging = false;
+        if (certModalBody) certModalBody.classList.remove("is-dragging");
+    }
+
+    // Zoom In
+    if (certZoomIn) {
+        certZoomIn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            currentZoom = Math.min(MAX_ZOOM, +(currentZoom + ZOOM_STEP).toFixed(2));
+            updateTransform();
+        });
+    }
+
+    // Zoom Out
+    if (certZoomOut) {
+        certZoomOut.addEventListener("click", (e) => {
+            e.stopPropagation();
+            currentZoom = Math.max(MIN_ZOOM, +(currentZoom - ZOOM_STEP).toFixed(2));
+            updateTransform();
+        });
+    }
+
+    // Reset Zoom
+    if (certZoomReset) {
+        certZoomReset.addEventListener("click", (e) => {
+            e.stopPropagation();
+            resetZoomAndPan();
+        });
+    }
+
+    // Mouse Wheel Zoom
+    certModalBody.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.15 : 0.15;
+        currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, +(currentZoom + delta).toFixed(2)));
+        updateTransform();
+    }, { passive: false });
+
+    // Drag & Pan with Mouse
+    certModalBody.addEventListener("mousedown", (e) => {
+        if (e.target.closest(".cert-modal-controls") || e.target.closest(".cert-modal-header")) return;
+        isDragging = true;
+        startDragX = e.clientX - panX;
+        startDragY = e.clientY - panY;
+        certModalBody.classList.add("is-dragging");
+    });
+
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        panX = e.clientX - startDragX;
+        panY = e.clientY - startDragY;
+        updateTransform();
+    });
+
+    window.addEventListener("mouseup", () => {
+        if (isDragging) {
+            isDragging = false;
+            certModalBody.classList.remove("is-dragging");
+        }
+    });
+
+    // Touch Support: Single finger pan & Pinch-to-zoom
+    let initialTouchDistance = null;
+    let touchStartZoom = 1.0;
+
+    certModalBody.addEventListener("touchstart", (e) => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            startDragX = e.touches[0].clientX - panX;
+            startDragY = e.touches[0].clientY - panY;
+        } else if (e.touches.length === 2) {
+            isDragging = false;
+            initialTouchDistance = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            touchStartZoom = currentZoom;
+        }
+    }, { passive: true });
+
+    certModalBody.addEventListener("touchmove", (e) => {
+        if (e.touches.length === 1 && isDragging) {
+            panX = e.touches[0].clientX - startDragX;
+            panY = e.touches[0].clientY - startDragY;
+            updateTransform();
+        } else if (e.touches.length === 2 && initialTouchDistance) {
+            const currentDistance = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            const scaleFactor = currentDistance / initialTouchDistance;
+            currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, +(touchStartZoom * scaleFactor).toFixed(2)));
+            updateTransform();
+        }
+    }, { passive: true });
+
+    certModalBody.addEventListener("touchend", () => {
+        isDragging = false;
+        initialTouchDistance = null;
+    });
+
+    // Double-click / Double-tap to toggle zoom
+    certModalBody.addEventListener("dblclick", () => {
+        if (currentZoom > 1.1) {
+            resetZoomAndPan();
+        } else {
+            currentZoom = 1.8;
+            updateTransform();
+        }
+    });
+
+    // Close Button (into / X)
+    if (certModalClose) {
+        certModalClose.addEventListener("click", (e) => {
+            e.stopPropagation();
+            closeCertModal();
+        });
+    }
+
+    // Backdrop Click
+    if (certModalBackdrop) {
+        certModalBackdrop.addEventListener("click", closeCertModal);
+    }
+
+    // Escape Key to Close
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && certModal.classList.contains("active")) {
+            closeCertModal();
+        }
+    });
+
+    // User Upload Certificate Image Handler
+    if (certUploadInput) {
+        certUploadInput.addEventListener("change", (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            if (file.size > 4 * 1024 * 1024) {
+                alert("Image file is too large! Please choose an image under 4MB.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const base64Data = event.target.result;
+                certModalImg.src = base64Data;
+                resetZoomAndPan();
+
+                if (currentCertId) {
+                    try {
+                        localStorage.setItem(`portfolio_cert_${currentCertId}`, base64Data);
+                        alert("Certificate uploaded and saved successfully! It will now display whenever you view this certificate.");
+                    } catch (err) {
+                        console.warn("Storage quota warning:", err);
+                        alert("Certificate preview updated for this session!");
+                    }
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Event Delegation: Open certificate modal on clicking any certificate card or title
+    document.addEventListener("click", (e) => {
+        // If clicking inside the modal or on an edit button in admin mode, don't trigger modal
+        if (e.target.closest("#certModal") || e.target.closest(".delete-btn") || e.target.closest("#darkModeBtn") || e.target.closest(".theme-toggle")) {
+            return;
+        }
+
+        const certCard = e.target.closest(".cert-card, [data-cert-id]");
+        if (certCard) {
+            e.preventDefault();
+            openCertModal(certCard);
+        }
+    });
+})();

@@ -153,8 +153,28 @@
         <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script>
-        // Hashing function to avoid storing plaintext passwords
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGYiauwyEbvyiTJvwydqv52C9JxwkmtUY",
+            authDomain: "my-portfolio-662a5.firebaseapp.com",
+            databaseURL: "https://my-portfolio-662a5-default-rtdb.firebaseio.com/",
+            projectId: "my-portfolio-662a5",
+            storageBucket: "my-portfolio-662a5.firebasestorage.app",
+            messagingSenderId: "583696101996",
+            appId: "1:583696101996:web:14e5206a1043598c4f9e49",
+            measurementId: "G-9VQY34G4L9"
+        };
+
+        let auth = null;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+        } catch (error) {
+            console.warn("Firebase Auth unavailable. Falling back to local demo login.", error);
+        }
+
         async function hashText(text) {
             const msgBuffer = new TextEncoder().encode(text);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -162,22 +182,48 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
+        async function fallbackLogin(email, password) {
+            const validPasswordHash = "1a4f3ac06a7aeb941b74c9216333fb1b7dc094173b911de4ac2526dcba599517";
+            const inputPasswordHash = await hashText(password);
+            return email === "shaikfayu52@gmail.com" && inputPasswordHash === validPasswordHash;
+        }
+
         document.getElementById('login-form').addEventListener('submit', async function (e) {
             e.preventDefault();
             const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
-            // Target Password Hash
-            const validPasswordHash = "1a4f3ac06a7aeb941b74c9216333fb1b7dc094173b911de4ac2526dcba599517";
+            const errorMsg = document.getElementById('error-msg');
 
-            const inputPasswordHash = await hashText(password);
+            try {
+                if (auth) {
+                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                    if (userCredential.user && userCredential.user.email) {
+                        localStorage.setItem("portfolio_admin", "true");
+                        localStorage.setItem("portfolio_admin_email", userCredential.user.email);
+                        window.location.href = "home.html";
+                        return;
+                    }
+                }
 
-            // Simple mock authentication using the user's specific email and hashed password
-            if (email === "shaikfayu52@gmail.com" && inputPasswordHash === validPasswordHash) {
-                // Set session token
-                localStorage.setItem("portfolio_admin", "true");
-                window.location.href = "index.html"; // Redirect back to homepage for in-line editing
-            } else {
-                document.getElementById('error-msg').style.display = "block";
+                const fallbackValid = await fallbackLogin(email, password);
+                if (fallbackValid) {
+                    localStorage.setItem("portfolio_admin", "true");
+                    localStorage.setItem("portfolio_admin_email", email);
+                    window.location.href = "home.html";
+                    return;
+                }
+
+                errorMsg.style.display = "block";
+            } catch (error) {
+                const fallbackValid = await fallbackLogin(email, password);
+                if (fallbackValid) {
+                    localStorage.setItem("portfolio_admin", "true");
+                    localStorage.setItem("portfolio_admin_email", email);
+                    window.location.href = "home.html";
+                    return;
+                }
+                errorMsg.textContent = "Access Denied. Unauthorized Email or Password.";
+                errorMsg.style.display = "block";
             }
         });
     </script>
