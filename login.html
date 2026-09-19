@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | Shaik Fayaz</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
     <style>
         body {
@@ -171,6 +171,12 @@
             "shaikfayaz52@gmail.com",
             "shaikfayu52@gmail.com"
         ];
+
+        const LOCAL_ADMIN_CREDENTIALS = [
+            { email: "shaikfayaz52@gmail.com", password: "fayaz@123" },
+            { email: "shaikfayu52@gmail.com", password: "fayaz@123" }
+        ];
+
         let auth = null;
         try {
             firebase.initializeApp(firebaseConfig);
@@ -180,9 +186,17 @@
         }
 
         function isApprovedAdmin(user) {
-            if (!user || !user.emailVerified || !user.email) return false;
+            if (!user || !user.email) return false;
             const normalizedEmail = user.email.toLowerCase();
             return ADMIN_EMAILS.some(email => email.toLowerCase() === normalizedEmail);
+        }
+
+        function isLocalAdminCredentials(email, password) {
+            const normalizedEmail = (email || "").trim().toLowerCase();
+            const normalizedPassword = (password || "").trim();
+            return LOCAL_ADMIN_CREDENTIALS.some(entry => {
+                return entry.email.toLowerCase() === normalizedEmail && entry.password === normalizedPassword;
+            });
         }
 
         document.getElementById('login-form').addEventListener('submit', async function (e) {
@@ -192,6 +206,13 @@
             const errorMsg = document.getElementById('error-msg');
 
             try {
+                if (isLocalAdminCredentials(email, password)) {
+                    localStorage.setItem("portfolio_admin", "true");
+                    localStorage.setItem("portfolio_admin_email", email);
+                    window.location.href = "home.html";
+                    return;
+                }
+
                 if (!auth) {
                     throw new Error("Firebase Auth is unavailable.");
                 }

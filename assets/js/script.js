@@ -854,7 +854,7 @@ if (isPortfolioAdminLoggedIn()) {
 
         // Check if user uploaded a custom certificate into localStorage
         const savedImg = localStorage.getItem(`portfolio_cert_${currentCertId}`);
-        const finalImgSrc = savedImg || defaultImg || "image.png";
+        const finalImgSrc = savedImg || defaultImg || "assets/images/image.png";
 
         certModalImg.src = finalImgSrc;
         certModalImg.alt = `${title} - Preview`;
