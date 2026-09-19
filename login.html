@@ -167,7 +167,10 @@
             measurementId: "G-9VQY34G4L9"
         };
 
-        const ADMIN_EMAIL = "shaikfayu52@gmail.com";
+        const ADMIN_EMAILS = [
+            "shaikfayaz52@gmail.com",
+            "shaikfayu52@gmail.com"
+        ];
         let auth = null;
         try {
             firebase.initializeApp(firebaseConfig);
@@ -177,7 +180,9 @@
         }
 
         function isApprovedAdmin(user) {
-            return user && user.emailVerified && user.email && user.email.toLowerCase() === ADMIN_EMAIL;
+            if (!user || !user.emailVerified || !user.email) return false;
+            const normalizedEmail = user.email.toLowerCase();
+            return ADMIN_EMAILS.some(email => email.toLowerCase() === normalizedEmail);
         }
 
         document.getElementById('login-form').addEventListener('submit', async function (e) {
