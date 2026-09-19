@@ -1,11 +1,15 @@
 {
   "rules": {
-    ".read": true,
+    ".read": false,
     ".write": false,
     "portfolio": {
       "sections": {
         ".read": true,
-        ".write": "auth != null && auth.token.email == 'shaikfayu52@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified == true && auth.token.email == 'shaikfayu52@gmail.com'",
+        ".validate": "newData.hasChildren()",
+        "$section": {
+          ".validate": "($section == 'home' || $section == 'about' || $section == 'interests' || $section == 'education' || $section == 'skills' || $section == 'technical-skills' || $section == 'projects' || $section == 'certificates' || $section == 'services' || $section == 'achievements' || $section == 'internship' || $section == 'contact' || $section == 'footer') && newData.isString() && newData.val().length <= 100000"
+        }
       }
     }
   }
