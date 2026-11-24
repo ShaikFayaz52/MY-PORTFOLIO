@@ -206,7 +206,7 @@ if (aiChatToggle && aiChatBox && aiChatClose && aiChatInput && aiChatSend && aiC
         if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
             return "Hello! I am Fayaz's AI portfolio assistant. How can I help you?";
         } else if (text.includes("project") || text.includes("work")) {
-            return "Fayaz has built projects like Shop Ease, KindMeals App, and a Carbon Footprint Calculator. Check out the Projects section!";
+            return "Fayaz has built projects including Shop Ease, AI-Personal Assistant, and VHIRE Landing Page. Check out the Projects section!";
         } else if (text.includes("skill") || text.includes("tech") || text.includes("know")) {
             return "Fayaz is skilled in Java, Python, C, HTML, CSS, JavaScript, Firebase, Android Development, MySQL, and more.";
         } else if (text.includes("contact") || text.includes("email") || text.includes("phone")) {
@@ -292,7 +292,7 @@ if (typeof firebase !== "undefined" && firebaseConfig.apiKey !== "YOUR_API_KEY" 
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
         auth = firebase.auth();
-        console.log("✅ Firebase connected successfully!");
+        console.log("Firebase connected successfully.");
     } catch (error) {
         console.error("Firebase initialization failed:", error);
     }
@@ -303,9 +303,12 @@ function isPortfolioAdminLoggedIn() {
 }
 
 const editableSections = ["home", "about", "interests", "education", "skills", "technical-skills", "projects", "certificates", "services", "achievements", "internship", "contact", "footer"];
+const protectedSections = new Set(["projects", "home", "about", "contact", "footer", "services", "internship"]);
+const cmsOverrideSections = editableSections.filter(id => !protectedSections.has(id));
+protectedSections.forEach(id => localStorage.removeItem(`saved_section_${id}`));
 
 function loadFromLocalStorage() {
-    editableSections.forEach(id => {
+    cmsOverrideSections.forEach(id => {
         const savedHtml = localStorage.getItem(`saved_section_${id}`);
         const section = document.getElementById(id);
         if (savedHtml && section) {
@@ -326,11 +329,126 @@ function saveSectionContentToCloud(updates) {
 
 loadFromLocalStorage();
 
+function initializeVisitorCounter() {
+    const countElement = document.getElementById("visitor-count");
+    if (!countElement) return;
+
+    if (typeof firebase !== "undefined" && firebase.database) {
+        const database = firebase.apps.length
+            ? firebase.database(firebase.apps[0])
+            : firebase.database();
+        const countRef = database.ref("portfolio/visitors/count");
+
+        countRef.on("value", snapshot => {
+            const cloudCount = Number(snapshot.val() || 0);
+            countElement.textContent = String(cloudCount);
+            localStorage.setItem("portfolio_view_count", String(cloudCount));
+        });
+
+        if (!localStorage.getItem("portfolio_visitor_recorded")) {
+            countRef.once("value").then(snapshot => {
+                const nextCount = Number(snapshot.val() || 0) + 1;
+                countRef.set(nextCount).then(() => {
+                    localStorage.setItem("portfolio_visitor_recorded", "true");
+                }).catch(() => {});
+            }).catch(() => {});
+        }
+        return;
+    }
+
+    const localCount = Number(localStorage.getItem("portfolio_view_count") || 0);
+    const newCount = localCount + 1;
+    localStorage.setItem("portfolio_view_count", String(newCount));
+    countElement.textContent = String(newCount);
+}
+
+function initializePortfolioRating() {
+    const stars = [...document.querySelectorAll(".rating-star")];
+    const averageElement = document.getElementById("rating-average");
+    const countElement = document.getElementById("rating-count");
+    if (!stars.length || !averageElement || !countElement) return;
+
+    const storedRating = Number(localStorage.getItem("portfolio_rating") || 0);
+
+    function paintStars(rating) {
+        stars.forEach(star => {
+            const starRating = Number(star.dataset.rating);
+            star.classList.toggle("is-active", starRating <= rating);
+            star.setAttribute("aria-checked", starRating === rating ? "true" : "false");
+        });
+    }
+
+    if (storedRating) paintStars(storedRating);
+
+    let ratingsRef = null;
+    if (typeof firebase !== "undefined" && firebase.database) {
+        const database = firebase.apps.length
+            ? firebase.database(firebase.apps[0])
+            : firebase.database();
+        ratingsRef = database.ref("portfolio/ratings");
+
+        ratingsRef.on("value", snapshot => {
+            const rating = snapshot.val();
+            if (!rating) {
+                averageElement.textContent = "0.0";
+                countElement.textContent = "(0 ratings)";
+                return;
+            }
+
+            const count = Number(rating.count || 0);
+            const average = count ? Number(rating.sum || 0) / count : 0;
+            averageElement.textContent = average.toFixed(1);
+            countElement.textContent = `(${count} rating${count === 1 ? "" : "s"})`;
+        });
+    }
+
+    stars.forEach(star => {
+        star.addEventListener("mouseenter", () => paintStars(Number(star.dataset.rating)));
+        star.addEventListener("mouseleave", () => paintStars(storedRating));
+        star.addEventListener("click", async () => {
+            const newRating = Number(star.dataset.rating);
+
+            if (!ratingsRef) {
+                localStorage.setItem("portfolio_rating", String(newRating));
+                paintStars(newRating);
+                averageElement.textContent = newRating.toFixed(1);
+                countElement.textContent = "(1 rating)";
+                return;
+            }
+
+            const snapshot = await ratingsRef.once("value");
+            const current = snapshot.val() || {};
+            let count = Number(current.count || 0);
+            let sum = Number(current.sum || 0);
+            const previousRating = Number(localStorage.getItem("portfolio_rating") || 0);
+
+            if (previousRating) {
+                sum = sum - previousRating + newRating;
+            } else {
+                count += 1;
+                sum += newRating;
+            }
+
+            const average = count ? sum / count : 0;
+            await ratingsRef.set({
+                count,
+                sum,
+                average: Number(average.toFixed(2))
+            });
+
+            localStorage.setItem("portfolio_rating", String(newRating));
+            paintStars(newRating);
+            averageElement.textContent = average.toFixed(1);
+            countElement.textContent = `(${count} rating${count === 1 ? "" : "s"})`;
+        });
+    });
+}
+
 if (db) {
     db.ref("portfolio/sections").once("value").then(snapshot => {
         const data = snapshot.val();
         if (data) {
-            editableSections.forEach(id => {
+            cmsOverrideSections.forEach(id => {
                 if (data[id]) {
                     const section = document.getElementById(id);
                     if (section) {
@@ -1053,3 +1171,8 @@ if (isPortfolioAdminLoggedIn()) {
         }
     });
 })();
+
+window.addEventListener("load", () => {
+    initializeVisitorCounter();
+    initializePortfolioRating();
+});

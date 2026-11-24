@@ -3,6 +3,26 @@
     ".read": false,
     ".write": false,
     "portfolio": {
+      "ratings": {
+        ".read": true,
+        ".write": true,
+        "count": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "sum": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "average": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5"
+        }
+      },
+      "visitors": {
+        "count": {
+          ".read": true,
+          ".write": true,
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        }
+      },
       "sections": {
         ".read": true,
         ".write": "auth != null && auth.token.email_verified == true && auth.token.email == 'shaikfayu52@gmail.com'",
